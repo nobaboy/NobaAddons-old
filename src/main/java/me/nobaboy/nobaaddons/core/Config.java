@@ -224,6 +224,7 @@ public class Config extends Vigilant {
 
         try {
             // DM Commands
+            addDependency("dmHelpCommand", "dmCommands");
             addDependency("warpMeCommand", "dmCommands");
             addDependency("partyMeCommand", "dmCommands");
             addDependency("dmWarpOutCommand", "dmCommands");

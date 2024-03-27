@@ -33,6 +33,8 @@ loom {
                 // This argument causes a crash on macOS
                 vmArgs.remove("-XstartOnFirstThread")
             }
+            isIdeConfigGenerated = true
+            programArgs("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
         }
         remove(getByName("server"))
     }
@@ -51,7 +53,8 @@ repositories {
     mavenCentral()
     maven("https://repo.spongepowered.org/maven/")
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
-    maven(url = "https://repo.essential.gg/repository/maven-public")
+    maven("https://repo.sk1er.club/repository/maven-public/")
+    maven("https://repo.sk1er.club/repository/maven-releases/")
     maven {
         url = uri("https://maven.pkg.github.com/celestialfault/celestial-config")
         credentials {
@@ -70,11 +73,16 @@ dependencies {
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
-    shadowImpl("me.celestialfault.celestialconfig:celestial-config:0.2") {
+    shadowImpl("me.celestialfault.celestialconfig:celestial-config:0.1") {
         isTransitive = false
     }
-
-    shadowImpl("gg.essential:vigilance-$mcVersion-forge:295")
+    shadowImpl("gg.essential:loader-launchwrapper:1.2.1")
+    implementation("gg.essential:essential-1.8.9-forge:14616+g169bd9af6a") {
+        exclude(module = "asm")
+        exclude(module = "asm-commons")
+        exclude(module = "asm-tree")
+        exclude(module = "gson")
+    }
 
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
 }
@@ -116,6 +124,15 @@ val remapJar by tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
 tasks.jar {
     archiveClassifier.set("without-deps")
     destinationDirectory.set(layout.buildDirectory.dir("badjars"))
+    manifest.attributes (
+        mapOf(
+            "ForceLoadAsMod" to true,
+            "ModSide" to "CLIENT",
+            "ModType" to "FML",
+            "TweakClass" to "gg.essential.loader.stage0.EssentialSetupTweaker",
+            "TweakOrder" to "0"
+        )
+    )
 }
 
 tasks.shadowJar {

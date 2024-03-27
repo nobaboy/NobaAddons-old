@@ -1,12 +1,11 @@
 package me.nobaboy.nobaaddons.commands;
 
 import com.google.common.collect.Lists;
+import gg.essential.api.utils.GuiUtil;
 import me.nobaboy.nobaaddons.NobaAddons;
 import me.nobaboy.nobaaddons.features.dungeons.SSDeviceTimer;
 import me.nobaboy.nobaaddons.features.dungeons.data.SSFile;
 import me.nobaboy.nobaaddons.util.ChatUtils;
-import me.nobaboy.nobaaddons.util.TickDelay;
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -85,7 +84,7 @@ public class NobaCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if(args.length < 1) {
-            new TickDelay(() -> Minecraft.getMinecraft().displayGuiScreen(NobaAddons.config.gui()), 1);
+            GuiUtil.open(NobaAddons.config.gui());
             return;
         }
         switch(args[0].toLowerCase()) {
