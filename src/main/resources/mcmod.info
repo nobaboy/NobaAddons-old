@@ -1,18 +1,18 @@
 [
   {
-    "modid": "${modid}",
-    "name": "Xample Mod",
-    "description": "A mod that is used as an example.",
+	"modid": "nobaaddons",
+	"name": "NobaAddons",
+	"description": "Some skyblock features made for convenience.",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/romangraef/Forge1.8.9Template/",
-    "updateUrl": "",
-    "authorList": [
-      "You"
-    ],
-    "credits": "",
-    "logoFile": "",
-    "screenshots": [],
-    "dependencies": []
+	"url": "",
+	"updateUrl": "",
+	"authorList": [
+		"nobaboy"
+	],
+	"credits": "celeste for roasting my code and improving on it.",
+	"logoFile": "",
+	"screenshots": [],
+	"dependencies": []
   }
 ]
