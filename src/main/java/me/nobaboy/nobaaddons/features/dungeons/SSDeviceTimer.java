@@ -39,9 +39,9 @@ public class SSDeviceTimer {
         if(Utils.currentFloor == DungeonFloor.F7 || Utils.currentFloor == DungeonFloor.M7) {
             String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-            if(receivedMessage.startsWith("[BOSS] Goldor: Who dares trespass into my domain?")) {
+            if(receivedMessage.equals("[BOSS] Goldor: Who dares trespass into my domain?")) {
                 inGoldorPhase = true;
-            } else if(receivedMessage.startsWith("[BOSS] Goldor: FINALLY! This took way too long.") || receivedMessage.startsWith("[BOSS] Goldor: Necron, forgive me.")) {
+            } else if(receivedMessage.equals("[BOSS] Goldor: FINALLY! This took way too long.") || receivedMessage.equals("[BOSS] Goldor: Necron, forgive me.")) {
                 inGoldorPhase = false;
                 firstButtonPressed = false;
             }

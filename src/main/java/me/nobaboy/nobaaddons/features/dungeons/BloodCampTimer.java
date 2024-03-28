@@ -19,7 +19,7 @@ public class BloodCampTimer {
         String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
         if(announcing) return;
-        if(receivedMessage.startsWith("The BLOOD DOOR has been opened!")) {
+        if(receivedMessage.equals("The BLOOD DOOR has been opened!")) {
             announcing = true;
             startThread();
         }

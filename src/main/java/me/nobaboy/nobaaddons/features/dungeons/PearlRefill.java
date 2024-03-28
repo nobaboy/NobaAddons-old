@@ -8,13 +8,16 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StringUtils;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PearlRefill {
     @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event) {
-        checkBeforeGetting();
+    public void onChatReceived(final ClientChatReceivedEvent event) {
+        if(!Utils.isInDungeons()) return;
+        String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
+
+        if(receivedMessage.equals("[NPC] Mort: Good luck.")) refillPearls();
     }
 
     public static void refillPearls() {
@@ -30,15 +33,5 @@ public class PearlRefill {
 
         int toAdd = Math.max(16 - sum, 0);
         if(toAdd > 0) ChatUtils.sendCommand("gfs ENDER_PEARL " + toAdd);
-    }
-
-    public synchronized void checkBeforeGetting() {
-        new Thread(() -> {
-            try {
-                Thread.sleep(5000);
-            } catch(InterruptedException ignored) { }
-            if(!Utils.isInDungeons() || !NobaAddons.config.autoRefillPearls) return;
-            refillPearls();
-        }).start();
     }
 }
