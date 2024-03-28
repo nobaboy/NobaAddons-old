@@ -27,48 +27,6 @@ public class SSDeviceTimer {
     long deviceStartTime;
     static double timeTakenToEnd;
 
-    public static void sendAverage() {
-        double sum = 0;
-        long count = 0;
-
-        List<Double> times = SSFile.INSTANCE.times.get();
-        for(Double time : times) {
-            sum += time;
-            count++;
-        }
-        if(count == 0) {
-            ChatUtils.addMessage("You have not completed a single Simon Says device in the Catacombs Floor 7.");
-            return;
-        }
-        double average = Math.round((sum/count)*1000.0)/1000.0;
-        ChatUtils.addMessage("Your average time for Simon Says is: " + average + "s (Total SS Devices: " + count + ")");
-    }
-
-    public static void modifySSTimes(boolean removeLast) {
-        List<Double> times = SSFile.INSTANCE.times.get();
-        Double personalBest = SSFile.INSTANCE.personalBest.get();
-
-        if(!times.isEmpty()) {
-            try {
-                if(removeLast && times.size() > 1) {
-                    ChatUtils.addMessage("Successfully removed last SS Time.");
-                    boolean isPb = times.get(times.size() - 1).equals(personalBest);
-                    times.remove(times.size() - 1);
-                    if(isPb) times.stream().mapToDouble(Double::doubleValue).min().ifPresent(SSFile.INSTANCE.personalBest::set);
-                } else {
-                    ChatUtils.addMessage("Successfully cleared SS Times.");
-                    SSFile.INSTANCE.personalBest.set(null);
-                    times.clear();
-                }
-                SSFile.INSTANCE.save();
-            } catch(IOException e) {
-                NobaAddons.LOGGER.error("Failed to modify simon-says-times.json");
-            }
-        } else {
-            ChatUtils.addMessage("You have not completed a single Simon Says device in the Catacombs Floor 7.");
-        }
-    }
-
     @SubscribeEvent
     public void onWorldUnload(WorldEvent.Unload event) {
         inGoldorPhase = false;
