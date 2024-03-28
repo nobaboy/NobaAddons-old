@@ -25,26 +25,12 @@ public class PartyCommands extends CooldownManager {
     static boolean isWarping = false;
     static boolean cancel = false;
 
-    // Warp in user
-    static boolean isWarpingUser = false;
-    static boolean playedJoined = false;
-    static String player;
-
     final Pattern chatPattern = Pattern.compile("^Party > (?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+): !(?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?");
 
     @SubscribeEvent
     public void onChatReceived(final ClientChatReceivedEvent event) {
         if(!NobaAddons.config.partyCommands) return;
         String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
-
-        if(isWarpingUser) {
-            if(receivedMessage.toLowerCase().contains(player + " is already in the party.")) {
-                isWarpingUser = false;
-                return;
-            } else if(receivedMessage.toLowerCase().contains(player + " joined the party.")) {
-                playedJoined = true;
-            }
-        }
 
         Matcher chatMatcher = chatPattern.matcher(receivedMessage);
         if(!chatMatcher.find()) return;
