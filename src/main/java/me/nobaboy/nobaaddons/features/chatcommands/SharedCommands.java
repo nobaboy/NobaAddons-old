@@ -6,7 +6,7 @@ public class SharedCommands {
     static boolean isWarpingOut = false;
     static boolean playedJoined = false;
     static String player;
-    static String _sender;
+    static String sender;
 
     public static void warpOutCommand(String username, String sender) {
         if(isWarpingOut) {
@@ -16,7 +16,7 @@ public class SharedCommands {
         } else {
             ChatUtils.delayedSend("p " + username);
             player = username;
-            _sender = sender;
+            SharedCommands.sender = sender;
             isWarpingOut = true;
             warpOutPlayer();
         }
@@ -30,7 +30,7 @@ public class SharedCommands {
             while(true) {
                 if(secondsPassed++ >= 60) {
                     if(!playedJoined) {
-                        ChatUtils.delayedSend(_sender + " Warp out failed, " + player + " did not join party.");
+                        ChatUtils.delayedSend(sender + " Warp out failed, " + player + " did not join party.");
                         isWarpingOut = false;
                     }
                     break;
@@ -44,7 +44,7 @@ public class SharedCommands {
                     try {
                         sleep(900);
                     } catch(InterruptedException ignored) {}
-                    ChatUtils.delayedSend(_sender + " Warp out successful.");
+                    ChatUtils.delayedSend(sender + " Warp out successful.");
                     playedJoined = false;
                     isWarpingOut = false;
                     break;

@@ -3,6 +3,7 @@ package me.nobaboy.nobaaddons.features.chatcommands;
 import com.google.common.collect.Lists;
 import me.nobaboy.nobaaddons.NobaAddons;
 import me.nobaboy.nobaaddons.util.ChatUtils;
+import me.nobaboy.nobaaddons.util.CooldownManager;
 import me.nobaboy.nobaaddons.util.PartyUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -16,9 +17,8 @@ import java.util.regex.Pattern;
 
 import static java.lang.Integer.parseInt;
 
-public class PartyCommands {
+public class PartyCommands extends CooldownManager {
     List<String> commands = Lists.newArrayList("help", "pt", "ptme", "transfer", "allinvite", "allinv", "warp", "cancel", "coords");
-    static int cooldown = 0;
 
     // Warp command
     static int delay = 0;
@@ -52,8 +52,7 @@ public class PartyCommands {
         String argument = chatMatcher.group("argument");
         String sender = chatMatcher.group("username");
 
-        if(!NobaAddons.config.debugMode && (!commands.contains(command.toLowerCase()) || cooldown > 0)) return;
-        cooldown = 3;
+        if(!NobaAddons.config.debugMode && (!commands.contains(command.toLowerCase()) || isOnCooldown())) return;
         startCooldown();
         switch(command.toLowerCase()) {
             case "help":
@@ -104,14 +103,13 @@ public class PartyCommands {
         }
     }
 
-    private static class WarpAfterInterval extends Thread {
-        @SuppressWarnings("BusyWait")
-        @Override
-        public void run() {
+    @SuppressWarnings("BusyWait")
+    public void startTimedWarp() {
+        new Thread(() -> {
             int secondsPassed = --delay;
             while(true) {
                 try {
-                    sleep(1000);
+                    Thread.sleep(1000);
                 } catch(InterruptedException ignored) {}
                 if(cancel) {
                     ChatUtils.sendCommand("pc Warp cancelled...");
@@ -125,30 +123,6 @@ public class PartyCommands {
                     break;
                 }
             }
-        }
-    }
-
-    public void startTimedWarp() {
-        WarpAfterInterval thread = new WarpAfterInterval();
-        thread.setName("warp-after-delay");
-        thread.start();
-    }
-
-    private static class CommandsCooldown extends Thread {
-        @SuppressWarnings("BusyWait")
-        @Override
-        public void run() {
-            do {
-                try {
-                    sleep(1000);
-                } catch(InterruptedException ignored) {}
-            } while (--cooldown != 0);
-        }
-    }
-
-    public void startCooldown() {
-        CommandsCooldown thread = new CommandsCooldown();
-        thread.setName("party-command-cooldown");
-        thread.start();
+        }).start();
     }
 }
