@@ -24,12 +24,9 @@ java {
 // Minecraft configuration:
 loom {
     log4jConfigs.from(file("log4j2.xml"))
-    launchConfigs {
-        "client" { }
-    }
     runConfigs {
         "client" {
-            if (SystemUtils.IS_OS_MAC_OSX) {
+            if(SystemUtils.IS_OS_MAC_OSX) {
                 // This argument causes a crash on macOS
                 vmArgs.remove("-XstartOnFirstThread")
             }
@@ -73,7 +70,7 @@ dependencies {
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
-    shadowImpl("me.celestialfault.celestialconfig:celestial-config:0.1") {
+    shadowImpl("me.celestialfault.celestialconfig:celestial-config:0.3.3") {
         isTransitive = false
     }
     shadowImpl("gg.essential:loader-launchwrapper:1.2.1")
@@ -84,7 +81,7 @@ dependencies {
         exclude(module = "gson")
     }
 
-    runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
+    runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.0")
 }
 
 // Tasks:

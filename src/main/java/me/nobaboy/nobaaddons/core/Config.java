@@ -1,9 +1,9 @@
 package me.nobaboy.nobaaddons.core;
 
-import me.nobaboy.nobaaddons.NobaAddons;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
+import me.nobaboy.nobaaddons.NobaAddons;
 
 import java.io.File;
 
@@ -208,6 +208,26 @@ public class Config extends Vigilant {
     )
     public boolean ssDeviceTimerPC = false;
 
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Refill Pearls",
+            description = "Run '/noba refillPearls' to refill your Enderpearls up to 16 or\n" +
+                    "change the key bind in controls to your desired key.",
+            category = "Dungeons",
+            subcategory = "QOL"
+    )
+    public boolean refillPearls = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Auto Refill Pearls",
+            description = "Automatically refill your pearls on dungeon start instead of\n" +
+                    "pressing a key bind or running a command",
+            category = "Dungeons",
+            subcategory = "UAYOR"
+    )
+    public boolean autoRefillPearls = false;
+
     // Dev
 
     @Property(
@@ -242,6 +262,7 @@ public class Config extends Vigilant {
             addDependency("centuryCakesAmount", "cakesEatenNotifier");
             // Dungeons
             addDependency("ssDeviceTimerPC", "ssDeviceTimer");
+            addDependency("autoRefillPearls", "refillPearls");
             markDirty();
         } catch(Exception e) {
             NobaAddons.LOGGER.error("Failed to add dependencies in config", e);

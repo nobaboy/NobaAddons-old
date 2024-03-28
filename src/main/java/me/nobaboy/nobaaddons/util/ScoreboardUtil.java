@@ -28,7 +28,7 @@ public class ScoreboardUtil {
         StringBuilder cleaned = new StringBuilder();
 
         for(char c : nvString) {
-            if ((int) c > 20 && (int) c < 127) {
+            if((int) c > 20 && (int) c < 127) {
                 cleaned.append(c);
             }
         }

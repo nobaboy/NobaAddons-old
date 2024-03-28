@@ -3,6 +3,7 @@ package me.nobaboy.nobaaddons.commands;
 import com.google.common.collect.Lists;
 import gg.essential.api.utils.GuiUtil;
 import me.nobaboy.nobaaddons.NobaAddons;
+import me.nobaboy.nobaaddons.features.dungeons.PearlRefill;
 import me.nobaboy.nobaaddons.features.dungeons.SSDeviceTimer;
 import me.nobaboy.nobaaddons.features.dungeons.data.SSFile;
 import me.nobaboy.nobaaddons.util.ChatUtils;
@@ -112,6 +113,13 @@ public class NobaCommand extends CommandBase {
                 break;
             case "sscleartimes":
                 SSDeviceTimer.modifySSTimes(false);
+                break;
+            case "refillpearls":
+                if(!NobaAddons.config.refillPearls) {
+                    ChatUtils.addMessage(true,  "This command doesn't exist, use '/noba help' to view all commands.");
+                    return;
+                }
+                PearlRefill.refillPearls();
                 break;
             default:
                 ChatUtils.addMessage(true,  "This command doesn't exist, use '/noba help' to view all commands.");

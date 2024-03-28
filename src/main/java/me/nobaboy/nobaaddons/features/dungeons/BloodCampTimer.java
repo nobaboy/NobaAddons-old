@@ -15,7 +15,7 @@ public class BloodCampTimer {
 
     @SubscribeEvent
     public void onChatReceived(final ClientChatReceivedEvent event) {
-        if(!NobaAddons.config.bloodCampAfterTime || !Utils.inDungeons) return;
+        if(!NobaAddons.config.bloodCampAfterTime || !Utils.isInDungeons()) return;
         String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
         if(announcing) return;

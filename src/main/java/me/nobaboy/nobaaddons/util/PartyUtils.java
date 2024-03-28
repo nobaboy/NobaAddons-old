@@ -4,6 +4,7 @@ import me.nobaboy.nobaaddons.NobaAddons;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
@@ -44,8 +45,13 @@ public class PartyUtils {
         getPartyList();
     }
 
+    @SubscribeEvent
+    public void WorldUnload(WorldEvent.Unload event) {
+        if(gettingList) gettingList = false;
+    }
+
     private void getPartyList() {
-        if(Minecraft.getMinecraft().isSingleplayer() || gettingList || !Utils.onHypixel) return;
+        if(Minecraft.getMinecraft().isSingleplayer() || gettingList || !Utils.isOnHypixel()) return;
         new Thread(() -> {
             try {
                 Thread.sleep(3000);
