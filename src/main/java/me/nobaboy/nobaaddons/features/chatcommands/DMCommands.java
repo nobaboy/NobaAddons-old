@@ -3,6 +3,7 @@ package me.nobaboy.nobaaddons.features.chatcommands;
 import com.google.common.collect.Lists;
 import me.nobaboy.nobaaddons.NobaAddons;
 import me.nobaboy.nobaaddons.util.ChatUtils;
+import me.nobaboy.nobaaddons.util.CooldownManager;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -11,9 +12,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DMCommands {
+public class DMCommands extends CooldownManager {
     List<String> commands = Lists.newArrayList("warpme", "partyme", "pme", "warpout");
-    static int cooldown = 0;
 
     // Warp in User
     static boolean isWarpingUser = false;
@@ -48,8 +48,7 @@ public class DMCommands {
         String argument = chatMatcher.group("argument");
         String sender = chatMatcher.group("username");
 
-        if(!NobaAddons.config.debugMode && (!commands.contains(command.toLowerCase()) || cooldown > 0)) return;
-        cooldown = 3;
+        if(!NobaAddons.config.debugMode && (!commands.contains(command.toLowerCase()) || isOnCooldown())) return;
         startCooldown();
         switch(command.toLowerCase()) {
             case "help":
@@ -85,10 +84,9 @@ public class DMCommands {
         warpUser();
     }
 
-    private static class WarpInUser extends Thread {
-        @SuppressWarnings("BusyWait")
-        @Override
-        public void run() {
+    @SuppressWarnings("BusyWait")
+    public void warpUser() {
+        new Thread(() -> {
             int secondsPassed = 0;
             while(isWarpingUser) {
                 if(secondsPassed++ == 60) {
@@ -101,7 +99,7 @@ public class DMCommands {
                 if(playedJoined) {
                     ChatUtils.sendCommand("p warp");
                     try {
-                        sleep(1000);
+                        Thread.sleep(1000);
                     } catch(InterruptedException ignored) {}
                     ChatUtils.sendCommand("p kick " + player);
                     playedJoined = false;
@@ -109,33 +107,9 @@ public class DMCommands {
                     break;
                 }
                 try {
-                    sleep(1000);
+                    Thread.sleep(1000);
                 } catch(InterruptedException ignored) {}
             }
-        }
-    }
-
-    public void warpUser() {
-        WarpInUser thread = new WarpInUser();
-        thread.setName("warp-user-" + player);
-        thread.start();
-    }
-
-    private static class CommandsCooldown extends Thread {
-        @SuppressWarnings("BusyWait")
-        @Override
-        public void run() {
-            do {
-                try {
-                    sleep(1000);
-                } catch(InterruptedException ignored) {}
-            } while (--cooldown != 0);
-        }
-    }
-
-    public void startCooldown() {
-        CommandsCooldown thread = new CommandsCooldown();
-        thread.setName("dm-command-cooldown");
-        thread.start();
+        }).start();
     }
 }
