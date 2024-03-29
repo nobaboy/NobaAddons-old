@@ -12,7 +12,8 @@ import me.nobaboy.nobaaddons.features.dungeons.SSDeviceTimer;
 import me.nobaboy.nobaaddons.features.dungeons.data.SSFile;
 import me.nobaboy.nobaaddons.features.misc.DisableMouse;
 import me.nobaboy.nobaaddons.features.notifiers.QOLNotifiers;
-import me.nobaboy.nobaaddons.util.ChatUtils;
+import me.nobaboy.nobaaddons.keybinds.CommandKeyBind;
+import me.nobaboy.nobaaddons.keybinds.NobaKeyBind;
 import me.nobaboy.nobaaddons.util.PartyUtils;
 import me.nobaboy.nobaaddons.util.Utils;
 import net.minecraft.client.Minecraft;
@@ -48,15 +49,14 @@ public class NobaAddons {
 
     public static Config config = new Config();
 
-    public static List<KeyBinding> keyBinds = Arrays.asList(
-            new KeyBinding("Pets Menu", Keyboard.KEY_V, MOD_NAME),
-            new KeyBinding("Wardrobe", Keyboard.KEY_LMENU, MOD_NAME),
-            new KeyBinding("Equipment Menu", Keyboard.KEY_H, MOD_NAME),
-            new KeyBinding("Enderchest", Keyboard.KEY_NONE, MOD_NAME),
-            new KeyBinding("Storage Menu", Keyboard.KEY_NONE, MOD_NAME),
-            new KeyBinding("Disable Mouse", Keyboard.KEY_NONE, MOD_NAME),
-            new KeyBinding("Refill Pearls", Keyboard.KEY_NONE, MOD_NAME)
-    );
+    private static final List<NobaKeyBind> KEYBINDS = Arrays.asList(
+            new CommandKeyBind("Pets Menu", Keyboard.KEY_V, "pets"),
+            new CommandKeyBind("Wardrobe", Keyboard.KEY_LMENU, "wardrobe"),
+            new CommandKeyBind("Equipment Menu", Keyboard.KEY_H, "equipment"),
+            new CommandKeyBind("Enderchest", "enderchest"),
+            new CommandKeyBind("Storage Menu", "storage"),
+            new NobaKeyBind("Disable Mouse", DisableMouse::onDisableMouse),
+            new NobaKeyBind("Refill Pearls", () -> PearlRefill.refillPearls(true)));
 
     @Mod.EventHandler
     public void init(final FMLInitializationEvent event) {
@@ -66,7 +66,7 @@ public class NobaAddons {
         } catch(IOException e) {
             NobaAddons.LOGGER.error("Failed to load simon-says-times.json", e);
         }
-        keyBinds.forEach(ClientRegistry::registerKeyBinding);
+        KEYBINDS.forEach(ClientRegistry::registerKeyBinding);
         Arrays.asList(
                 this,
                 new PartyUtils(),
@@ -89,13 +89,7 @@ public class NobaAddons {
 
     @SubscribeEvent
     public void onKeyInput(final InputEvent.KeyInputEvent event) {
-        if(keyBinds.get(0).isPressed()) ChatUtils.sendCommand("pets");
-        if(keyBinds.get(1).isPressed()) ChatUtils.sendCommand("wardrobe");
-        if(keyBinds.get(2).isPressed()) ChatUtils.sendCommand("equipment");
-        if(keyBinds.get(3).isPressed()) ChatUtils.sendCommand("enderchest");
-        if(keyBinds.get(4).isPressed()) ChatUtils.sendCommand("storage");
-        if(keyBinds.get(5).isPressed()) DisableMouse.onDisableMouse();
-        if(keyBinds.get(6).isPressed()) PearlRefill.refillPearls(true);
+        KEYBINDS.forEach(NobaKeyBind::maybePress);
     }
 
     @SubscribeEvent
