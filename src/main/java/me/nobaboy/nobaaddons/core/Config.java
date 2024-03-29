@@ -8,7 +8,7 @@ import me.nobaboy.nobaaddons.NobaAddons;
 import java.io.File;
 
 public class Config extends Vigilant {
-    // DM Commands
+    // region DM Commands
 
     @Property(
             type = PropertyType.SWITCH,
@@ -55,7 +55,9 @@ public class Config extends Vigilant {
     )
     public boolean dmWarpOutCommand = false;
 
-    // Party Commands
+    // endregion
+
+    // region Party Commands
 
     @Property(
             type = PropertyType.SWITCH,
@@ -111,7 +113,9 @@ public class Config extends Vigilant {
     )
     public boolean coordsCommand = false;
 
-    // Guild Commands
+    // endregion
+
+    // region Guild Commands
 
     @Property(
             type = PropertyType.SWITCH,
@@ -140,7 +144,9 @@ public class Config extends Vigilant {
     )
     public boolean guildWarpOutCommand = false;
 
-    // Notifiers
+    // endregion
+
+    // region Notifiers
 
     @Property(
             type = PropertyType.SWITCH,
@@ -168,7 +174,9 @@ public class Config extends Vigilant {
     )
     public boolean corruptionTotemNotifier = false;
 
-    // Dungeons
+    // endregion
+
+    // region Dungeons
 
     @Property(
             type = PropertyType.SWITCH,
@@ -226,15 +234,19 @@ public class Config extends Vigilant {
     )
     public boolean autoRefillPearls = false;
 
-    // Dev
+    // endregion
+
+    // region Dev
 
     @Property(
             type = PropertyType.SWITCH,
             name = "Debug Mode",
-            description = "Only turn this on if you're testing something while editing code.",
+            description = "§cYou should only turn this on if you know what you're doing, or if you were requested to turn this on.",
             category = "Dev"
     )
     public boolean debugMode = false;
+
+    // endregion
 
     public Config() {
         super(new File("./config/nobaaddons/" + NobaAddons.MOD_ID + ".toml"),  NobaAddons.MOD_NAME + " (" + NobaAddons.MOD_VERSION + ")");
