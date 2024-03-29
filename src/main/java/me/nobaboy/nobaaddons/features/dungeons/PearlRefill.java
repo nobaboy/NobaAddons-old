@@ -33,10 +33,12 @@ public class PearlRefill extends CooldownManager {
         }
         int toAdd = Math.max(16 - sum, 0);
 
-        if(toAdd > 0) {
-            if(fromKeyBind || Utils.isInDungeons()) ChatUtils.sendCommand("gfs ENDER_PEARL " + toAdd);
-        } else {
-            ChatUtils.addMessage("Can't add more than 16 pearls to your inventory.");
+        if(fromKeyBind || Utils.isInDungeons()) {
+            if (toAdd > 0) {
+                ChatUtils.sendCommand("gfs ENDER_PEARL " + toAdd);
+            } else {
+                ChatUtils.addMessage("Can't add more than 16 pearls to your inventory.");
+            }
         }
     }
 }
