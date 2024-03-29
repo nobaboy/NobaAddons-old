@@ -17,6 +17,6 @@ public class RefillPearlsCommand implements ISubCommand {
 
 	@Override
 	public void run(String[] args) {
-		PearlRefill.refillPearls();
+		PearlRefill.refillPearls(true);
 	}
 }

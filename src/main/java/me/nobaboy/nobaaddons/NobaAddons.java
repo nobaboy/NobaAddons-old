@@ -95,7 +95,7 @@ public class NobaAddons {
         if(keyBinds.get(3).isPressed()) ChatUtils.sendCommand("enderchest");
         if(keyBinds.get(4).isPressed()) ChatUtils.sendCommand("storage");
         if(keyBinds.get(5).isPressed()) DisableMouse.onDisableMouse();
-        if(keyBinds.get(6).isPressed()) PearlRefill.refillPearls();
+        if(keyBinds.get(6).isPressed()) PearlRefill.refillPearls(true);
     }
 
     @SubscribeEvent
