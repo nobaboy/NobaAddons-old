@@ -18,7 +18,6 @@ import me.nobaboy.nobaaddons.util.PartyUtils;
 import me.nobaboy.nobaaddons.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -41,7 +40,6 @@ public class NobaAddons {
     public static final String MOD_ID = "nobaaddons";
     public static final String MOD_NAME = "NobaAddons";
     public static final String MOD_VERSION = "0.9.9";
-    public static final String PLAYER_IGN = Minecraft.getMinecraft().getSession().getUsername();
 
 //    public static final NobaAddons INSTANCE = new NobaAddons();
     public static final Logger LOGGER = LogManager.getLogger(NobaAddons.class);
@@ -56,7 +54,8 @@ public class NobaAddons {
             new CommandKeyBind("Enderchest", "enderchest"),
             new CommandKeyBind("Storage Menu", "storage"),
             new NobaKeyBind("Disable Mouse", DisableMouse::onDisableMouse),
-            new NobaKeyBind("Refill Pearls", () -> PearlRefill.refillPearls(true)));
+            new NobaKeyBind("Refill Pearls", () -> PearlRefill.refillPearls(true))
+    );
 
     @Mod.EventHandler
     public void init(final FMLInitializationEvent event) {
@@ -105,8 +104,13 @@ public class NobaAddons {
                 Utils.checkForSkyblock();
                 Utils.checkTabLocation();
                 Utils.checkForDungeonFloor();
+                Utils.checkForDungeonClass();
             }
             ticks = 0;
         }
+    }
+
+    public static String getUsername() {
+        return Minecraft.getMinecraft().thePlayer.getName();
     }
 }

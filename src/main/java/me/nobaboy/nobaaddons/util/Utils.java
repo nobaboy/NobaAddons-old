@@ -1,8 +1,9 @@
 package me.nobaboy.nobaaddons.util;
 
 import me.nobaboy.nobaaddons.NobaAddons;
-import me.nobaboy.nobaaddons.util.locations.DungeonFloor;
-import me.nobaboy.nobaaddons.util.locations.Location;
+import me.nobaboy.nobaaddons.util.data.DungeonClass;
+import me.nobaboy.nobaaddons.util.data.DungeonFloor;
+import me.nobaboy.nobaaddons.util.data.Location;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.scoreboard.ScoreObjective;
@@ -19,8 +20,9 @@ public class Utils {
     public static boolean inSkyblock;
     public static Location currentLocation = Location.NONE;
     public static DungeonFloor currentFloor = DungeonFloor.NONE;
+    public static DungeonClass currentClass = DungeonClass.NONE;
 
-    @SuppressWarnings("all")
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isOnHypixel() {
         if(NobaAddons.config.debugMode) return true;
 
@@ -29,9 +31,7 @@ public class Utils {
             if(mc.thePlayer != null && mc.thePlayer.getClientBrand() != null && mc.thePlayer.getClientBrand().toLowerCase().contains("hypixel")) {
                 return true;
             }
-            if(mc.getCurrentServerData() != null && mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel")) {
-                return true;
-            }
+            return mc.getCurrentServerData() != null && mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel");
         }
         return false;
     }
@@ -75,6 +75,9 @@ public class Utils {
         return currentLocation == Location.CATACOMBS;
     }
 
+    /**
+     * Modified logging
+     */
     public static void checkForDungeonFloor() {
         if(isInDungeons()) {
             List<String> scoreboard = ScoreboardUtil.getSidebarLines();
@@ -89,7 +92,7 @@ public class Utils {
                         currentFloor = DungeonFloor.valueOf(floor);
                     } catch(IllegalArgumentException ex) {
                         currentFloor = DungeonFloor.NONE;
-                        ex.printStackTrace();
+                        NobaAddons.LOGGER.error("Unexpected value for Dungeon Floor: ", ex);
                     }
 
                     break;
@@ -97,6 +100,28 @@ public class Utils {
             }
         } else {
             currentFloor = DungeonFloor.NONE;
+        }
+    }
+
+    /**
+    * @author nobaboy
+    */
+    public static void checkForDungeonClass() {
+        if(isInDungeons()) {
+            String playerName = Minecraft.getMinecraft().thePlayer.getName();
+            Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
+            for(NetworkPlayerInfo player : players) {
+                if(player == null || player.getDisplayName() == null) continue;
+                String text = player.getDisplayName().getUnformattedText();
+                if(text.contains(playerName) && text.indexOf('(') != -1) {
+                    String dungeonClass = text.substring(text.indexOf("(") + 1, text.lastIndexOf(")"));
+                    if(dungeonClass.equals("EMPTY")) return;
+                    currentClass = DungeonClass.valueOf(dungeonClass.split(" ")[0].toUpperCase());
+                    break;
+                }
+            }
+        } else {
+            currentClass = DungeonClass.NONE;
         }
     }
 

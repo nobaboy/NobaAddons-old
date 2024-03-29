@@ -211,8 +211,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Refill Pearls",
-            description = "Run '/noba refillPearls' to refill your Enderpearls up to 16 or\n" +
-                    "change the key bind in controls to your desired key.",
+            description = "Run '/noba refillPearls' to refill your Enderpearls up to 16 or change the key bind in controls to your desired key.",
             category = "Dungeons",
             subcategory = "QOL"
     )
@@ -221,8 +220,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Auto Refill Pearls",
-            description = "Automatically refill your pearls on dungeon start instead of\n" +
-                    "pressing a key bind or running a command",
+            description = "Automatically refill your pearls on dungeon start instead of pressing a key bind or running a command",
             category = "Dungeons",
             subcategory = "UAYOR"
     )

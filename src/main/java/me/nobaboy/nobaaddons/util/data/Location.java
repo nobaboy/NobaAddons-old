@@ -1,4 +1,4 @@
-package me.nobaboy.nobaaddons.util.locations;
+package me.nobaboy.nobaaddons.util.data;
 
 /**
  * Taken from Danker's Skyblock Mod under GPL 3.0 license

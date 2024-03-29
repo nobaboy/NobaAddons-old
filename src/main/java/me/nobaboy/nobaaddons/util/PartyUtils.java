@@ -78,7 +78,7 @@ public class PartyUtils {
             Matcher matcher = PARTY_LEADER.matcher(receivedMessage);
             if(matcher.find()) {
                 leaderName = matcher.group("leader");
-                if(leaderName.equals(NobaAddons.PLAYER_IGN)) isLeader = true;
+                if(leaderName.equals(NobaAddons.getUsername())) isLeader = true;
                 inParty = true;
                 return;
             }
@@ -93,7 +93,7 @@ public class PartyUtils {
             Matcher inviteMatcher = PARTY_INVITE.matcher(receivedMessage);
             if(inviteMatcher.find()) {
                 leaderName = inviteMatcher.group("leader");
-                if(leaderName.equals(NobaAddons.PLAYER_IGN)) isLeader = true;
+                if(leaderName.equals(NobaAddons.getUsername())) isLeader = true;
                 inParty = true;
             }
         } else {
@@ -112,7 +112,7 @@ public class PartyUtils {
                     .findFirst()
                     .ifPresent(match -> {
                         leaderName = match.group("leader");
-                        isLeader = leaderName.equals(NobaAddons.PLAYER_IGN);
+                        isLeader = leaderName.equals(NobaAddons.getUsername());
                     });
         }
     }

@@ -53,11 +53,11 @@ public class PartyCommands extends CooldownManager {
                 break;
             case "allinvite":
             case "allinv":
-                if((!PartyUtils.isLeader && NobaAddons.PLAYER_IGN.equals(sender)) || !NobaAddons.config.allInviteCommand) return;
+                if((!PartyUtils.isLeader && NobaAddons.getUsername().equals(sender)) || !NobaAddons.config.allInviteCommand) return;
                 ChatUtils.delayedSend("p settings allinvite");
                 break;
             case "warp":
-                if((!PartyUtils.isLeader && NobaAddons.PLAYER_IGN.equals(sender)) || isWarping || !NobaAddons.config.warpCommand) return;
+                if((!PartyUtils.isLeader && NobaAddons.getUsername().equals(sender)) || isWarping || !NobaAddons.config.warpCommand) return;
                 warpCommand(argument);
                 break;
             case "cancel":

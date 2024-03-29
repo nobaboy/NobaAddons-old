@@ -52,20 +52,20 @@ public class DMCommands extends CooldownManager {
         startCooldown();
         switch(command.toLowerCase()) {
             case "help":
-                if(NobaAddons.PLAYER_IGN.equals(sender) || !NobaAddons.config.dmHelpCommand) return;
+                if(NobaAddons.getUsername().equals(sender) || !NobaAddons.config.dmHelpCommand) return;
                 ChatUtils.delayedSend("pc NobaAddons > !help, !warpme , !(partyme|pme), !warpout");
                 break;
             case "warpme":
-                if(NobaAddons.PLAYER_IGN.equals(sender) || !NobaAddons.config.warpMeCommand) return;
+                if(NobaAddons.getUsername().equals(sender) || !NobaAddons.config.warpMeCommand) return;
                 warpUserCommand(sender);
                 break;
             case "partyme":
             case "pme":
-                if(NobaAddons.PLAYER_IGN.equals(sender) || !NobaAddons.config.partyMeCommand) return;
+                if(NobaAddons.getUsername().equals(sender) || !NobaAddons.config.partyMeCommand) return;
                 ChatUtils.delayedSend("p " + sender);
                 break;
             case "warpout":
-                if(NobaAddons.PLAYER_IGN.equals(sender) || !NobaAddons.config.dmWarpOutCommand) return;
+                if(NobaAddons.getUsername().equals(sender) || !NobaAddons.config.dmWarpOutCommand) return;
                 SharedCommands.warpOutCommand(argument, "msg " + sender);
                 break;
             default:
