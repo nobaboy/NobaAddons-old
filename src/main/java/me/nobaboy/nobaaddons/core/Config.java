@@ -1,11 +1,12 @@
 package me.nobaboy.nobaaddons.core;
 
 import gg.essential.vigilance.Vigilant;
-import gg.essential.vigilance.data.Property;
-import gg.essential.vigilance.data.PropertyType;
+import gg.essential.vigilance.data.*;
 import me.nobaboy.nobaaddons.NobaAddons;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.Comparator;
 
 public class Config extends Vigilant {
     // region DM Commands
@@ -249,7 +250,12 @@ public class Config extends Vigilant {
     // endregion
 
     public Config() {
-        super(new File("./config/nobaaddons/" + NobaAddons.MOD_ID + ".toml"),  NobaAddons.MOD_NAME + " (" + NobaAddons.MOD_VERSION + ")");
+        super(
+                new File("./config/nobaaddons/" + NobaAddons.MOD_ID + ".toml"),
+                NobaAddons.MOD_NAME + " (" + NobaAddons.MOD_VERSION + ")",
+                new JVMAnnotationPropertyCollector(),
+                new ConfigSorting()
+        );
         initialize();
 
         try {
@@ -273,9 +279,22 @@ public class Config extends Vigilant {
             // Dungeons
             addDependency("ssDeviceTimerPC", "ssDeviceTimer");
             addDependency("autoRefillPearls", "refillPearls");
+            // -
             markDirty();
         } catch(Exception e) {
-            NobaAddons.LOGGER.error("Failed to add dependencies in config", e);
+            NobaAddons.LOGGER.error("Failed to add dependency in config", e);
+        }
+    }
+
+    private static class ConfigSorting extends SortingBehavior {
+        @Override
+        public @NotNull Comparator<? super Category> getCategoryComparator() {
+            return (Comparator<Category>) (o1, o2) -> {
+                if(o1.getName().equals("General")) return -1;
+                if(o2.getName().equals("General")) return 1;
+                if(o1.getName().equals("Dev") || o2.getName().equals("Dev")) return 1;
+                else return o1.getName().compareTo(o2.getName());
+            };
         }
     }
 }
