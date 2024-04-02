@@ -52,13 +52,7 @@ repositories {
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
     maven("https://repo.sk1er.club/repository/maven-public/")
     maven("https://repo.sk1er.club/repository/maven-releases/")
-    maven {
-        url = uri("https://maven.pkg.github.com/celestialfault/celestial-config")
-        credentials {
-            username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
-            password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
-        }
-    }
+    maven("https://maven.odinair.xyz/releases")
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -70,7 +64,7 @@ dependencies {
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
-    shadowImpl("me.celestialfault.celestialconfig:celestial-config:0.3.3") {
+    shadowImpl("me.celestialfault:celestial-config:0.3.3") {
         isTransitive = false
     }
     shadowImpl("gg.essential:loader-launchwrapper:1.2.1")
