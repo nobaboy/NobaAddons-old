@@ -20,8 +20,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Execute Gradle build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew build
 
       - name: Upload built mod JAR
