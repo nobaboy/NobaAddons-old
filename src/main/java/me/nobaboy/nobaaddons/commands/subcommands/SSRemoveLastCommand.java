@@ -11,7 +11,7 @@ import java.util.List;
 public class SSRemoveLastCommand implements ISubCommand {
 	@Override
 	public String getName() {
-		return "ssremovelast";
+		return "ssRemoveLast";
 	}
 
 	@Override

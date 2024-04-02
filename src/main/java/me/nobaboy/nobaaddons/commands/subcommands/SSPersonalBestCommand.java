@@ -10,12 +10,12 @@ import java.util.List;
 public class SSPersonalBestCommand implements ISubCommand {
 	@Override
 	public String getName() {
-		return "sspersonalbest";
+		return "ssPersonalBest";
 	}
 
 	@Override
 	public List<String> getAliases() {
-		return Collections.singletonList("sspb");
+		return Collections.singletonList("ssPB");
 	}
 
 	@Override

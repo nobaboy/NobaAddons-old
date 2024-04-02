@@ -10,12 +10,12 @@ import java.util.List;
 public class SSAverageCommand implements ISubCommand {
 	@Override
 	public String getName() {
-		return "ssaverage";
+		return "ssAverage";
 	}
 
 	@Override
 	public List<String> getAliases() {
-		return Collections.singletonList("ssavg");
+		return Collections.singletonList("ssAvg");
 	}
 
 	@Override

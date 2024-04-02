@@ -12,12 +12,12 @@ import java.util.List;
 public class SSClearCommand implements ISubCommand {
 	@Override
 	public String getName() {
-		return "sscleartimes";
+		return "ssClearTimes";
 	}
 
 	@Override
 	public List<String> getAliases() {
-		return Collections.singletonList("ssclear");
+		return Collections.singletonList("ssClear");
 	}
 
 	@Override

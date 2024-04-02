@@ -7,7 +7,7 @@ import me.nobaboy.nobaaddons.features.dungeons.PearlRefill;
 public class RefillPearlsCommand implements ISubCommand {
 	@Override
 	public String getName() {
-		return "refillpearls";
+		return "refillPearls";
 	}
 
 	@Override

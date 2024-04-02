@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PartyUtils {
-    final Pattern PARTY_INVITE = Pattern.compile("^(?:\\[[A-Z+]+] )?(?<leader>[A-z0-9_]+) invited (?:\\[[A-Z+]+] )?(?<former>[A-z0-9_]+) to the party! They have 60 seconds to accept.");
+    final Pattern PARTY_INVITE = Pattern.compile("^(?:\\[[A-Z+]+] )?(?<leader>[A-z0-9_]+) invited (?:\\[[A-Z+]+] )?(?<player>[A-z0-9_]+) to the party! They have 60 seconds to accept.");
     final Pattern PARTY_JOIN = Pattern.compile("^You have joined (?:\\[[A-Z+]+] )?(?<leader>[A-z0-9_]+)'s party!");
     final Pattern PARTY_LEADER = Pattern.compile("^Party Leader: (?:\\[[A-Z+]+] )?(?<leader>[A-z0-9_]+) ●");
     final Pattern PARTY_LIST = Pattern.compile("-{50,53}|Party (?:Leader|Moderators|Members):?.*|You are not currently in a party\\.");
@@ -38,11 +38,10 @@ public class PartyUtils {
     boolean inParty = false;
     String leaderName = null;
 
-    @SuppressWarnings("unused")
     @SubscribeEvent
     public void onJoin(FMLNetworkEvent.ClientConnectedToServerEvent ignored) {
         gettingList = false;
-        getPartyList();
+        new TickDelay(this::getPartyList, 5*20);
     }
 
     @SubscribeEvent
@@ -53,9 +52,7 @@ public class PartyUtils {
     private void getPartyList() {
         if(Minecraft.getMinecraft().isSingleplayer() || gettingList || !Utils.isOnHypixel()) return;
         new Thread(() -> {
-            try {
-                Thread.sleep(3000);
-            } catch(InterruptedException ignored) {}
+            if(NobaAddons.config.debugMode) NobaAddons.LOGGER.info("Getting party list...");
             gettingList = true;
             ChatUtils.sendCommand("party list");
             try {
