@@ -25,7 +25,8 @@ public class PartyCommands extends CooldownManager {
     static boolean isWarping = false;
     static boolean cancel = false;
 
-    final Pattern chatPattern = Pattern.compile("^Party > (?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+): !(?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?");
+    // .*? is for the player symbols added by mods
+    final Pattern chatPattern = Pattern.compile("^Party > .*?(?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+).*?: !(?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?");
 
     @SubscribeEvent
     public void onChatReceived(final ClientChatReceivedEvent event) {
@@ -53,11 +54,11 @@ public class PartyCommands extends CooldownManager {
                 break;
             case "allinvite":
             case "allinv":
-                if((!PartyUtils.isLeader && NobaAddons.getUsername().equals(sender)) || !NobaAddons.config.allInviteCommand) return;
+                if(!PartyUtils.isLeader || !NobaAddons.config.allInviteCommand) return;
                 ChatUtils.delayedSend("p settings allinvite");
                 break;
             case "warp":
-                if((!PartyUtils.isLeader && NobaAddons.getUsername().equals(sender)) || isWarping || !NobaAddons.config.warpCommand) return;
+                if(!PartyUtils.isLeader || isWarping || !NobaAddons.config.warpCommand) return;
                 warpCommand(argument);
                 break;
             case "cancel":

@@ -33,7 +33,7 @@ public class PearlRefill extends CooldownManager {
         }
         int toAdd = Math.max(16 - sum, 0);
 
-        if(fromKeyBind || Utils.isInDungeons()) {
+        if(fromKeyBind || Utils.isInDungeons() || Utils.isInKuudra()) {
             if (toAdd > 0) {
                 ChatUtils.sendCommand("gfs ENDER_PEARL " + toAdd);
             } else {

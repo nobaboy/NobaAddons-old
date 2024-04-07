@@ -75,6 +75,10 @@ public class Utils {
         return currentLocation == Location.CATACOMBS;
     }
 
+    public static boolean isInKuudra() {
+        return currentLocation == Location.KUUDRA;
+    }
+
     /**
      * Modified logging
      */
@@ -101,6 +105,13 @@ public class Utils {
         } else {
             currentFloor = DungeonFloor.NONE;
         }
+    }
+
+    /**
+     * @author nobaboy
+     */
+    public static boolean isInCatacombs7() {
+        return currentFloor == DungeonFloor.F7 || currentFloor == DungeonFloor.M7;
     }
 
     /**

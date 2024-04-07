@@ -14,7 +14,9 @@ import java.util.regex.Pattern;
 
 public class GuildCommands extends CooldownManager {
     List<String> commands = Lists.newArrayList("help", "warpout");
-    Pattern chatPattern = Pattern.compile("^Guild > (?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+)(?<grank> \\[[A-z0-9 ]+])?: !(?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?");
+
+    // .*? is for the player symbols added by mods
+    Pattern chatPattern = Pattern.compile("^Guild > .*?(?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+)(?<grank> \\[[A-z0-9 ]+])?.*?: !(?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?");
 
     @SubscribeEvent
     public void onChatReceived(final ClientChatReceivedEvent event) {

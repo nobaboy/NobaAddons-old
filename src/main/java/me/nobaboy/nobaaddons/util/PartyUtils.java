@@ -8,6 +8,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -18,6 +19,7 @@ public class PartyUtils {
     final Pattern PARTY_JOIN = Pattern.compile("^You have joined (?:\\[[A-Z+]+] )?(?<leader>[A-z0-9_]+)'s party!");
     final Pattern PARTY_LEADER = Pattern.compile("^Party Leader: (?:\\[[A-Z+]+] )?(?<leader>[A-z0-9_]+) ●");
     final Pattern PARTY_LIST = Pattern.compile("-{50,53}|Party (?:Leader|Moderators|Members):?.*|You are not currently in a party\\.");
+    final List<String> STORED_LIST = new ArrayList<>();
 
     final List<Pattern> LEADER_PATTERNS = Arrays.asList(
             Pattern.compile("^The party was transferred to (?:\\[[A-Z+]+] )?(?<leader>[A-z0-9_]+) by (?:\\[[A-Z+]+] )?(?<former>[A-z0-9_]+)"),
@@ -69,16 +71,22 @@ public class PartyUtils {
         if(gettingList) {
             Matcher listMatcher = PARTY_LIST.matcher(receivedMessage);
             if(listMatcher.find()) {
+                STORED_LIST.add(receivedMessage);
                 event.setCanceled(true);
             }
 
-            Matcher matcher = PARTY_LEADER.matcher(receivedMessage);
-            if(matcher.find()) {
-                leaderName = matcher.group("leader");
-                if(leaderName.equals(NobaAddons.getUsername())) isLeader = true;
-                inParty = true;
-                return;
+            for(String line : STORED_LIST) {
+                Matcher matcher = PARTY_LEADER.matcher(line);
+
+                if(matcher.find()) {
+                    leaderName = matcher.group("leader");
+                    if(leaderName.equals(NobaAddons.getUsername())) isLeader = true;
+                    inParty = true;
+                    System.out.println("in party, leader:" + leaderName);
+                    break;
+                }
             }
+            STORED_LIST.clear();
         }
         if(!inParty) {
             Matcher joinMatcher = PARTY_JOIN.matcher(receivedMessage);

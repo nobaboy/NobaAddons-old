@@ -4,7 +4,6 @@ import me.nobaboy.nobaaddons.NobaAddons;
 import me.nobaboy.nobaaddons.features.dungeons.data.SSFile;
 import me.nobaboy.nobaaddons.util.ChatUtils;
 import me.nobaboy.nobaaddons.util.Utils;
-import me.nobaboy.nobaaddons.util.data.DungeonFloor;
 import net.minecraft.block.BlockButtonStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -36,7 +35,7 @@ public class SSDeviceTimer {
     @SubscribeEvent
     public void onChatReceived(final ClientChatReceivedEvent event) {
         if(!Utils.isInDungeons() || !NobaAddons.config.ssDeviceTimer) return;
-        if(Utils.currentFloor == DungeonFloor.M7 || Utils.currentFloor == DungeonFloor.F7) {
+        if(Utils.isInCatacombs7()) {
             String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
             if (receivedMessage.equals("[BOSS] Goldor: Who dares trespass into my domain?")) {
