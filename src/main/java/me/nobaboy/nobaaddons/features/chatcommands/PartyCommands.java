@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class PartyCommands extends ChatCommandManager {
     // .*? is for the player symbols added by mods
-    private static final Pattern chatPattern = Pattern.compile("^Party > .*?(?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+).*?: !(?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?");
+    private static final Pattern chatPattern = Pattern.compile("^Party > .*?(?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+).*?: [!?.](?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?");
 
     {
         register(new HelpCommand(this, "pc", () -> NobaAddons.config.partyHelpCommand));

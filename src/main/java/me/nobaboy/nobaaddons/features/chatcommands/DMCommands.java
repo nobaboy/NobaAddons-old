@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DMCommands extends ChatCommandManager {
-    private static final Pattern chatPattern = Pattern.compile("^From (?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+): !(?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?");
+    private static final Pattern chatPattern = Pattern.compile("^From (?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+): [!?.](?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?");
 
     {
         register(new HelpCommand(this, "r", () -> NobaAddons.config.dmHelpCommand));
