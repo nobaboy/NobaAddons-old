@@ -32,7 +32,7 @@ public class SSAverageCommand implements ISubCommand {
 			ChatUtils.addMessage("You have not completed a single Simon Says device in the Catacombs Floor 7.");
 			return;
 		}
-		double average = Math.round((sum/count)*1000.0)/1000.0;
+		double average = Math.round((sum / count) * 1000.0) / 1000.0;
 		ChatUtils.addMessage("Your average time for Simon Says is: " + average + "s (Total SS Devices: " + count + ")");
 	}
 }

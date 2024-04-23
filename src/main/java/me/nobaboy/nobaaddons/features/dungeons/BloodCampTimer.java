@@ -3,6 +3,7 @@ package me.nobaboy.nobaaddons.features.dungeons;
 import me.nobaboy.nobaaddons.NobaAddons;
 import me.nobaboy.nobaaddons.util.ChatUtils;
 import me.nobaboy.nobaaddons.util.Utils;
+import me.nobaboy.nobaaddons.util.data.Location;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -12,26 +13,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class BloodCampTimer {
     static boolean announcing = false;
     static AnnounceCampWarning announceCampWarning;
-
-    @SubscribeEvent
-    public void onChatReceived(final ClientChatReceivedEvent event) {
-        if(!NobaAddons.config.bloodCampAfterTime || !Utils.isInDungeons()) return;
-        String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
-
-        if(announcing) return;
-        if(receivedMessage.equals("The BLOOD DOOR has been opened!")) {
-            announcing = true;
-            startThread();
-        }
-    }
-
-    @SubscribeEvent
-    public void onWorldUnload(WorldEvent.Unload event) {
-        if(announceCampWarning != null) {
-            announceCampWarning.interrupt();
-            announcing = false;
-        }
-    }
 
     public static class AnnounceCampWarning extends Thread {
         @Override
@@ -54,5 +35,25 @@ public class BloodCampTimer {
         announceCampWarning = new AnnounceCampWarning();
         announceCampWarning.setName("blood-camp-warning");
         announceCampWarning.start();
+    }
+
+    @SubscribeEvent
+    public void onChatReceived(final ClientChatReceivedEvent event) {
+        if(!NobaAddons.config.bloodCampAfterTime || !Utils.isInLocation(Location.CATACOMBS)) return;
+        String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
+
+        if(announcing) return;
+        if(receivedMessage.equals("The BLOOD DOOR has been opened!")) {
+            announcing = true;
+            startThread();
+        }
+    }
+
+    @SubscribeEvent
+    public void onWorldUnload(WorldEvent.Unload event) {
+        if(announceCampWarning != null) {
+            announceCampWarning.interrupt();
+            announcing = false;
+        }
     }
 }

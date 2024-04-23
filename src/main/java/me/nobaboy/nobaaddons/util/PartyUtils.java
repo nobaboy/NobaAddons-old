@@ -40,17 +40,6 @@ public class PartyUtils {
     boolean inParty = false;
     String leaderName = null;
 
-    @SubscribeEvent
-    public void onJoin(FMLNetworkEvent.ClientConnectedToServerEvent ignored) {
-        gettingList = false;
-        new TickDelay(this::getPartyList, 5*20);
-    }
-
-    @SubscribeEvent
-    public void WorldUnload(WorldEvent.Unload event) {
-        if(gettingList) gettingList = false;
-    }
-
     private void getPartyList() {
         if(Minecraft.getMinecraft().isSingleplayer() || gettingList || !Utils.isOnHypixel()) return;
         new Thread(() -> {
@@ -62,6 +51,17 @@ public class PartyUtils {
             } catch(InterruptedException ignored) {}
             gettingList = false;
         }).start();
+    }
+
+    @SubscribeEvent
+    public void onJoin(FMLNetworkEvent.ClientConnectedToServerEvent ignored) {
+        gettingList = false;
+        new TickDelay(this::getPartyList, 5 * 20);
+    }
+
+    @SubscribeEvent
+    public void WorldUnload(WorldEvent.Unload event) {
+        if(gettingList) gettingList = false;
     }
 
     @SubscribeEvent
@@ -82,7 +82,6 @@ public class PartyUtils {
                     leaderName = matcher.group("leader");
                     if(leaderName.equals(NobaAddons.getUsername())) isLeader = true;
                     inParty = true;
-                    System.out.println("in party, leader:" + leaderName);
                     break;
                 }
             }

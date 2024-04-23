@@ -1,12 +1,16 @@
 package me.nobaboy.nobaaddons.util;
 
 import me.nobaboy.nobaaddons.NobaAddons;
+import me.nobaboy.nobaaddons.util.data.DungeonBoss;
 import me.nobaboy.nobaaddons.util.data.DungeonClass;
 import me.nobaboy.nobaaddons.util.data.DungeonFloor;
 import me.nobaboy.nobaaddons.util.data.Location;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.scoreboard.ScoreObjective;
+import net.minecraft.util.StringUtils;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,6 +25,7 @@ public class Utils {
     public static Location currentLocation = Location.NONE;
     public static DungeonFloor currentFloor = DungeonFloor.NONE;
     public static DungeonClass currentClass = DungeonClass.NONE;
+    public static DungeonBoss currentBoss = DungeonBoss.UNKNOWN;
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isOnHypixel() {
@@ -71,19 +76,15 @@ public class Utils {
         currentLocation = Location.NONE;
     }
 
-    public static boolean isInDungeons() {
-        return currentLocation == Location.CATACOMBS;
-    }
-
-    public static boolean isInKuudra() {
-        return currentLocation == Location.KUUDRA;
+    public static boolean isInLocation(Location location) {
+        return currentLocation == location;
     }
 
     /**
      * Modified logging
      */
     public static void checkForDungeonFloor() {
-        if(isInDungeons()) {
+        if(isInLocation(Location.CATACOMBS)) {
             List<String> scoreboard = ScoreboardUtil.getSidebarLines();
 
             for(String s : scoreboard) {
@@ -115,10 +116,10 @@ public class Utils {
     }
 
     /**
-    * @author nobaboy
-    */
+     * @author nobaboy
+     */
     public static void checkForDungeonClass() {
-        if(isInDungeons()) {
+        if(isInLocation(Location.CATACOMBS)) {
             String playerName = Minecraft.getMinecraft().thePlayer.getName();
             Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
             for(NetworkPlayerInfo player : players) {
@@ -134,6 +135,15 @@ public class Utils {
         } else {
             currentClass = DungeonClass.NONE;
         }
+    }
+
+    /**
+     * @author nobaboy
+     */
+    @SubscribeEvent
+    public void checkForDungeonBoss(final ClientChatReceivedEvent event) {
+        String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
+        if(isInLocation(Location.CATACOMBS)) currentBoss = DungeonBoss.fromChat(receivedMessage);
     }
 
     // Will get a use later on.

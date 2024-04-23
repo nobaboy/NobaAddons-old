@@ -9,6 +9,7 @@ public class HelpCommand implements ISubCommand {
 		switch(type.toLowerCase()) {
 			case "dmcommands":
 				return "§7§m-----------------§r§7[ §9DM Commands §7]§m-----------------\n" +
+						" §3!help §7» §rSends all usable commands.\n" +
 						" §3!warpme §7» §rWarp user to your lobby.\n" +
 						" §3!partyme (Alias: !pme) §7» §rInvite user to party.\n" +
 						"§7§m-----------------------------------------------";

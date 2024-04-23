@@ -10,15 +10,6 @@ public class DisableMouse {
     public static boolean disableMouse = false;
     static float sens = 0.5F;
 
-    @SubscribeEvent
-    public void onWorldUnload(WorldEvent.Unload event) {
-        if(disableMouse) {
-            Minecraft.getMinecraft().gameSettings.mouseSensitivity = sens;
-            Minecraft.getMinecraft().gameSettings.saveOptions();
-        }
-        disableMouse = false;
-    }
-
     public static void onDisableMouse() {
         disableMouse = !disableMouse;
         GameSettings gs = Minecraft.getMinecraft().gameSettings;
@@ -30,5 +21,14 @@ public class DisableMouse {
             gs.saveOptions();
         }
         ChatUtils.addMessage(disableMouse ? "Mouse movement disabled" : "Mouse movement enabled");
+    }
+
+    @SubscribeEvent
+    public void onWorldUnload(WorldEvent.Unload event) {
+        if(disableMouse) {
+            Minecraft.getMinecraft().gameSettings.mouseSensitivity = sens;
+            Minecraft.getMinecraft().gameSettings.saveOptions();
+        }
+        disableMouse = false;
     }
 }

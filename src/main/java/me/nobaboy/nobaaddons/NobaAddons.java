@@ -75,7 +75,8 @@ public class NobaAddons {
                 new BloodCampTimer(),
                 new SSDeviceTimer(),
                 new QOLNotifiers(),
-                new PearlRefill()
+                new PearlRefill(),
+                new Utils() // Possibly move out dungeon phase checker to not have it here
         ).forEach(MinecraftForge.EVENT_BUS::register);
     }
 
