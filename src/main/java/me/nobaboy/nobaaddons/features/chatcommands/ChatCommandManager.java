@@ -40,7 +40,7 @@ public abstract class ChatCommandManager extends CooldownManager {
 
     @SuppressWarnings("CodeBlock2Expr")
     public void processMessage(String message) {
-        synchronized ($lock) {
+        synchronized($lock) {
             if(isOnCooldown()) return;
 
             getContext(message).ifPresent(ctx -> {

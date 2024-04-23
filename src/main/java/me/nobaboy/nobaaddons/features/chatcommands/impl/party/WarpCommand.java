@@ -54,11 +54,10 @@ public class WarpCommand implements IChatCommand {
     public void startTimedWarp() {
         new Thread(() -> {
             int secondsPassed = --delay;
-            while (true) {
+            while(true) {
                 try {
                     Thread.sleep(1000);
-                } catch(InterruptedException ignored) {
-                }
+                } catch(InterruptedException ignored) { }
                 if(cancel) {
                     ChatUtils.sendCommand("pc Warp cancelled...");
                     isWarping = false;

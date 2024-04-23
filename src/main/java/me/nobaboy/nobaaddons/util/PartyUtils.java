@@ -48,7 +48,7 @@ public class PartyUtils {
             ChatUtils.sendCommand("party list");
             try {
                 Thread.sleep(1000);
-            } catch(InterruptedException ignored) {}
+            } catch(InterruptedException ignored) { }
             gettingList = false;
         }).start();
     }
