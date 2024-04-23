@@ -1,7 +1,7 @@
 package me.nobaboy.nobaaddons.util.data;
 
 public enum DungeonBoss {
-    WATCHER("Watcher"),
+    WATCHER("The Watcher"),
     BONZO("Bonzo"),
     SCARF("Scarf"),
     PROFESSOR("Professor"),

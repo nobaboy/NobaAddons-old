@@ -143,7 +143,12 @@ public class Utils {
     @SubscribeEvent
     public void checkForDungeonBoss(final ClientChatReceivedEvent event) {
         String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
-        if(isInLocation(Location.CATACOMBS)) currentBoss = DungeonBoss.fromChat(receivedMessage);
+        if(isInLocation(Location.CATACOMBS) && receivedMessage.startsWith("[BOSS]"))
+            currentBoss = DungeonBoss.fromChat(receivedMessage);
+    }
+
+    public static boolean isInPhase(DungeonBoss boss) {
+        return currentBoss == boss;
     }
 
     // Will get a use later on.

@@ -40,7 +40,7 @@ public class SSDeviceTimer {
         if(Utils.isInCatacombs7()) {
             String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-            if(Utils.currentBoss == DungeonBoss.GOLDOR) {
+            if(Utils.isInPhase(DungeonBoss.GOLDOR)) {
                 inGoldorPhase = true;
             } else {
                 inGoldorPhase = false;
