@@ -11,7 +11,7 @@ public class ChatUtils {
     public static final String MOD_PREFIX = BLUE + "NobaAddons " + DARK_BLUE + "> " + AQUA;
 
     public static void sendCommand(String command) {
-        command = (!NobaAddons.config.debugMode ? "/" : "") + command;
+        command = (!NobaAddons.config.removeSlash ? "/" : "") + command;
         mc.thePlayer.sendChatMessage(command);
     }
 

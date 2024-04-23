@@ -36,7 +36,7 @@ public class Config extends Vigilant {
             category = "Commands",
             subcategory = "DM Commands"
     )
-    public boolean warpMeCommand = false;
+    public boolean dmWarpMeCommand = false;
 
     @Property(
             type = PropertyType.CHECKBOX,
@@ -45,7 +45,7 @@ public class Config extends Vigilant {
             category = "Commands",
             subcategory = "DM Commands"
     )
-    public boolean partyMeCommand = false;
+    public boolean dmPartyMeCommand = false;
 
     @Property(
             type = PropertyType.CHECKBOX,
@@ -85,7 +85,7 @@ public class Config extends Vigilant {
             category = "Commands",
             subcategory = "Party Commands"
     )
-    public boolean transferCommand = false;
+    public boolean partyTransferCommand = false;
 
     @Property(
             type = PropertyType.CHECKBOX,
@@ -94,7 +94,7 @@ public class Config extends Vigilant {
             category = "Commands",
             subcategory = "Party Commands"
     )
-    public boolean allInviteCommand = false;
+    public boolean partyAllInviteCommand = false;
 
     @Property(
             type = PropertyType.CHECKBOX,
@@ -103,7 +103,7 @@ public class Config extends Vigilant {
             category = "Commands",
             subcategory = "Party Commands"
     )
-    public boolean warpCommand = false;
+    public boolean partyWarpCommand = false;
 
     @Property(
             type = PropertyType.CHECKBOX,
@@ -112,7 +112,7 @@ public class Config extends Vigilant {
             category = "Commands",
             subcategory = "Party Commands"
     )
-    public boolean coordsCommand = false;
+    public boolean partyCoordsCommand = false;
 
     // endregion
 
@@ -247,6 +247,14 @@ public class Config extends Vigilant {
     )
     public boolean debugMode = false;
 
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove Slash from Messages",
+            description = "§cRemoves the slash from the messages sent by the mod, only turn this on if you know what you're doing.",
+            category = "Dev"
+    )
+    public boolean removeSlash = false;
+
     // endregion
 
     public Config() {
@@ -261,15 +269,15 @@ public class Config extends Vigilant {
         try {
             // DM Commands
             addDependency("dmHelpCommand", "dmCommands");
-            addDependency("warpMeCommand", "dmCommands");
-            addDependency("partyMeCommand", "dmCommands");
+            addDependency("dmWarpMeCommand", "dmCommands");
+            addDependency("dmPartyMeCommand", "dmCommands");
             addDependency("dmWarpOutCommand", "dmCommands");
             // Party Commands
             addDependency("partyHelpCommand", "partyCommands");
-            addDependency("transferCommand", "partyCommands");
-            addDependency("allInviteCommand", "partyCommands");
-            addDependency("warpCommand", "partyCommands");
-            addDependency("coordsCommand", "partyCommands");
+            addDependency("partyTransferCommand", "partyCommands");
+            addDependency("partyAllInviteCommand", "partyCommands");
+            addDependency("partyWarpCommand", "partyCommands");
+            addDependency("partyCoordsCommand", "partyCommands");
             // Guild Commands
             addDependency("guildHelpCommand", "guildCommands");
             addDependency("guildWarpOutCommand", "guildCommands");
