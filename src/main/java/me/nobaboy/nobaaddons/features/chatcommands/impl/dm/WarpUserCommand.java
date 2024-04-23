@@ -36,7 +36,7 @@ public class WarpUserCommand implements IChatCommand {
     public void warpUser() {
         new Thread(() -> {
             int secondsPassed = 0;
-            while (isWarpingUser) {
+            while(isWarpingUser) {
                 if(secondsPassed++ == 60) {
                     if(!playerJoined) {
                         ChatUtils.sendCommand("msg " + player + " Warp timed out, didn't join party.");
@@ -48,8 +48,7 @@ public class WarpUserCommand implements IChatCommand {
                     ChatUtils.sendCommand("p warp");
                     try {
                         Thread.sleep(1000);
-                    } catch(InterruptedException ignored) {
-                    }
+                    } catch(InterruptedException ignored) { }
                     ChatUtils.sendCommand("p kick " + player);
                     playerJoined = false;
                     isWarpingUser = false;
@@ -57,8 +56,7 @@ public class WarpUserCommand implements IChatCommand {
                 }
                 try {
                     Thread.sleep(1000);
-                } catch(InterruptedException ignored) {
-                }
+                } catch(InterruptedException ignored) { }
             }
         }).start();
     }

@@ -29,10 +29,10 @@ public class HelpCommand implements IChatCommand {
     @Override
     public void run(ChatContext ctx) {
         List<String> commands = this.manager.getCommands().stream()
-                .map(x -> "!" + x.usage())
+                .map(IChatCommand::usage)
                 .collect(Collectors.toList());
 
-        ChatUtils.delayedSend(command + " NobaAddons > " + StringUtils.join(commands, ", "));
+        ChatUtils.delayedSend(command + " NobaAddons > [! ? .] |" + StringUtils.join(commands, ", "));
     }
 
     @Override

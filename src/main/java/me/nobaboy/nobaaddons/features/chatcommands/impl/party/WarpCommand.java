@@ -27,7 +27,7 @@ public class WarpCommand implements IChatCommand {
     @Override
     public void run(ChatContext ctx) {
         if(!PartyUtils.isLeader) return;
-        warpCommand(ctx.args()[0]);
+        warpCommand(ctx.args().length == 0 ? null : ctx.args()[0]);
     }
 
     @Override

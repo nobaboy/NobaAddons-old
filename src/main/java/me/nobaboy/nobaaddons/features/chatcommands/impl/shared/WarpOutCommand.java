@@ -7,11 +7,12 @@ import me.nobaboy.nobaaddons.util.ChatUtils;
 import java.util.function.Supplier;
 
 public class WarpOutCommand implements IChatCommand {
+    private final String command;
+    private final Supplier<Boolean> isEnabled;
+
     public static boolean isWarpingOut = false;
     public static boolean playerJoined = false;
     public static String player;
-    private final String command;
-    private final Supplier<Boolean> isEnabled;
 
     public WarpOutCommand(String command, Supplier<Boolean> enabled) {
         this.command = command;
@@ -47,18 +48,12 @@ public class WarpOutCommand implements IChatCommand {
         return isEnabled.get();
     }
 
-    public void warpOutPlayer() {
-        WarpOutThread thread = new WarpOutThread();
-        thread.setName("warp-out-" + player);
-        thread.start();
-    }
-
     private class WarpOutThread extends Thread {
         @SuppressWarnings("BusyWait")
         @Override
         public void run() {
             int secondsPassed = 0;
-            while (true) {
+            while(true) {
                 if(secondsPassed++ >= 60) {
                     if(!playerJoined) {
                         ChatUtils.delayedSend(command + " Warp out failed, " + player + " did not join party.");
@@ -70,13 +65,11 @@ public class WarpOutCommand implements IChatCommand {
                     ChatUtils.delayedSend("p warp");
                     try {
                         sleep(900);
-                    } catch(InterruptedException ignored) {
-                    }
+                    } catch(InterruptedException ignored) { }
                     ChatUtils.delayedSend("p disband");
                     try {
                         sleep(900);
-                    } catch(InterruptedException ignored) {
-                    }
+                    } catch(InterruptedException ignored) { }
                     ChatUtils.delayedSend(command + " Warp out successful.");
                     playerJoined = false;
                     isWarpingOut = false;
@@ -84,9 +77,14 @@ public class WarpOutCommand implements IChatCommand {
                 }
                 try {
                     sleep(1000);
-                } catch(InterruptedException ignored) {
-                }
+                } catch(InterruptedException ignored) { }
             }
         }
+    }
+
+    public void warpOutPlayer() {
+        WarpOutThread thread = new WarpOutThread();
+        thread.setName("warp-out-" + player);
+        thread.start();
     }
 }

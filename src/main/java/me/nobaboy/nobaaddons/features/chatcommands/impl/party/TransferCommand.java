@@ -17,7 +17,7 @@ public class TransferCommand implements IChatCommand {
 
     @Override
     public String usage() {
-        return "(transfer|pt) [optional: username], !ptme";
+        return "(transfer|pt) [optional: username], ptme";
     }
 
     @Override
