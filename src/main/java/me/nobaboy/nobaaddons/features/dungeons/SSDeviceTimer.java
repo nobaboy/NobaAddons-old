@@ -4,6 +4,8 @@ import me.nobaboy.nobaaddons.NobaAddons;
 import me.nobaboy.nobaaddons.features.dungeons.data.SSFile;
 import me.nobaboy.nobaaddons.util.ChatUtils;
 import me.nobaboy.nobaaddons.util.Utils;
+import me.nobaboy.nobaaddons.util.data.DungeonBoss;
+import me.nobaboy.nobaaddons.util.data.Location;
 import net.minecraft.block.BlockButtonStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -34,22 +36,22 @@ public class SSDeviceTimer {
 
     @SubscribeEvent
     public void onChatReceived(final ClientChatReceivedEvent event) {
-        if(!Utils.isInDungeons() || !NobaAddons.config.ssDeviceTimer) return;
+        if(!Utils.isInLocation(Location.CATACOMBS) || !NobaAddons.config.ssDeviceTimer) return;
         if(Utils.isInCatacombs7()) {
             String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-            if (receivedMessage.equals("[BOSS] Goldor: Who dares trespass into my domain?")) {
+            if(Utils.currentBoss == DungeonBoss.GOLDOR) {
                 inGoldorPhase = true;
-            } else if (receivedMessage.equals("[BOSS] Goldor: FINALLY! This took way too long.") || receivedMessage.equals("[BOSS] Goldor: Necron, forgive me.")) {
+            } else {
                 inGoldorPhase = false;
                 firstButtonPressed = false;
             }
 
-            if (!inGoldorPhase) return;
+            if(!inGoldorPhase) return;
             Matcher chatMatcher = chatPattern.matcher(receivedMessage);
-            if (!chatMatcher.find()) return;
+            if(!chatMatcher.find()) return;
             String username = chatMatcher.group("username");
-            if (!username.equals(NobaAddons.getUsername())) {
+            if(!username.equals(NobaAddons.getUsername())) {
                 inGoldorPhase = false;
                 firstButtonPressed = false;
                 return;
@@ -63,18 +65,18 @@ public class SSDeviceTimer {
             List<Double> times = SSFile.INSTANCE.times.get();
             times.add(timeTakenToEnd);
 
-            if (personalBest == null) {
+            if(personalBest == null) {
                 personalBest = timeTakenToEnd;
                 SSFile.INSTANCE.personalBest.set(personalBest);
             }
 
-            if (timeTakenToEnd < personalBest) {
+            if(timeTakenToEnd < personalBest) {
                 SSFile.INSTANCE.personalBest.set(timeTakenToEnd);
             }
 
             // Send message
             String message = (timeTakenToEnd <= personalBest) ? " §3§l(PB)" : " §3(" + personalBest + ")";
-            if (NobaAddons.config.ssDeviceTimerPC) {
+            if(NobaAddons.config.ssDeviceTimerPC) {
                 ChatUtils.delayedSend("pc Simon Says took " + timeTakenToEnd + "s to complete." + StringUtils.stripControlCodes(message));
             } else {
                 ChatUtils.addMessage("Simon Says took " + timeTakenToEnd + "s to complete." + message);
@@ -83,7 +85,7 @@ public class SSDeviceTimer {
             // Save ss times
             try {
                 SSFile.INSTANCE.save();
-            } catch (IOException e) {
+            } catch(IOException e) {
                 NobaAddons.LOGGER.error("Failed to save new time/personal best", e);
             }
         }
@@ -91,7 +93,7 @@ public class SSDeviceTimer {
 
     @SubscribeEvent
     public void onRightClick(PlayerInteractEvent event) { // Very unreadable but bare with it.
-        if(!Utils.isInDungeons() || !NobaAddons.config.ssDeviceTimer || firstButtonPressed || !inGoldorPhase) return;
+        if(!Utils.isInLocation(Location.CATACOMBS) || !NobaAddons.config.ssDeviceTimer || firstButtonPressed || !inGoldorPhase) return;
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
         if(event.entityPlayer != player || !event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) return;
         IBlockState blockState = event.world.getBlockState(event.pos);
