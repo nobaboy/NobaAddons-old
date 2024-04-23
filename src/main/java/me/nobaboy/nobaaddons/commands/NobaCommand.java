@@ -10,10 +10,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class NobaCommand extends CommandBase {
     private static final List<ISubCommand> COMMANDS = new ArrayList<>();
@@ -70,14 +67,20 @@ public class NobaCommand extends CommandBase {
     }
 
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
-        if(args.length != 1) {
-            return null;
+        switch (args.length) {
+            case 1:
+                List<String> commands = new ArrayList<>();
+                COMMANDS.stream().filter(ISubCommand::isEnabled).forEach(command -> {
+                    commands.add(command.getName());
+                    commands.addAll(command.getAliases());
+                });
+                return getListOfStringsMatchingLastWord(args, commands);
+            case 2:
+                if(args[0].equalsIgnoreCase("help")) {
+                    return getListOfStringsMatchingLastWord(args, "dmCommands", "partyCommands", "guildCommands");
+                }
+            default:
+                return Collections.emptyList();
         }
-        List<String> commands = new ArrayList<>();
-        COMMANDS.stream().filter(ISubCommand::isEnabled).forEach(command -> {
-            commands.add(command.getName());
-            commands.addAll(command.getAliases());
-        });
-        return getListOfStringsMatchingLastWord(args, commands);
     }
 }
