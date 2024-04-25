@@ -22,82 +22,81 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SSDeviceTimer {
-    final Pattern chatPattern = Pattern.compile("^(?<username>[A-z0-9_]+) completed a device! \\(([0-7])/7\\)");
-    boolean inGoldorPhase = false;
+    final Pattern chatPattern = Pattern.compile("^(?<username>[A-z0-9_]+) completed a device! \\([1-7]/7\\)");
+    boolean deviceDone = false;
     boolean firstButtonPressed = false;
     long deviceStartTime;
-    static double timeTakenToEnd;
+    double timeTakenToEnd;
+
+    private void processDeviceTime() {
+        deviceDone = true;
+
+        timeTakenToEnd = (double) (System.currentTimeMillis() - deviceStartTime) / 1000;
+        List<Double> times = SSFile.INSTANCE.times.get();
+        times.add(timeTakenToEnd);
+
+        Double personalBest = SSFile.INSTANCE.personalBest.get();
+        if(personalBest == null || timeTakenToEnd < personalBest) {
+            SSFile.INSTANCE.personalBest.set(timeTakenToEnd);
+            personalBest = timeTakenToEnd;
+        }
+
+        String isPB = (timeTakenToEnd <= personalBest) ? " §3§l(PB)" : " §3(" + personalBest + ")";
+        String message = "Simon Says took " + timeTakenToEnd + "s to complete." + isPB;
+        if(NobaAddons.config.ssDeviceTimerPC) {
+            ChatUtils.delayedAdd("pc " + message);
+        } else {
+            ChatUtils.addMessage(message);
+        }
+
+        try {
+            SSFile.INSTANCE.save();
+        } catch (IOException e) {
+            NobaAddons.LOGGER.error("Failed to save new time/personal best", e);
+        }
+    }
+
+    public boolean isApplicable() {
+        return NobaAddons.config.ssDeviceTimer && Utils.isInLocation(Location.CATACOMBS);
+    }
 
     @SubscribeEvent
     public void onWorldUnload(WorldEvent.Unload event) {
-        inGoldorPhase = false;
-        firstButtonPressed = false;
+        if(deviceDone || firstButtonPressed) {
+            deviceDone = false;
+            firstButtonPressed = false;
+        }
     }
 
     @SubscribeEvent
     public void onChatReceived(final ClientChatReceivedEvent event) {
-        if(!Utils.isInLocation(Location.CATACOMBS) || !NobaAddons.config.ssDeviceTimer) return;
-        if(Utils.isInCatacombs7()) {
+        if(!isApplicable() || deviceDone) return;
+        if(Utils.isInCatacombs7() && Utils.isInPhase(DungeonBoss.GOLDOR)) {
             String receivedMessage = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-            if(Utils.isInPhase(DungeonBoss.GOLDOR)) {
-                inGoldorPhase = true;
-            } else {
-                inGoldorPhase = false;
-                firstButtonPressed = false;
-            }
-
-            if(!inGoldorPhase) return;
             Matcher chatMatcher = chatPattern.matcher(receivedMessage);
             if(!chatMatcher.find()) return;
+
             String username = chatMatcher.group("username");
             if(!username.equals(NobaAddons.getUsername())) {
-                inGoldorPhase = false;
-                firstButtonPressed = false;
+                deviceDone = true;
                 return;
             }
-            inGoldorPhase = false;
-            firstButtonPressed = false;
 
-            // Time stuff
-            timeTakenToEnd = (double) (System.currentTimeMillis() - deviceStartTime) / 1000;
-            Double personalBest = SSFile.INSTANCE.personalBest.get();
-            List<Double> times = SSFile.INSTANCE.times.get();
-            times.add(timeTakenToEnd);
-
-            if(personalBest == null) {
-                personalBest = timeTakenToEnd;
-                SSFile.INSTANCE.personalBest.set(personalBest);
-            }
-
-            if(timeTakenToEnd < personalBest) {
-                SSFile.INSTANCE.personalBest.set(timeTakenToEnd);
-            }
-
-            // Send message
-            String message = (timeTakenToEnd <= personalBest) ? " §3§l(PB)" : " §3(" + personalBest + ")";
-            if(NobaAddons.config.ssDeviceTimerPC) {
-                ChatUtils.delayedSend("pc Simon Says took " + timeTakenToEnd + "s to complete." + StringUtils.stripControlCodes(message));
-            } else {
-                ChatUtils.addMessage("Simon Says took " + timeTakenToEnd + "s to complete." + message);
-            }
-
-            // Save ss times
-            try {
-                SSFile.INSTANCE.save();
-            } catch(IOException e) {
-                NobaAddons.LOGGER.error("Failed to save new time/personal best", e);
-            }
+            processDeviceTime();
         }
     }
 
     @SubscribeEvent
     public void onRightClick(PlayerInteractEvent event) { // Very unreadable but bare with it.
-        if(!Utils.isInLocation(Location.CATACOMBS) || !NobaAddons.config.ssDeviceTimer || firstButtonPressed || !inGoldorPhase) return;
+        if(!isApplicable() || firstButtonPressed || deviceDone) return;
+
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
         if(event.entityPlayer != player || !event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) return;
+
         IBlockState blockState = event.world.getBlockState(event.pos);
         if(blockState == null || blockState.getBlock() == null || !(blockState.getBlock() instanceof BlockButtonStone)) return;
+
         firstButtonPressed = true;
         deviceStartTime = System.currentTimeMillis();
     }
