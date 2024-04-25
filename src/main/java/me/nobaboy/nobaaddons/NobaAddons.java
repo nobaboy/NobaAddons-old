@@ -29,7 +29,6 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -48,9 +47,9 @@ public class NobaAddons {
     public static Config config = new Config();
 
     private static final List<NobaKeyBind> KEYBINDS = Arrays.asList(
-            new CommandKeyBind("Pets Menu", Keyboard.KEY_V, "pets"),
-            new CommandKeyBind("Wardrobe", Keyboard.KEY_LMENU, "wardrobe"),
-            new CommandKeyBind("Equipment Menu", Keyboard.KEY_H, "equipment"),
+            new CommandKeyBind("Pets Menu", "pets"),
+            new CommandKeyBind("Wardrobe", "wardrobe"),
+            new CommandKeyBind("Equipment Menu", "equipment"),
             new CommandKeyBind("Enderchest", "enderchest"),
             new CommandKeyBind("Storage Menu", "storage"),
             new NobaKeyBind("Disable Mouse", DisableMouse::onDisableMouse),
