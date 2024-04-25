@@ -39,7 +39,7 @@ import java.util.List;
 public class NobaAddons {
     public static final String MOD_ID = "nobaaddons";
     public static final String MOD_NAME = "NobaAddons";
-    public static final String MOD_VERSION = "0.10.0";
+    public static final String MOD_VERSION = "0.10.1";
 
 //    public static final NobaAddons INSTANCE = new NobaAddons();
     public static final Logger LOGGER = LogManager.getLogger(NobaAddons.class);
