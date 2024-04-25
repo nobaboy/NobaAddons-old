@@ -3,6 +3,7 @@ package me.nobaboy.nobaaddons.features.dungeons;
 import me.nobaboy.nobaaddons.NobaAddons;
 import me.nobaboy.nobaaddons.features.dungeons.data.SSFile;
 import me.nobaboy.nobaaddons.util.ChatUtils;
+import me.nobaboy.nobaaddons.util.PartyUtils;
 import me.nobaboy.nobaaddons.util.Utils;
 import me.nobaboy.nobaaddons.util.data.DungeonBoss;
 import me.nobaboy.nobaaddons.util.data.Location;
@@ -43,8 +44,8 @@ public class SSDeviceTimer {
 
         String isPB = (timeTakenToEnd <= personalBest) ? " §3§l(PB)" : " §3(" + personalBest + ")";
         String message = "Simon Says took " + timeTakenToEnd + "s to complete." + isPB;
-        if(NobaAddons.config.ssDeviceTimerPC) {
-            ChatUtils.delayedAdd("pc " + message);
+        if(NobaAddons.config.ssDeviceTimerPC && PartyUtils.inParty) {
+            ChatUtils.delayedCommand("pc " + StringUtils.stripControlCodes(message));
         } else {
             ChatUtils.addMessage(message);
         }
@@ -65,6 +66,8 @@ public class SSDeviceTimer {
         if(deviceDone || firstButtonPressed) {
             deviceDone = false;
             firstButtonPressed = false;
+            deviceStartTime = 0;
+            timeTakenToEnd = 0;
         }
     }
 

@@ -37,7 +37,7 @@ public class PartyUtils {
 
     boolean gettingList = false;
     public static boolean isLeader = false;
-    boolean inParty = false;
+    public static boolean inParty = false;
     String leaderName = null;
 
     private void getPartyList() {

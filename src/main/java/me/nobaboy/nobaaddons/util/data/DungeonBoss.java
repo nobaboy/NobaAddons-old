@@ -23,7 +23,7 @@ public enum DungeonBoss {
 
     public static DungeonBoss fromChat(String text) {
         for(DungeonBoss boss : DungeonBoss.values()) {
-            if(text.startsWith("[BOSS] " + boss.text + ":")) return boss;
+            if(text.contains(boss.text)) return boss;
         }
         return UNKNOWN;
     }
