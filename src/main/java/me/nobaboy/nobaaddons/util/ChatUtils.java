@@ -10,9 +10,21 @@ public class ChatUtils {
     private static final Minecraft mc = Minecraft.getMinecraft();
     public static final String MOD_PREFIX = BLUE + "NobaAddons " + DARK_BLUE + "> " + AQUA;
 
+    public static void sendMessage(String message) {
+        mc.thePlayer.sendChatMessage(message);
+    }
+
+    public static void delayedSend(String message) {
+        new TickDelay(() -> sendMessage(message), 2);
+    }
+
     public static void sendCommand(String command) {
         command = (!NobaAddons.config.removeSlash ? "/" : "") + command;
         mc.thePlayer.sendChatMessage(command);
+    }
+
+    public static void delayedCommand(String command) {
+        new TickDelay(() -> sendCommand(command), 2);
     }
 
     public static void addMessage(boolean prefix, String message) {
@@ -21,10 +33,6 @@ public class ChatUtils {
 
     public static void addMessage(String message) {
         addMessage(true, message);
-    }
-
-    public static void delayedSend(String command) {
-        new TickDelay(() -> sendCommand(command), 2);
     }
 
     public static void delayedAdd(boolean prefix, String message) {

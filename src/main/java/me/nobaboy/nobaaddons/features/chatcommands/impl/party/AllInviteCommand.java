@@ -23,7 +23,7 @@ public class AllInviteCommand implements IChatCommand {
     @Override
     public void run(ChatContext ctx) {
         if(!PartyUtils.isLeader) return;
-        ChatUtils.delayedSend("p settings allinvite");
+        ChatUtils.delayedCommand("p settings allinvite");
     }
 
     @Override

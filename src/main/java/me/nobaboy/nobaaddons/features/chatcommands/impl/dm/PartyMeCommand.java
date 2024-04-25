@@ -16,7 +16,7 @@ public class PartyMeCommand implements IChatCommand {
 
     @Override
     public void run(ChatContext ctx) {
-        ChatUtils.delayedSend("p " + ctx.user());
+        ChatUtils.delayedCommand("p " + ctx.user());
     }
 
     @Override

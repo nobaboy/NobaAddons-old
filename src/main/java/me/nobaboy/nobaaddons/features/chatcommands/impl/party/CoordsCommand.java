@@ -16,7 +16,7 @@ public class CoordsCommand implements IChatCommand {
     @Override
     public void run(ChatContext ctx) {
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-        ChatUtils.delayedSend("pc x: " + (int) player.posX + ", y: " + (int) player.posY + ", z: " + (int) player.posZ);
+        ChatUtils.delayedCommand("pc x: " + (int) player.posX + ", y: " + (int) player.posY + ", z: " + (int) player.posZ);
     }
 
     @Override

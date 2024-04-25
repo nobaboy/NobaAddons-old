@@ -32,12 +32,12 @@ public class WarpOutCommand implements IChatCommand {
     @Override
     public void run(ChatContext ctx) {
         if(isWarpingOut) {
-            ChatUtils.delayedSend(command + " Warp out is on cooldown, try again later!");
+            ChatUtils.delayedCommand(command + " Warp out is on cooldown, try again later!");
         } else if(ctx.args().length == 0) {
-            ChatUtils.delayedSend(command + " Please provide a username.");
+            ChatUtils.delayedCommand(command + " Please provide a username.");
         } else {
             player = ctx.args()[0];
-            ChatUtils.delayedSend("p " + player);
+            ChatUtils.delayedCommand("p " + player);
             isWarpingOut = true;
             warpOutPlayer();
         }
@@ -56,21 +56,21 @@ public class WarpOutCommand implements IChatCommand {
             while(true) {
                 if(secondsPassed++ >= 60) {
                     if(!playerJoined) {
-                        ChatUtils.delayedSend(command + " Warp out failed, " + player + " did not join party.");
+                        ChatUtils.delayedCommand(command + " Warp out failed, " + player + " did not join party.");
                         isWarpingOut = false;
                     }
                     break;
                 }
                 if(playerJoined) {
-                    ChatUtils.delayedSend("p warp");
+                    ChatUtils.delayedCommand("p warp");
                     try {
                         sleep(900);
                     } catch(InterruptedException ignored) { }
-                    ChatUtils.delayedSend("p disband");
+                    ChatUtils.delayedCommand("p disband");
                     try {
                         sleep(900);
                     } catch(InterruptedException ignored) { }
-                    ChatUtils.delayedSend(command + " Warp out successful.");
+                    ChatUtils.delayedCommand(command + " Warp out successful.");
                     playerJoined = false;
                     isWarpingOut = false;
                     break;

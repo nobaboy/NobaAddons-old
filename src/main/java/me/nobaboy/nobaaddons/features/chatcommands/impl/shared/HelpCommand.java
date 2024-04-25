@@ -32,7 +32,7 @@ public class HelpCommand implements IChatCommand {
                 .map(IChatCommand::usage)
                 .collect(Collectors.toList());
 
-        ChatUtils.delayedSend(command + " NobaAddons > [! ? .] |" + StringUtils.join(commands, ", "));
+        ChatUtils.delayedCommand(command + " NobaAddons > [! ? .] |" + StringUtils.join(commands, ", "));
     }
 
     @Override

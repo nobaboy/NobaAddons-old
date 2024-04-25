@@ -22,7 +22,7 @@ public class WarpUserCommand implements IChatCommand {
             return;
         }
         player = ctx.user().toLowerCase();
-        ChatUtils.delayedSend("p " + player);
+        ChatUtils.delayedCommand("p " + player);
         isWarpingUser = true;
         warpUser();
     }

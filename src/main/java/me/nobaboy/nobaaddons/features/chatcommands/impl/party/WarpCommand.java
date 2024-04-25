@@ -37,13 +37,13 @@ public class WarpCommand implements IChatCommand {
 
     public void warpCommand(String seconds) {
         if(seconds == null) {
-            ChatUtils.delayedSend("p warp");
+            ChatUtils.delayedCommand("p warp");
         } else if(!StringUtils.isNumeric(seconds)) {
-            ChatUtils.delayedSend("pc First argument can either be an integer or empty");
+            ChatUtils.delayedCommand("pc First argument can either be an integer or empty");
         } else if(parseInt(seconds) > 15 || parseInt(seconds) < 3) {
-            ChatUtils.delayedSend("pc Warp delay has a maximum limit of 15 seconds and a minimum of 3.");
+            ChatUtils.delayedCommand("pc Warp delay has a maximum limit of 15 seconds and a minimum of 3.");
         } else {
-            ChatUtils.delayedSend("pc Warping in " + seconds + " (To cancel type '!cancel')");
+            ChatUtils.delayedCommand("pc Warping in " + seconds + " (To cancel type '!cancel')");
             delay = parseInt(seconds);
             isWarping = true;
             startTimedWarp();

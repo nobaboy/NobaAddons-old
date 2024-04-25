@@ -26,11 +26,11 @@ public class TransferCommand implements IChatCommand {
         if(!ctx.command().equalsIgnoreCase("ptme")) {
             String player = ctx.args().length == 0 ? ctx.user() : ctx.args()[0];
             if(player.equalsIgnoreCase(NobaAddons.getUsername())) return;
-            ChatUtils.delayedSend("p transfer " + player);
+            ChatUtils.delayedCommand("p transfer " + player);
             return;
         }
         if(ctx.user().equals(NobaAddons.getUsername())) return;
-        ChatUtils.delayedSend("p transfer " + ctx.user());
+        ChatUtils.delayedCommand("p transfer " + ctx.user());
     }
 
     @Override
