@@ -74,7 +74,6 @@ object PartyAPI {
         userPartyJoin.matchMatcher(receivedMessage) {
             val name = group("leader")
             partyLeader = name
-            inParty = true
             addPlayer(name)
         }
         otherPartyJoin.matchMatcher(receivedMessage) {
@@ -82,40 +81,33 @@ object PartyAPI {
             if (partyMembers.size == 1) {
                 partyLeader = Utils.getPlayerName()
             }
-            inParty = true
             addPlayer(name)
         }
         kuudraQueue.matchMatcher(receivedMessage) {
             val name = group("name")
-            inParty = true
             addPlayer(name)
         }
         dungeonQueue.matchMatcher(receivedMessage) {
             val name = group("name")
-            inParty = true
             addPlayer(name)
         }
 
         // Member Leave
         otherLeftParty.matchMatcher(receivedMessage) {
             val name = group("name")
-            inParty = true
-            addPlayer(name)
+            removePlayer(name)
         }
         otherKicked.matchMatcher(receivedMessage) {
             val name = group("name")
-            inParty = true
-            addPlayer(name)
+            removePlayer(name)
         }
         otherKickedOffline.matchMatcher(receivedMessage) {
             val name = group("name")
-            inParty = true
-            addPlayer(name)
+            removePlayer(name)
         }
         otherDisconnect.matchMatcher(receivedMessage) {
             val name = group("name")
-            inParty = true
-            addPlayer(name)
+            removePlayer(name)
         }
         transferOnLeave.matchMatcher(receivedMessage) {
             val formerLeader = group("formerLeader")
@@ -158,13 +150,9 @@ object PartyAPI {
             val names = group("names")
 
             for (name in names.split(" ● ")) {
-                println("`$name`")
-
                 val playerName = name.replace(" ●", "")
                     .replace(Regex("\\[[A-Z+]+] "), "")
                     .split(" ")
-
-                println(playerName)
 
                 playerName.forEach {
                     if (it == "") return
@@ -181,6 +169,11 @@ object PartyAPI {
     private fun addPlayer(playerName: String) {
         if (partyMembers.contains(playerName)) return
         partyMembers.add(playerName)
+        inParty = true
+    }
+
+    private fun removePlayer(playerName: String) {
+        partyMembers.remove(playerName)
     }
 
     private fun partyLeft() {
