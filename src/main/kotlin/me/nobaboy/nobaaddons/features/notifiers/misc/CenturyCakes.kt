@@ -18,8 +18,7 @@ class CenturyCakes {
         val receivedMessage = event.message.unformattedText.cleanMessage()
 
         if (receivedMessage.startsWith("Yum! You gain")) {
-            cakesEaten++
-            if (cakesEaten >= NobaAddons.config.centuryCakesAmount) {
+            if (cakesEaten++ >= NobaAddons.config.centuryCakesAmount) {
                 ChatUtils.delayedAdd("All cakes eaten!")
                 mc.thePlayer.playSound("note.pling", 1F, 2.0F)
                 cakesEaten = 0
