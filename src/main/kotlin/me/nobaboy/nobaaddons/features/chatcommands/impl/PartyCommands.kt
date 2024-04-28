@@ -1,0 +1,43 @@
+package me.nobaboy.nobaaddons.features.chatcommands.impl
+
+import me.nobaboy.nobaaddons.NobaAddons
+import me.nobaboy.nobaaddons.features.chatcommands.ChatCommandManager
+import me.nobaboy.nobaaddons.features.chatcommands.impl.party.*
+import me.nobaboy.nobaaddons.features.chatcommands.impl.shared.HelpCommand
+import me.nobaboy.nobaaddons.util.StringUtils.cleanMessage
+import me.nobaboy.nobaaddons.util.StringUtils.matchMatcher
+import net.minecraftforge.client.event.ClientChatReceivedEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+class PartyCommands : ChatCommandManager() {
+    private val chatPattern: Pattern =
+        Pattern.compile("^Party > .*?(?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+).*?: [!?.](?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?")
+
+    init {
+        register(HelpCommand(this, "pc", NobaAddons.config.partyHelpCommand))
+        register(TransferCommand())
+        register(AllInviteCommand())
+        register(WarpCommand())
+        register(CancelCommand())
+        register(CoordsCommand())
+    }
+
+    override fun matchMessage(message: String): Matcher? {
+        chatPattern.matchMatcher(message) {
+            return this
+        }
+        return null
+    }
+
+    @SubscribeEvent
+    fun onChatReceived(event: ClientChatReceivedEvent) {
+        if (!isEnabled()) return
+
+        val receivedMessage = event.message.unformattedText.cleanMessage()
+        processMessage(receivedMessage)
+    }
+
+    fun isEnabled() = NobaAddons.config.partyCommands
+}

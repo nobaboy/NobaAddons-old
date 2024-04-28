@@ -6,6 +6,7 @@ plugins {
     id("gg.essential.loom") version "0.10.0.+"
     id("dev.architectury.architectury-pack200") version "0.1.3"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    kotlin("jvm") version "1.9.20"
 }
 
 //Constants:
@@ -40,8 +41,14 @@ loom {
     }
 }
 
+tasks.compileJava {
+    dependsOn(tasks.processResources)
+}
+
 sourceSets.main {
     output.setResourcesDir(sourceSets.main.flatMap { it.java.classesDirectory })
+    java.srcDirs(layout.projectDirectory.dir("src/main/kotlin"))
+    kotlin.destinationDirectory.set(java.destinationDirectory)
 }
 
 // Dependencies:
@@ -52,7 +59,7 @@ repositories {
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
     maven("https://repo.sk1er.club/repository/maven-public/")
     maven("https://repo.sk1er.club/repository/maven-releases/")
-    maven("https://maven.odinair.xyz/releases")
+    maven("https://maven.odinair.xyz/snapshots")
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -64,9 +71,12 @@ dependencies {
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
-    shadowImpl("me.celestialfault:celestial-config:0.3.3") {
+    shadowImpl(kotlin("stdlib-jdk8"))
+
+    shadowImpl("me.celestialfault:celestial-config:1.0-alpha.2") {
         isTransitive = false
     }
+
     shadowImpl("gg.essential:loader-launchwrapper:1.2.1")
     implementation("gg.essential:essential-1.8.9-forge:14616+g169bd9af6a") {
         exclude(module = "asm")
@@ -136,8 +146,8 @@ tasks.shadowJar {
         }
     }
 
+    // If you want to include other dependencies and shadow them, you can relocate them in here
     fun relocate(name: String) = relocate(name, "$baseGroup.deps.$name")
 }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)
-
