@@ -1,5 +1,6 @@
 package me.nobaboy.nobaaddons.commands
 
+import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.util.ChatUtils
 import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommandSender
@@ -29,7 +30,8 @@ class SWikiCommand : CommandBase() {
         try {
             Desktop.getDesktop()
                 .browse(URI.create("https://wiki.hypixel.net/index.php?search=${args.joinToString("+")}&scope=internal"))
-        } catch (ignored: IOException) {
+        } catch (ex: IOException) {
+            NobaAddons.LOGGER.error("Failed to open hypixel wiki, search query: '$args'", ex)
         }
     }
 }
