@@ -5,7 +5,6 @@ import me.nobaboy.nobaaddons.api.PartyAPI
 import me.nobaboy.nobaaddons.features.chatcommands.ChatContext
 import me.nobaboy.nobaaddons.features.chatcommands.IChatCommand
 import me.nobaboy.nobaaddons.util.ChatUtils
-import me.nobaboy.nobaaddons.util.Utils
 
 class AllInviteCommand : IChatCommand {
     override val name: String = "allinvite"
@@ -18,7 +17,7 @@ class AllInviteCommand : IChatCommand {
         get() = NobaAddons.config.partyAllInviteCommand
 
     override fun run(ctx: ChatContext) {
-        if (PartyAPI.partyLeader != Utils.getPlayerName()) return
+        if (PartyAPI.isLeader()) return
         ChatUtils.queueCommand("p settings allinvite")
     }
 }

@@ -4,7 +4,7 @@ import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.features.chatcommands.ChatCommandManager
 import me.nobaboy.nobaaddons.features.chatcommands.impl.party.*
 import me.nobaboy.nobaaddons.features.chatcommands.impl.shared.HelpCommand
-import me.nobaboy.nobaaddons.util.StringUtils.cleanMessage
+import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.StringUtils.matchMatcher
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -35,7 +35,7 @@ class PartyCommands : ChatCommandManager() {
     fun onChatReceived(event: ClientChatReceivedEvent) {
         if (!isEnabled()) return
 
-        val receivedMessage = event.message.unformattedText.cleanMessage()
+        val receivedMessage = event.message.unformattedText.cleanString()
         processMessage(receivedMessage)
     }
 

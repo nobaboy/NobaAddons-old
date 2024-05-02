@@ -7,7 +7,6 @@ import me.nobaboy.nobaaddons.api.PartyAPI
 import me.nobaboy.nobaaddons.features.chatcommands.ChatContext
 import me.nobaboy.nobaaddons.features.chatcommands.IChatCommand
 import me.nobaboy.nobaaddons.util.ChatUtils
-import me.nobaboy.nobaaddons.util.Utils
 import org.apache.commons.lang3.StringUtils
 import kotlin.time.Duration.Companion.seconds
 
@@ -28,7 +27,7 @@ class WarpCommand : IChatCommand {
         get() = NobaAddons.config.partyWarpCommand
 
     override fun run(ctx: ChatContext) {
-        if (PartyAPI.partyLeader != Utils.getPlayerName()) return
+        if (PartyAPI.isLeader()) return
 
         val time = if (ctx.args().isEmpty()) null else ctx.args()[0]
         warpParty(time)
