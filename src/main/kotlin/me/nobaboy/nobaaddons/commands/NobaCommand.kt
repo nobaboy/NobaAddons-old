@@ -11,16 +11,16 @@ import net.minecraft.util.BlockPos
 import java.util.*
 
 class NobaCommand : CommandBase() {
-    private val COMMANDS = mutableListOf<ISubCommand>()
+    private val subCommands = mutableListOf<ISubCommand>()
 
     init {
-        COMMANDS.add(HelpCommand())
-        COMMANDS.add(RefillPearlsCommand())
-        COMMANDS.add(SSAverageCommand())
-        COMMANDS.add(SSClearCommand())
-        COMMANDS.add(SSPersonalBestCommand())
-        COMMANDS.add(SSRemoveLastCommand())
-        COMMANDS.add(DebugPartyCommand())
+        subCommands.add(HelpCommand())
+        subCommands.add(RefillPearlsCommand())
+        subCommands.add(SSAverageCommand())
+        subCommands.add(SSClearCommand())
+        subCommands.add(SSPersonalBestCommand())
+        subCommands.add(SSRemoveLastCommand())
+        subCommands.add(DebugPartyCommand())
     }
 
     override fun canCommandSenderUseCommand(sender: ICommandSender?): Boolean {
@@ -45,9 +45,9 @@ class NobaCommand : CommandBase() {
         }
 
         val commandName = args[0]
-        val command = COMMANDS.firstOrNull { cmd ->
+        val command = subCommands.firstOrNull { cmd ->
             cmd.name lowercaseEquals commandName ||
-                    cmd.aliases.any { alias -> alias lowercaseEquals commandName }
+            cmd.aliases.any { alias -> alias lowercaseEquals commandName }
         }
 
         if (command == null) {
@@ -65,7 +65,7 @@ class NobaCommand : CommandBase() {
     ): List<String>? {
         return when (args.size) {
             1 -> {
-                val commands = COMMANDS.filter { it.isEnabled }
+                val commands = subCommands.filter { it.isEnabled }
                     .map { mutableListOf(it.name).apply { addAll(it.aliases) } }.flatten()
                 getListOfStringsMatchingLastWord(args, commands)
             }

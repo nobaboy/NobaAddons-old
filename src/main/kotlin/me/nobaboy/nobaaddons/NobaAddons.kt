@@ -20,7 +20,8 @@ import me.nobaboy.nobaaddons.features.notifiers.misc.TotemOfCorruption
 import me.nobaboy.nobaaddons.keybinds.CommandKeyBind
 import me.nobaboy.nobaaddons.keybinds.NobaKeyBind
 import me.nobaboy.nobaaddons.util.ChatUtils
-import me.nobaboy.nobaaddons.util.Utils
+import me.nobaboy.nobaaddons.util.DungeonUtils
+import me.nobaboy.nobaaddons.util.LocationUtils
 import net.minecraft.client.Minecraft
 import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
@@ -99,6 +100,7 @@ class NobaAddons {
         keybinds.forEach(ClientRegistry::registerKeyBinding)
         arrayOf(
             this,
+            
             // APIs
             PartyAPI,
 
@@ -137,12 +139,12 @@ class NobaAddons {
     fun onTick(event: TickEvent.ClientTickEvent) {
         if (event.phase != TickEvent.Phase.START) return
 
-        if (ticks++ % 20 == 0) {
+        if (++ticks % 20 == 0) {
             if (mc.thePlayer != null) {
-                Utils.checkForSkyblock()
-                Utils.checkTabLocation()
-                Utils.checkForDungeonFloor()
-                Utils.checkForDungeonClass()
+                LocationUtils.checkForSkyblock()
+                LocationUtils.checkTabLocation()
+                DungeonUtils.checkForDungeonFloor()
+                DungeonUtils.checkForDungeonClass()
             }
             ticks = 0
         }

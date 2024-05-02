@@ -4,9 +4,9 @@ import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
 import me.nobaboy.nobaaddons.util.ChatUtils
 import me.nobaboy.nobaaddons.util.CooldownManager
+import me.nobaboy.nobaaddons.util.LocationUtils
 import me.nobaboy.nobaaddons.util.StringUtils.lowercaseEquals
 import me.nobaboy.nobaaddons.util.TickDelay
-import me.nobaboy.nobaaddons.util.Utils
 import me.nobaboy.nobaaddons.util.data.Location
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
@@ -39,7 +39,7 @@ object PearlRefill : CooldownManager() {
             return
         }
 
-        if (fromKeyBind || Utils.isInLocation(Location.CATACOMBS) || Utils.isInLocation(Location.KUUDRA)) {
+        if (fromKeyBind || LocationUtils.isInLocation(Location.CATACOMBS) || LocationUtils.isInLocation(Location.KUUDRA)) {
             ChatUtils.queueCommand("gfs ENDER_PEARL $pearlsToRefill")
         }
     }
@@ -54,5 +54,5 @@ object PearlRefill : CooldownManager() {
         startCooldown()
     }
 
-    fun isEnabled() = NobaAddons.config.refillPearls && Utils.inSkyblock
+    fun isEnabled() = NobaAddons.config.refillPearls && LocationUtils.inSkyblock
 }

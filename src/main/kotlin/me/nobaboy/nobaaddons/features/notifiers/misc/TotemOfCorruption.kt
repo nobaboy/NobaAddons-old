@@ -6,7 +6,7 @@ import kotlinx.coroutines.launch
 import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
 import me.nobaboy.nobaaddons.util.ChatUtils
-import me.nobaboy.nobaaddons.util.Utils
+import me.nobaboy.nobaaddons.util.LocationUtils
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StringUtils
@@ -55,5 +55,5 @@ class TotemOfCorruption {
         if (itemDisplayName == "Totem of Corruption") startTimer()
     }
 
-    fun isEnabled() = NobaAddons.config.corruptionTotemNotifier && Utils.inSkyblock
+    fun isEnabled() = NobaAddons.config.corruptionTotemNotifier && LocationUtils.inSkyblock
 }

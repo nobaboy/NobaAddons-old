@@ -5,7 +5,9 @@ import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
 import me.nobaboy.nobaaddons.api.PartyAPI
 import me.nobaboy.nobaaddons.features.dungeons.data.SSFile
 import me.nobaboy.nobaaddons.util.ChatUtils
-import me.nobaboy.nobaaddons.util.StringUtils.cleanMessage
+import me.nobaboy.nobaaddons.util.DungeonUtils
+import me.nobaboy.nobaaddons.util.LocationUtils
+import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.StringUtils.matchMatcher
 import me.nobaboy.nobaaddons.util.Utils
 import me.nobaboy.nobaaddons.util.data.DungeonBoss
@@ -68,10 +70,10 @@ class SimonSaysTimer {
     fun onChatReceived(event: ClientChatReceivedEvent) {
         if (!isEnabled()) return
         if (deviceDone) return
-        if (!Utils.isInCatacombs7()) return
-        if (!Utils.isInPhase(DungeonBoss.GOLDOR)) return
+        if (!DungeonUtils.isInCatacombs7()) return
+        if (!DungeonUtils.isInPhase(DungeonBoss.GOLDOR)) return
 
-        val receivedMessage = event.message.unformattedText.cleanMessage()
+        val receivedMessage = event.message.unformattedText.cleanString()
 
         chatPattern.matchMatcher(receivedMessage) {
             val username = group("username")
@@ -101,5 +103,5 @@ class SimonSaysTimer {
         deviceStartTime = System.currentTimeMillis()
     }
 
-    fun isEnabled() = NobaAddons.config.ssDeviceTimer && Utils.isInLocation(Location.CATACOMBS)
+    fun isEnabled() = NobaAddons.config.ssDeviceTimer && LocationUtils.isInLocation(Location.CATACOMBS)
 }

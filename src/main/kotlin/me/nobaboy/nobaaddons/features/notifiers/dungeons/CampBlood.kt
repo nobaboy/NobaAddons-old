@@ -6,9 +6,9 @@ import kotlinx.coroutines.launch
 import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
 import me.nobaboy.nobaaddons.util.ChatUtils
-import me.nobaboy.nobaaddons.util.StringUtils.cleanMessage
+import me.nobaboy.nobaaddons.util.LocationUtils
+import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.StringUtils.lowercaseEquals
-import me.nobaboy.nobaaddons.util.Utils
 import me.nobaboy.nobaaddons.util.data.Location
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.event.world.WorldEvent
@@ -41,9 +41,9 @@ class CampBlood {
     fun onChatReceived(event: ClientChatReceivedEvent) {
         if (!isEnabled()) return
 
-        val receivedMessage = event.message.unformattedText.cleanMessage()
+        val receivedMessage = event.message.unformattedText.cleanString()
         if (receivedMessage.lowercaseEquals("The BLOOD DOOR has been opened!")) startTimer()
     }
 
-    fun isEnabled() = NobaAddons.config.bloodCampAfterTime && Utils.isInLocation(Location.CATACOMBS)
+    fun isEnabled() = NobaAddons.config.bloodCampAfterTime && LocationUtils.isInLocation(Location.CATACOMBS)
 }
