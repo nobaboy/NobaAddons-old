@@ -9,7 +9,7 @@ object StringUtils {
 
     infix fun String.lowercaseContains(other: String) = this.lowercase().contains(other.lowercase())
 
-    fun String.cleanMessage(): String {
+    fun String.cleanString(): String {
         return StringUtils.stripControlCodes(this)
     }
 
