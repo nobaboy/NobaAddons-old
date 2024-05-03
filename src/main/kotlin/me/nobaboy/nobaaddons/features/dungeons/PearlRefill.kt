@@ -34,19 +34,20 @@ object PearlRefill : CooldownManager() {
         if (!isEnabled()) return
 
         val pearlsToRefill = getPearlsNeeded()
-        if (pearlsToRefill == 0) {
-            ChatUtils.addMessage("Can't add more than 16 pearls to your inventory.")
-            return
-        }
-
         if (fromKeyBind || LocationUtils.isInLocation(Location.CATACOMBS) || LocationUtils.isInLocation(Location.KUUDRA)) {
+            if (pearlsToRefill == 0) {
+                ChatUtils.addMessage("Can't add more than 16 pearls to your inventory.")
+                return
+            }
+
             ChatUtils.queueCommand("gfs ENDER_PEARL $pearlsToRefill")
         }
     }
 
     @SubscribeEvent
     fun onWorldLoad(ignored: WorldEvent.Load) {
-        if (!NobaAddons.config.autoRefillPearls || isOnCooldown()) return
+        if (!NobaAddons.config.autoRefillPearls) return
+        if (isOnCooldown()) return
 
         TickDelay(5 * 20) {
             refillPearls(false)
