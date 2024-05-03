@@ -121,7 +121,7 @@ object PartyAPI {
                     val isPartyLeader = type == "Leader"
                     val names = group("names")
 
-                    addPlayersToList(type, isPartyLeader, names)
+                    addPlayersToList(isPartyLeader, names)
                 }
             }
             return
@@ -218,11 +218,11 @@ object PartyAPI {
             val isPartyLeader = type == "Leader"
             val names = group("names")
 
-            addPlayersToList(type, isPartyLeader, names)
+            addPlayersToList(isPartyLeader, names)
         }
     }
 
-    private fun addPlayersToList(type: String, isPartyLeader: Boolean, names: String) {
+    private fun addPlayersToList(isPartyLeader: Boolean, names: String) {
         inParty = true
 
         for (name in names.split(" ● ")) {
