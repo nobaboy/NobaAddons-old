@@ -2,11 +2,10 @@ package me.nobaboy.nobaaddons.commands
 
 import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.util.ChatUtils
+import me.nobaboy.nobaaddons.util.StringUtils.capitalizeFirstLetters
+import me.nobaboy.nobaaddons.util.Utils
 import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommandSender
-import java.awt.Desktop
-import java.io.IOException
-import java.net.URI
 
 class SWikiCommand : CommandBase() {
     override fun canCommandSenderUseCommand(sender: ICommandSender?): Boolean {
@@ -26,12 +25,22 @@ class SWikiCommand : CommandBase() {
             ChatUtils.addMessage("§3Missing search query.")
             return
         }
-        ChatUtils.addMessage("Opening wiki.hypixel.net with search query '${args.joinToString(" ")}'.")
-        try {
-            Desktop.getDesktop()
-                .browse(URI.create("https://wiki.hypixel.net/index.php?search=${args.joinToString("+")}&scope=internal"))
-        } catch (ex: IOException) {
-            NobaAddons.LOGGER.error("Failed to open hypixel wiki, search query: '$args'", ex)
+
+        val wikiName = "§3§lOfficial SkyBlock Wiki§b"
+        val hypixelWikiLink = "https://wiki.hypixel.net/index.php?search=${args.joinToString("+")}&scope=internal"
+
+        // If auto-open on, just open
+        if (NobaAddons.config.autoOpenSWiki) {
+            ChatUtils.addMessage("Opening the $wikiName with search query '${args.joinToString(" ")}'.")
+            Utils.openBrowser(hypixelWikiLink)
+            return
         }
+
+        // Provide the link otherwise
+        ChatUtils.chatLink(
+            "Click §3§lHERE §bto find '${args.joinToString(" ").capitalizeFirstLetters()}' on the $wikiName.",
+        hypixelWikiLink,
+        "§7View '${args.joinToString( )}' on the Official SkyBlock Wiki"
+        )
     }
 }

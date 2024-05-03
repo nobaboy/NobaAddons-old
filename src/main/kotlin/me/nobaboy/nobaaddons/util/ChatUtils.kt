@@ -1,7 +1,10 @@
 package me.nobaboy.nobaaddons.util
 
 import me.nobaboy.nobaaddons.NobaAddons
+import me.nobaboy.nobaaddons.NobaAddons.Companion.MOD_PREFIX
 import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
+import net.minecraft.event.ClickEvent
+import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
@@ -30,10 +33,23 @@ object ChatUtils {
         commandQueue.add(message)
     }
 
-    fun sendCommand(command: String) {
+    private fun sendCommand(command: String) {
         mc.thePlayer.sendChatMessage(
             (if (NobaAddons.config.removeSlash) "" else "/") + command
         )
+    }
+
+    fun chatLink(
+        message: String,
+        url: String,
+        hover: String = "§3Open $url",
+        prefix: Boolean = true
+    ) {
+        val usePrefix = if (prefix) MOD_PREFIX else ""
+        val text = ChatComponentText(usePrefix + message)
+        text.chatStyle.chatHoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText(hover))
+        text.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, url)
+        addMessage(text)
     }
 
     fun sendMessage(message: String) {
@@ -45,15 +61,20 @@ object ChatUtils {
     }
 
     fun addMessage(prefix: Boolean, message: String) {
+        val usePrefix = if (prefix) MOD_PREFIX else ""
         mc.thePlayer.addChatMessage(
             ChatComponentText(
-                if (prefix) NobaAddons.MOD_PREFIX + message else message
+                usePrefix + message
             )
         )
     }
 
     fun addMessage(message: String) {
         addMessage(true, message)
+    }
+
+    fun addMessage(message: ChatComponentText) {
+        mc.thePlayer.addChatMessage(message)
     }
 
     fun delayedAdd(prefix: Boolean, message: String) = TickDelay(1) {

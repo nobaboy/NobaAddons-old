@@ -13,13 +13,25 @@ object Config : Vigilant(
     "NobaAddons ${NobaAddons.MOD_VERSION}",
     sortingBehavior = ConfigSorting
 ) {
-    // region DM Commands
+    // region Commands
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Auto Open SWiki Search",
+        description = "Automatically open the Official SkyBlock Wiki with the given search query when using '/swiki' command",
+        category = "Commands",
+        subcategory = "SWiki Command"
+    )
+    var autoOpenSWiki = false
+    // endregion
 
+    // region Chat Commands
+
+    // region DM Commands
     @Property(
         type = PropertyType.SWITCH,
         name = "DM Commands",
         description = "Allows whoever DMs to use DM commands.\n/noba dmcommands",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "DM Commands"
     )
     var dmCommands = false
@@ -28,7 +40,7 @@ object Config : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "!help",
         description = "Sends all usable commands.",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "DM Commands"
     )
     var dmHelpCommand = false
@@ -37,7 +49,7 @@ object Config : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "!warpme",
         description = "Warp user to your lobby.",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "DM Commands"
     )
     var dmWarpMeCommand = false
@@ -46,7 +58,7 @@ object Config : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "!partyme or !pme",
         description = "Invite user to party.",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "DM Commands"
     )
     var dmPartyMeCommand = false
@@ -55,20 +67,18 @@ object Config : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "!warpout [username]",
         description = "Warp out a player.",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "DM Commands"
     )
     var dmWarpOutCommand = false
-
     // endregion
 
     // region Party Commands
-
     @Property(
         type = PropertyType.SWITCH,
         name = "Party Commands",
         description = "Allows everyone in party to use party commands.\n/noba partycommands",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "Party Commands"
     )
     var partyCommands = false
@@ -77,7 +87,7 @@ object Config : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "!help",
         description = "Sends all usable commands.",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "Party Commands"
     )
     var partyHelpCommand = false
@@ -86,7 +96,7 @@ object Config : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "!transfer or !ptme",
         description = "Transfer party to the player who ran the command.",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "Party Commands"
     )
     var partyTransferCommand = false
@@ -95,7 +105,7 @@ object Config : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "!allinvite or !allinv",
         description = "Turns on all invite party setting.",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "Party Commands"
     )
     var partyAllInviteCommand = false
@@ -104,7 +114,7 @@ object Config : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "!warp [optional: seconds] and !cancel",
         description = "Requests party warp with an optional warp delay.",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "Party Commands"
     )
     var partyWarpCommand = false
@@ -113,20 +123,18 @@ object Config : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "!coords",
         description = "Sends current location of user.",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "Party Commands"
     )
     var partyCoordsCommand = false
-
     // endregion
 
     // region Guild Commands
-
     @Property(
         type = PropertyType.SWITCH,
         name = "Guild Commands",
         description = "Allows everyone in guild to use guild commands.\n/noba guildcommands",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "Guild Commands"
     )
     var guildCommands = false
@@ -135,7 +143,7 @@ object Config : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "!help",
         description = "Sends all usable commands.",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "Guild Commands"
     )
     var guildHelpCommand = false
@@ -144,15 +152,15 @@ object Config : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "!warpout [username]",
         description = "Warp out a player.",
-        category = "Commands",
+        category = "Chat Commands",
         subcategory = "Guild Commands"
     )
     var guildWarpOutCommand = false
+    // endregion
 
     // endregion
 
     // region Notifiers
-
     @Property(
         type = PropertyType.SWITCH,
         name = "Cakes Eaten Notifier",
@@ -178,9 +186,8 @@ object Config : Vigilant(
         category = "Notifiers"
     )
     var corruptionTotemNotifier = false
-
-
     // endregion
+
     // region Dungeons
     @Property(
         type = PropertyType.SWITCH,
@@ -237,11 +244,9 @@ object Config : Vigilant(
         subcategory = "UAYOR"
     )
     var autoRefillPearls = false
-
     // endregion
 
     // region Dev
-
     @Property(
         type = PropertyType.SWITCH,
         name = "Debug Mode",
@@ -257,7 +262,6 @@ object Config : Vigilant(
         category = "Dev"
     )
     var removeSlash = false
-
     // endregion
 
     init {
