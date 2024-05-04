@@ -17,7 +17,7 @@ object HypixelCommands {
 
     // Inventory Related Commands
     /**
-     * Retreives items from the sacks with the specified item ID obtained from wiki.hypixel.net
+     * Retrieves items from the sacks with the specified item ID obtained from wiki.hypixel.net
      *
      * @param itemID The internal ID that's obtained from the wiki
      */
