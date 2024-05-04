@@ -3,7 +3,7 @@ package me.nobaboy.nobaaddons.features.chatcommands.impl.dm
 import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.features.chatcommands.ChatContext
 import me.nobaboy.nobaaddons.features.chatcommands.IChatCommand
-import me.nobaboy.nobaaddons.util.ChatUtils
+import me.nobaboy.nobaaddons.util.HypixelCommands
 
 class PartyMeCommand : IChatCommand {
     override val name: String = "partyme"
@@ -14,6 +14,6 @@ class PartyMeCommand : IChatCommand {
         get() = NobaAddons.config.dmPartyMeCommand
 
     override fun run(ctx: ChatContext) {
-        ChatUtils.queueCommand("p ${ctx.user()}")
+        HypixelCommands.partyInvite(ctx.user())
     }
 }

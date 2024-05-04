@@ -7,9 +7,9 @@ import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
 import me.nobaboy.nobaaddons.util.ChatUtils
 import me.nobaboy.nobaaddons.util.LocationUtils
+import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
-import net.minecraft.util.StringUtils
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -51,7 +51,7 @@ class TotemOfCorruption {
         val heldItem: ItemStack = event.entityPlayer.heldItem ?: return
         if (heldItem.item != Items.banner) return
 
-        val itemDisplayName = StringUtils.stripControlCodes(heldItem.displayName)
+        val itemDisplayName = heldItem.displayName.cleanString()
         if (itemDisplayName == "Totem of Corruption") startTimer()
     }
 

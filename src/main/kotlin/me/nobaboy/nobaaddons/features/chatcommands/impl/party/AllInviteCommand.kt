@@ -4,7 +4,7 @@ import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.api.PartyAPI
 import me.nobaboy.nobaaddons.features.chatcommands.ChatContext
 import me.nobaboy.nobaaddons.features.chatcommands.IChatCommand
-import me.nobaboy.nobaaddons.util.ChatUtils
+import me.nobaboy.nobaaddons.util.HypixelCommands
 
 class AllInviteCommand : IChatCommand {
     override val name: String = "allinvite"
@@ -18,6 +18,6 @@ class AllInviteCommand : IChatCommand {
 
     override fun run(ctx: ChatContext) {
         if (PartyAPI.isLeader()) return
-        ChatUtils.queueCommand("p settings allinvite")
+        HypixelCommands.partyAllInvite()
     }
 }

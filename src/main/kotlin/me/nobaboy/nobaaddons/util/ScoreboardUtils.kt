@@ -4,7 +4,6 @@ import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
 import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.StringUtils.lowercaseContains
 import net.minecraft.scoreboard.ScorePlayerTeam
-import net.minecraft.util.StringUtils
 
 object ScoreboardUtils {
     private val splitIcons = listOf(
@@ -25,7 +24,7 @@ object ScoreboardUtils {
         "\uD83D\uDD2B",
     )
 
-    fun String.cleanScoreboard() = StringUtils.stripControlCodes(this).filter { it.code in (21 until 127) }
+    fun String.cleanScoreboard() = this.cleanString().filter { it.code in (21 until 127) }
 
     fun getSidebarLines(): List<String> {
         val lines = mutableListOf<String>()

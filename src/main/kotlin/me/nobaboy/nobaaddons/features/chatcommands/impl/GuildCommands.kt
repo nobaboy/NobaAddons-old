@@ -4,6 +4,7 @@ import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.features.chatcommands.ChatCommandManager
 import me.nobaboy.nobaaddons.features.chatcommands.impl.shared.HelpCommand
 import me.nobaboy.nobaaddons.features.chatcommands.impl.shared.WarpOutCommand
+import me.nobaboy.nobaaddons.features.chatcommands.impl.shared.WarpPlayerHandler
 import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.StringUtils.lowercaseContains
 import me.nobaboy.nobaaddons.util.StringUtils.matchMatcher
@@ -34,12 +35,13 @@ class GuildCommands : ChatCommandManager() {
 
         val receivedMessage = event.message.unformattedText.cleanString()
 
-        if (WarpOutCommand.isWarpingOut) {
-            if (receivedMessage.lowercaseContains("${WarpOutCommand.player} is already in the party")) {
-                WarpOutCommand.isWarpingOut = false
+        if (WarpPlayerHandler.isWarping) {
+            val playerName = WarpPlayerHandler.player
+            if (receivedMessage.lowercaseContains("$playerName is already in the party")) {
+                WarpPlayerHandler.reset(true)
                 return
-            } else if (receivedMessage.lowercaseContains("${WarpOutCommand.player} joined the party")) {
-                WarpOutCommand.playerJoined = true
+            } else if (receivedMessage.lowercaseContains("$playerName joined the party")) {
+                WarpPlayerHandler.playerJoined = true
                 return
             }
         }

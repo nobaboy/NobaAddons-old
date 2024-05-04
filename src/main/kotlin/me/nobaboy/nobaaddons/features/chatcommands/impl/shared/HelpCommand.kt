@@ -7,7 +7,7 @@ import me.nobaboy.nobaaddons.util.ChatUtils
 
 class HelpCommand(
     private val manager: ChatCommandManager,
-    private val command: String,
+    private var command: String,
     private val enabled: Boolean
 ) : IChatCommand {
 
@@ -17,6 +17,7 @@ class HelpCommand(
         get() = enabled
 
     override fun run(ctx: ChatContext) {
+        if (command == "msg") command = "msg ${ctx.user()}"
         val commands = manager.getCommands().map { it.usage }
         val commandsList = commands.joinToString(", ")
 

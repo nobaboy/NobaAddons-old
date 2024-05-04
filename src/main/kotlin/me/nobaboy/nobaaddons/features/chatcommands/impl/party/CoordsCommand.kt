@@ -4,7 +4,7 @@ import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
 import me.nobaboy.nobaaddons.features.chatcommands.ChatContext
 import me.nobaboy.nobaaddons.features.chatcommands.IChatCommand
-import me.nobaboy.nobaaddons.util.ChatUtils
+import me.nobaboy.nobaaddons.util.HypixelCommands
 
 class CoordsCommand : IChatCommand {
     override val name: String = "coords"
@@ -18,6 +18,6 @@ class CoordsCommand : IChatCommand {
         val posY = player.posY.toInt()
         val posZ = player.posZ.toInt()
 
-        ChatUtils.queueCommand("pc x: $posX, y: $posY, z: $posZ")
+        HypixelCommands.partyChat("x: $posX, y: $posY, z: $posZ")
     }
 }

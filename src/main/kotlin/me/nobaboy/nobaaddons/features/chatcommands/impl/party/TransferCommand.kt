@@ -4,7 +4,7 @@ import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.api.PartyAPI
 import me.nobaboy.nobaaddons.features.chatcommands.ChatContext
 import me.nobaboy.nobaaddons.features.chatcommands.IChatCommand
-import me.nobaboy.nobaaddons.util.ChatUtils
+import me.nobaboy.nobaaddons.util.HypixelCommands
 import me.nobaboy.nobaaddons.util.StringUtils.lowercaseEquals
 import me.nobaboy.nobaaddons.util.Utils
 
@@ -24,10 +24,10 @@ class TransferCommand : IChatCommand {
 
         if (!ctx.command().lowercaseEquals("ptme")) {
             val player = if (ctx.args().isEmpty()) ctx.user() else ctx.args()[0]
-            ChatUtils.queueCommand("p transfer $player")
+            HypixelCommands.partyTransfer(player)
             return
         }
 
-        ChatUtils.queueCommand("p transfer ${ctx.user()}")
+        HypixelCommands.partyTransfer(ctx.user())
     }
 }

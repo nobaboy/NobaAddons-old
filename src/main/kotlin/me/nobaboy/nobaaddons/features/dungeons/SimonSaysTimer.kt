@@ -4,16 +4,12 @@ import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
 import me.nobaboy.nobaaddons.api.PartyAPI
 import me.nobaboy.nobaaddons.features.dungeons.data.SSFile
-import me.nobaboy.nobaaddons.util.ChatUtils
-import me.nobaboy.nobaaddons.util.DungeonUtils
-import me.nobaboy.nobaaddons.util.LocationUtils
+import me.nobaboy.nobaaddons.util.*
 import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.StringUtils.matchMatcher
-import me.nobaboy.nobaaddons.util.Utils
 import me.nobaboy.nobaaddons.util.data.DungeonBoss
 import me.nobaboy.nobaaddons.util.data.Location
 import net.minecraft.block.BlockButtonStone
-import net.minecraft.util.StringUtils
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.event.world.WorldEvent
@@ -44,7 +40,7 @@ class SimonSaysTimer {
         val isPB = if (timeTakenToEnd <= personalBest) " §3§l(PB)" else " §3($personalBest)"
         val message = "Simon Says took ${timeTakenToEnd}s to complete. $isPB"
         if (NobaAddons.config.ssDeviceTimerPC && PartyAPI.inParty) {
-            ChatUtils.queueCommand("pc ${StringUtils.stripControlCodes(message)}")
+            HypixelCommands.partyChat(message.cleanString())
         } else {
             ChatUtils.addMessage(message)
         }

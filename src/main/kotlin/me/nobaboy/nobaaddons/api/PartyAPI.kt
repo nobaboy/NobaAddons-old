@@ -5,6 +5,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.util.ChatUtils
+import me.nobaboy.nobaaddons.util.HypixelCommands
 import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.StringUtils.matchMatcher
 import me.nobaboy.nobaaddons.util.Utils
@@ -62,7 +63,7 @@ object PartyAPI {
 
     var inParty: Boolean = false
     var partyMembers = mutableListOf<String>()
-    private var partyLeader: String? = null
+    var partyLeader: String? = null
 
     fun listMembers() {
         val partySize = partyMembers.size
@@ -78,15 +79,13 @@ object PartyAPI {
     }
 
     private fun getPartyList() {
-        println(Utils.onHypixel())
-
         task = NobaAddons.coroutineScope.launch {
             delay(5.seconds)
             if (!Utils.onHypixel()) return@launch
             if (NobaAddons.config.debugMode) NobaAddons.LOGGER.info("Getting party list...")
 
             gettingList = true
-            ChatUtils.queueCommand("party list")
+            HypixelCommands.partyList()
             delay(1.seconds)
             gettingList = false
         }

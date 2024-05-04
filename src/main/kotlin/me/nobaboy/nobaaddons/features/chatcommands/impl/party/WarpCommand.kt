@@ -6,7 +6,7 @@ import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.api.PartyAPI
 import me.nobaboy.nobaaddons.features.chatcommands.ChatContext
 import me.nobaboy.nobaaddons.features.chatcommands.IChatCommand
-import me.nobaboy.nobaaddons.util.ChatUtils
+import me.nobaboy.nobaaddons.util.HypixelCommands
 import org.apache.commons.lang3.StringUtils
 import kotlin.time.Duration.Companion.seconds
 
@@ -35,11 +35,11 @@ class WarpCommand : IChatCommand {
 
     private fun warpParty(seconds: String?) {
         if (seconds == null) {
-            ChatUtils.queueCommand("p warp")
+            HypixelCommands.partyWarp()
         } else if (!StringUtils.isNumeric(seconds)) {
-            ChatUtils.queueCommand("pc First argument can either be an integer or empty")
+            HypixelCommands.partyChat("First argument can either be an integer or empty")
         } else if (seconds.toInt() > 15 || seconds.toInt() < 3) {
-            ChatUtils.queueCommand("pc Warp delay has a maximum limit of 15 seconds and a minimum of 3.")
+            HypixelCommands.partyChat("Warp delay has a maximum limit of 15 seconds and a minimum of 3.")
         } else {
             delay = seconds.toInt()
             isWarping = true
@@ -48,25 +48,25 @@ class WarpCommand : IChatCommand {
     }
 
     private fun startTimedWarp() {
-        ChatUtils.queueCommand("pc Warping in $delay (To cancel type '!cancel')")
+        HypixelCommands.partyChat("Warping in $delay (To cancel type '!cancel')")
         NobaAddons.coroutineScope.launch {
             while (delay-- >= 0) {
                 delay(1.seconds)
 
                 if (cancel) {
-                    ChatUtils.queueCommand("pc Warp cancelled...")
+                    HypixelCommands.partyChat("Warp cancelled...")
                     isWarping = false
                     cancel = false
                     break
                 }
 
                 if (delay == 0) {
-                    ChatUtils.queueCommand("p warp")
+                    HypixelCommands.partyWarp()
                     isWarping = false
                     break
                 }
 
-                ChatUtils.queueCommand("pc $delay")
+                HypixelCommands.partyChat("$delay")
             }
         }
     }
