@@ -1,4 +1,4 @@
-package me.nobaboy.nobaaddons.features.dungeons
+package me.nobaboy.nobaaddons.features.misc
 
 import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
@@ -52,5 +52,5 @@ object PearlRefill : CooldownManager() {
         startCooldown()
     }
 
-    fun isEnabled() = NobaAddons.config.refillPearls && LocationUtils.inSkyblock
+    fun isEnabled() = NobaAddons.config.refillPearls && mc.theWorld != null && LocationUtils.inSkyblock
 }

@@ -10,10 +10,10 @@ import me.nobaboy.nobaaddons.core.Config
 import me.nobaboy.nobaaddons.features.chatcommands.impl.DMCommands
 import me.nobaboy.nobaaddons.features.chatcommands.impl.GuildCommands
 import me.nobaboy.nobaaddons.features.chatcommands.impl.PartyCommands
-import me.nobaboy.nobaaddons.features.dungeons.PearlRefill
 import me.nobaboy.nobaaddons.features.dungeons.SimonSaysTimer
 import me.nobaboy.nobaaddons.features.dungeons.data.SSFile
 import me.nobaboy.nobaaddons.features.misc.DisableMouse
+import me.nobaboy.nobaaddons.features.misc.PearlRefill
 import me.nobaboy.nobaaddons.features.notifiers.dungeons.CampBlood
 import me.nobaboy.nobaaddons.features.notifiers.misc.CenturyCakes
 import me.nobaboy.nobaaddons.features.notifiers.misc.TotemOfCorruption
