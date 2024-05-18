@@ -54,7 +54,7 @@ object PartyAPI {
 
     // Party Misc
     private val partyListPattern : Pattern =
-        Pattern.compile("^-{53}|^Party (?<type>Leader|Moderators|Members): (?<names>.*)|^You are not currently in a party\\.")
+        Pattern.compile("^-{53}|^Party Members \\([0-9]+\\)|^Party (?<type>Leader|Moderators|Members): (?<names>.*)|^You are not currently in a party\\.")
     private val partyChatPattern : Pattern = Pattern.compile("^Party > (?:\\[[A-Z+]+ )?(?<name>[A-z0-9_]+): .*")
 
     private var storedPartyList = mutableListOf<String>()

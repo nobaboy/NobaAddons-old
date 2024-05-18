@@ -55,7 +55,6 @@ class NobaAddons {
         val LOGGER: Logger = LogManager.getLogger(NobaAddons)
         var ticks = 0
 
-
         @JvmStatic
         val mc: Minecraft by lazy {
             Minecraft.getMinecraft()

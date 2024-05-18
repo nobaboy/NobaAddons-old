@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 object DungeonUtils {
     private var currentFloor: DungeonFloor = DungeonFloor.NONE
-    private var currentClass: DungeonClass = DungeonClass.NONE
+    private var currentClass: DungeonClass = DungeonClass.EMPTY
     private var currentBoss: DungeonBoss = DungeonBoss.UNKNOWN
 
     fun checkForDungeonFloor() {
@@ -58,13 +58,12 @@ object DungeonUtils {
                 val text = player.displayName.unformattedText
                 if (text.contains(playerName) && text.indexOf('(') != -1) {
                     val dungeonClass = text.substring(text.indexOf("(") + 1, text.lastIndexOf(")"))
-                    if (dungeonClass == "EMPTY") return
                     currentClass = DungeonClass.valueOf(dungeonClass.split(" ")[0].uppercase())
                     break
                 }
             }
         } else {
-            currentClass = DungeonClass.NONE
+            currentClass = DungeonClass.EMPTY
         }
     }
 
