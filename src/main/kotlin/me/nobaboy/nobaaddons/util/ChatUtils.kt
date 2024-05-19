@@ -12,7 +12,7 @@ import java.util.*
 import kotlin.time.Duration.Companion.seconds
 
 object ChatUtils {
-    private var lastMessageSent = TimeStamp.distantPast()
+    private var lastMessageSent = Timestamp.distantPast()
     private val commandQueue: Queue<String> = LinkedList()
     private val messageDelay = 1.seconds
 
@@ -25,7 +25,7 @@ object ChatUtils {
         }
         if (lastMessageSent.elapsedSince() > messageDelay) {
             sendCommand(commandQueue.poll() ?: return)
-            lastMessageSent = TimeStamp.currentTime()
+            lastMessageSent = Timestamp.currentTime()
         }
     }
 
