@@ -41,6 +41,10 @@ object DungeonUtils {
         }
     }
 
+    fun getPlayerFloor(): DungeonFloor {
+        return currentFloor
+    }
+
     fun isInCatacombs7(): Boolean {
         return currentFloor == DungeonFloor.F7 || currentFloor == DungeonFloor.M7
     }
