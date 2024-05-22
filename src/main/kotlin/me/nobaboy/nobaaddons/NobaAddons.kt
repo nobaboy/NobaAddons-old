@@ -92,6 +92,10 @@ class NobaAddons {
 
         try {
             SSFile.load()
+            if (SSFile.personalBest !in SSFile.times) {
+                SSFile.personalBest = SSFile.times.minOrNull()
+                SSFile.save()
+            }
         } catch (ex: IOException) {
             LOGGER.error("Failed to load simon-says-times.json", ex)
         }
