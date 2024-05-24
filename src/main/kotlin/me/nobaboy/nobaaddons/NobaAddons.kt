@@ -7,6 +7,7 @@ import me.nobaboy.nobaaddons.api.PartyAPI
 import me.nobaboy.nobaaddons.commands.NobaCommand
 import me.nobaboy.nobaaddons.commands.SWikiCommand
 import me.nobaboy.nobaaddons.core.Config
+import me.nobaboy.nobaaddons.features.chat.HideTipMessages
 import me.nobaboy.nobaaddons.features.chatcommands.impl.DMCommands
 import me.nobaboy.nobaaddons.features.chatcommands.impl.GuildCommands
 import me.nobaboy.nobaaddons.features.chatcommands.impl.PartyCommands
@@ -88,7 +89,7 @@ class NobaAddons {
 
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent) {
-        config.initialize()
+        config
 
         try {
             SSFile.load()
@@ -102,19 +103,29 @@ class NobaAddons {
 
         keybinds.forEach(ClientRegistry::registerKeyBinding)
         arrayOf(
+            // Objects that don't fit into any category
             this,
             
             // APIs
             PartyAPI,
 
-            // Features
+            // Chat
+            HideTipMessages(),
+
+            // Chat Commands
             PartyCommands(),
             GuildCommands(),
             DMCommands(),
+
+            // Dungeons
             SimonSaysTimer(),
             CampBlood(),
+
+            // Notifiers
             CenturyCakes(),
             TotemOfCorruption(),
+
+            // Misc
             PearlRefill,
 
             // Util

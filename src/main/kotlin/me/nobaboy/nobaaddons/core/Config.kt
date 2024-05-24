@@ -14,6 +14,7 @@ object Config : Vigilant(
     sortingBehavior = ConfigSorting
 ) {
     // region Commands
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Auto Open SWiki Search",
@@ -22,6 +23,19 @@ object Config : Vigilant(
         subcategory = "SWiki Command"
     )
     var autoOpenSWiki = false
+
+    // endregion
+
+    // region Chat
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Hide Tip Messages",
+        description = "Hides the messages sent when you tip a player or get tipped by a player.",
+        category = "Chat"
+    )
+    var hideTipMessages = false
+
     // endregion
 
     // region Chat Commands
@@ -161,6 +175,7 @@ object Config : Vigilant(
     // endregion
 
     // region Notifiers
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Cakes Eaten Notifier",
@@ -186,9 +201,11 @@ object Config : Vigilant(
         category = "Notifiers"
     )
     var corruptionTotemNotifier = false
+
     // endregion
 
     // region Dungeons
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Camp Blood After Time",
@@ -244,9 +261,11 @@ object Config : Vigilant(
         subcategory = "UAYOR"
     )
     var autoRefillPearls = false
+
     // endregion
 
     // region Dev
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Debug Mode",
@@ -262,6 +281,7 @@ object Config : Vigilant(
         category = "Dev"
     )
     var removeSlash = false
+
     // endregion
 
     init {
