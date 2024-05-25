@@ -43,7 +43,7 @@ object PearlRefill : CooldownManager() {
 
     @SubscribeEvent
     fun onWorldLoad(ignored: WorldEvent.Load) {
-        if (!NobaAddons.config.autoRefillPearls) return
+        if (!NobaAddons.config.dungeons.uayor.autoRefillPearls) return
         if (isOnCooldown()) return
 
         TickDelay(5 * 20) {
@@ -52,5 +52,5 @@ object PearlRefill : CooldownManager() {
         startCooldown()
     }
 
-    fun isEnabled() = NobaAddons.config.refillPearls && mc.theWorld != null && LocationUtils.inSkyblock
+    fun isEnabled() = NobaAddons.config.dungeons.refillPearls && mc.theWorld != null && LocationUtils.inSkyblock
 }

@@ -1,6 +1,5 @@
 package me.nobaboy.nobaaddons.commands
 
-import gg.essential.api.utils.GuiUtil
 import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.commands.subcommands.*
 import me.nobaboy.nobaaddons.util.ChatUtils
@@ -40,8 +39,9 @@ class NobaCommand : CommandBase() {
     }
 
     override fun processCommand(sender: ICommandSender, args: Array<String>) {
-        if (args.isEmpty()) return run {
-            GuiUtil.open(NobaAddons.config.gui())
+        if(args.isEmpty()) {
+            NobaAddons.openConfigGui = true
+            return
         }
 
         val commandName = args[0]

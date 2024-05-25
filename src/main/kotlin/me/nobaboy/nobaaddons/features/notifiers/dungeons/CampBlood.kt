@@ -21,7 +21,7 @@ class CampBlood {
 
     private fun startTimer() {
         timer = NobaAddons.coroutineScope.launch {
-            delay(NobaAddons.config.timeTillBloodCamp.seconds)
+            delay(NobaAddons.config.dungeons.timeTillBloodCamp.seconds)
 
             ChatUtils.addMessage("Go blood camp!")
 
@@ -45,5 +45,5 @@ class CampBlood {
         if (receivedMessage.lowercaseEquals("The BLOOD DOOR has been opened!")) startTimer()
     }
 
-    fun isEnabled() = NobaAddons.config.bloodCampAfterTime && LocationUtils.isInLocation(Location.CATACOMBS)
+    fun isEnabled() = NobaAddons.config.dungeons.bloodCampAfterTime && LocationUtils.isInLocation(Location.CATACOMBS)
 }

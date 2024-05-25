@@ -11,7 +11,7 @@ class PartyMeCommand : IChatCommand {
     override val aliases: MutableList<String> = mutableListOf("pme")
 
     override val isEnabled: Boolean
-        get() = NobaAddons.config.dmPartyMeCommand
+        get() = NobaAddons.config.chatCommands.dmCommands.partyMe
 
     override fun run(ctx: ChatContext) {
         HypixelCommands.partyInvite(ctx.user())

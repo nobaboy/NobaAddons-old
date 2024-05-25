@@ -55,5 +55,5 @@ class TotemOfCorruption {
         if (itemDisplayName == "Totem of Corruption") startTimer()
     }
 
-    fun isEnabled() = NobaAddons.config.corruptionTotemNotifier && LocationUtils.inSkyblock
+    fun isEnabled() = NobaAddons.config.notifiers.corruptionTotemNotifier && LocationUtils.inSkyblock
 }

@@ -18,8 +18,8 @@ class GuildCommands : ChatCommandManager() {
         Pattern.compile("^Guild > .*?(?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+)(?<grank> \\[[A-z0-9 ]+])?.*?: [!?.](?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?")
 
     init {
-        register(HelpCommand(this, "gc", NobaAddons.config.guildHelpCommand))
-        register(WarpOutCommand("gc", NobaAddons.config.guildWarpOutCommand))
+        register(HelpCommand(this, "gc", NobaAddons.config.chatCommands.guildCommands::help))
+        register(WarpOutCommand("gc", NobaAddons.config.chatCommands.guildCommands::warpOut))
     }
 
     override fun matchMessage(message: String): Matcher? {
@@ -49,5 +49,5 @@ class GuildCommands : ChatCommandManager() {
         processMessage(receivedMessage)
     }
 
-    fun isEnabled() = NobaAddons.config.guildCommands
+    fun isEnabled() = NobaAddons.config.chatCommands.guildCommands.enabled
 }

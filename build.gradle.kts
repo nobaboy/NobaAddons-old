@@ -32,7 +32,7 @@ loom {
                 vmArgs.remove("-XstartOnFirstThread")
             }
             isIdeConfigGenerated = true
-            programArgs("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
+            programArgs("--tweakClass", "io.github.notenoughupdates.moulconfig.tweaker.DevelopmentResourceTweaker")
         }
         remove(getByName("server"))
     }
@@ -57,13 +57,16 @@ repositories {
     mavenCentral()
     maven("https://repo.spongepowered.org/maven/")
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
-    maven("https://repo.sk1er.club/repository/maven-public/")
-    maven("https://repo.sk1er.club/repository/maven-releases/")
-    maven("https://maven.odinair.xyz/snapshots")
+    maven("https://maven.celestialfault.dev/snapshots")
+    maven("https://maven.notenoughupdates.org/releases/")
 }
 
 val shadowImpl: Configuration by configurations.creating {
     configurations.implementation.get().extendsFrom(this)
+}
+
+val shadowModImpl: Configuration by configurations.creating {
+    configurations.modImplementation.get().extendsFrom(this)
 }
 
 dependencies {
@@ -72,18 +75,12 @@ dependencies {
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
     shadowImpl(kotlin("stdlib-jdk8"))
+    shadowImpl("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
 
     shadowImpl("me.celestialfault:celestial-config:1.0-alpha.2") {
-        isTransitive = false
-    }
-
-    shadowImpl("gg.essential:loader-launchwrapper:1.2.1")
-    implementation("gg.essential:essential-1.8.9-forge:14616+g169bd9af6a") {
-        exclude(module = "asm")
-        exclude(module = "asm-commons")
-        exclude(module = "asm-tree")
         exclude(module = "gson")
     }
+    shadowModImpl("org.notenoughupdates.moulconfig:legacy:3.0.0-beta.9")
 
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.0")
 }
@@ -115,7 +112,6 @@ tasks.processResources {
     rename("(.+_at.cfg)", "META-INF/$1")
 }
 
-
 val remapJar by tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
     archiveClassifier.set("")
     from(tasks.shadowJar)
@@ -130,7 +126,7 @@ tasks.jar {
             "ForceLoadAsMod" to true,
             "ModSide" to "CLIENT",
             "ModType" to "FML",
-            "TweakClass" to "gg.essential.loader.stage0.EssentialSetupTweaker",
+            "TweakClass" to "io.github.notenoughupdates.moulconfig.tweaker.DevelopmentResourceTweaker",
             "TweakOrder" to "0"
         )
     )
@@ -139,15 +135,15 @@ tasks.jar {
 tasks.shadowJar {
     destinationDirectory.set(layout.buildDirectory.dir("badjars"))
     archiveClassifier.set("all-dev")
-    configurations = listOf(shadowImpl)
+    configurations = listOf(shadowImpl, shadowModImpl)
     doLast {
         configurations.forEach {
             println("Copying jars into mod: ${it.files}")
         }
     }
 
-    // If you want to include other dependencies and shadow them, you can relocate them in here
-    fun relocate(name: String) = relocate(name, "$baseGroup.deps.$name")
+    relocate("me.celestialfault.celestialconfig", "$baseGroup.vendored.celestialconfig")
+    relocate("io.github.notenoughupdates.moulconfig", "$baseGroup.vendored.moulconfig")
 }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)

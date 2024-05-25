@@ -10,7 +10,7 @@ class CoordsCommand : IChatCommand {
     override val name: String = "coords"
 
     override val isEnabled: Boolean
-        get() = NobaAddons.config.partyCoordsCommand
+        get() = NobaAddons.config.chatCommands.partyCommands.coords
 
     override fun run(ctx: ChatContext) {
         val player = mc.thePlayer

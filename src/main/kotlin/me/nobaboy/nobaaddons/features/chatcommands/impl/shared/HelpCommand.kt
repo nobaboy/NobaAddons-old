@@ -8,13 +8,13 @@ import me.nobaboy.nobaaddons.util.ChatUtils
 class HelpCommand(
     private val manager: ChatCommandManager,
     private var command: String,
-    private val enabled: Boolean
+    private val enabled: () -> Boolean
 ) : IChatCommand {
 
     override val name: String = "help"
 
     override val isEnabled: Boolean
-        get() = enabled
+        get() = enabled()
 
     override fun run(ctx: ChatContext) {
         if (command == "msg") command = "msg ${ctx.user()}"

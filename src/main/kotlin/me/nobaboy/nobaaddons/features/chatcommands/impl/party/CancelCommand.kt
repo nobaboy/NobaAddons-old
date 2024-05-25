@@ -8,7 +8,7 @@ class CancelCommand : IChatCommand {
     override val name: String = "cancel"
 
     override val isEnabled: Boolean
-        get() = NobaAddons.config.partyWarpCommand
+        get() = NobaAddons.config.chatCommands.partyCommands.warp
 
     override val bypassCooldown: Boolean = true
 

@@ -30,7 +30,7 @@ class SWikiCommand : CommandBase() {
         val hypixelWikiLink = "https://wiki.hypixel.net/index.php?search=${args.joinToString("+")}&scope=internal"
 
         // If auto-open on, just open
-        if (NobaAddons.config.autoOpenSWiki) {
+        if (NobaAddons.config.commands.autoOpenSWiki) {
             ChatUtils.addMessage("Opening the $wikiName with search query '${args.joinToString(" ")}'.")
             Utils.openBrowser(hypixelWikiLink)
             return
