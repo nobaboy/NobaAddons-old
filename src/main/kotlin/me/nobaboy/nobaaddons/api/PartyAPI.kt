@@ -82,7 +82,7 @@ object PartyAPI {
         task = NobaAddons.coroutineScope.launch {
             delay(5.seconds)
             if (!Utils.onHypixel()) return@launch
-            if (NobaAddons.config.debugMode) NobaAddons.LOGGER.info("Getting party list...")
+            if (NobaAddons.config.dev.debugMode) NobaAddons.LOGGER.info("Getting party list...")
 
             gettingList = true
             HypixelCommands.partyList()
