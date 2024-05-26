@@ -99,6 +99,7 @@ object PartyAPI {
 
     @SubscribeEvent
     fun onDisconnectFromServer(ignored: ClientDisconnectionFromServerEvent) {
+        storedPartyList.clear()
         task?.cancel()
     }
 
