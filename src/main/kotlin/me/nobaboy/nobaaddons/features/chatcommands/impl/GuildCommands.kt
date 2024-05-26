@@ -14,12 +14,13 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class GuildCommands : ChatCommandManager() {
+    private val config get() = NobaAddons.config.chatCommands.guildCommands
     private val chatPattern: Pattern =
         Pattern.compile("^Guild > .*?(?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+)(?<grank> \\[[A-z0-9 ]+])?.*?: [!?.](?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?")
 
     init {
-        register(HelpCommand(this, "gc", NobaAddons.config.chatCommands.guildCommands::help))
-        register(WarpOutCommand("gc", NobaAddons.config.chatCommands.guildCommands::warpOut))
+        register(HelpCommand(this, "gc", config::help))
+        register(WarpOutCommand("gc", config::warpOut))
     }
 
     override fun matchMessage(message: String): Matcher? {
@@ -49,5 +50,5 @@ class GuildCommands : ChatCommandManager() {
         processMessage(receivedMessage)
     }
 
-    fun isEnabled() = NobaAddons.config.chatCommands.guildCommands.enabled
+    fun isEnabled() = config.enabled
 }

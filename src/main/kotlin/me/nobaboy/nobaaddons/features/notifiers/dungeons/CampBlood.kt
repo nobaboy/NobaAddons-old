@@ -17,11 +17,12 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 class CampBlood {
+    private val config get() = NobaAddons.config.dungeons.bloodCampTimer
     private var timer: Job? = null
 
     private fun startTimer() {
         timer = NobaAddons.coroutineScope.launch {
-            delay(NobaAddons.config.dungeons.timeTillBloodCamp.seconds)
+            delay(config.timeTillWarning.seconds)
 
             ChatUtils.addMessage("Go blood camp!")
 
@@ -45,5 +46,5 @@ class CampBlood {
         if (receivedMessage.lowercaseEquals("The BLOOD DOOR has been opened!")) startTimer()
     }
 
-    fun isEnabled() = NobaAddons.config.dungeons.bloodCampAfterTime && LocationUtils.isInLocation(Location.CATACOMBS)
+    fun isEnabled() = config.enabled && LocationUtils.isInLocation(Location.CATACOMBS)
 }

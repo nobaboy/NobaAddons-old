@@ -12,11 +12,12 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class PartyCommands : ChatCommandManager() {
+    private val config get() = NobaAddons.config.chatCommands.partyCommands
     private val chatPattern: Pattern =
         Pattern.compile("^Party > .*?(?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+).*?: [!?.](?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?")
 
     init {
-        register(HelpCommand(this, "pc", NobaAddons.config.chatCommands.partyCommands::help))
+        register(HelpCommand(this, "pc", config::help))
         register(TransferCommand())
         register(AllInviteCommand())
         register(WarpCommand())
@@ -39,5 +40,5 @@ class PartyCommands : ChatCommandManager() {
         processMessage(receivedMessage)
     }
 
-    fun isEnabled() = NobaAddons.config.chatCommands.partyCommands.enabled
+    fun isEnabled() = config.enabled
 }

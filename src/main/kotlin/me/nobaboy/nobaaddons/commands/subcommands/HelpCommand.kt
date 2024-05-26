@@ -10,30 +10,36 @@ class HelpCommand : ISubCommand {
             "dmcommands" ->
                 """
                     #§7§m-----------------§r§7[ §9DM Commands §7]§m-----------------
-                    # §3!help §7» §rSends all usable commands.
-                    # §3!warpme §7» §rWarp user to your lobby.
-                    # §3!partyme (Alias: !pme) §7» §rInvite user to party.
+                    # §3Prefixes: §r! ? . 
+                    #
+                    # §3help §7» §rSends all usable commands.
+                    # §3warpme §7» §rWarp user to your lobby.
+                    # §3partyme (Alias: !pme) §7» §rInvite user to party.
                     #§7§m-----------------------------------------------
                 """.trimMargin("#")
 
             "partycommands" ->
                 """
                     #§7§m-----------------§r§7[ §9Party Commands §7]§m-----------------
-                    # §3!help §7» §rSends all usable commands.
-                    # §3!ptme (Alias: !transfer or !pt) §7» §rTransfer party to the player who ran the command."
-                    # §3!allinvite (Alias: !allinv) §7» §rTurns on all invite party setting.
-                    # §3!warp [optional: seconds] §7» §rRequests party warp with an optional warp delay.
-                    # §3!cancel §7» §rStop the current delayed warp.
-                    # §3!warpme §7» §rWarp user to your lobby.
-                    # §3!coords §7» §rSends current location of user.
+                    # §3Prefixes: §r! ? . 
+                    #
+                    # §3help §7» §rSends all usable commands.
+                    # §3ptme (Alias: !transfer or !pt) §7» §rTransfer party to the player who ran the command."
+                    # §3allinvite (Alias: !allinv) §7» §rTurns on all invite party setting.
+                    # §3warp [optional: seconds] §7» §rRequests party warp with an optional warp delay.
+                    # §3cancel §7» §rStop the current delayed warp.
+                    # §3warpme §7» §rWarp user to your lobby.
+                    # §3coords §7» §rSends current location of user.
                     #§7§m--------------------------------------------------
                 """.trimMargin("#")
 
             "guildcommands" ->
                 """
                     #§7§m-----------------§r§7[ §9Guild Commands §7]§m-----------------
-                    # §3!help §7» §rSends all usable commands.
-                    # §3!warpout [username] §7» §rWarp out a player.
+                    # §3Prefixes: §r! ? . 
+                    #
+                    # §3help §7» §rSends all usable commands.
+                    # §3warpout [username] §7» §rWarp out a player.
                     #§7§m-------------------------------------------------
                 """.trimMargin("#")
 
@@ -54,6 +60,9 @@ class HelpCommand : ISubCommand {
                     #   §3/noba ssAverage §7» §rSend average time taken to complete SS Device.
                     #   §3/noba ssRemoveLast §7» §rRemove the last SS time.
                     #   §3/noba ssClearTimes §7» §rClear SS Times.
+                    #   §3/noba refillPearls §7» §rRefills you with pearls up to 16.
+                    # §9§l➜ Debug:
+                    #   §3/noba debugParty §7» Sends a debug response of the users party
                     #§7§m-----------------------------------------------
                 """.trimMargin("#")
         }

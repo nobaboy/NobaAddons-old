@@ -16,12 +16,13 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class DMCommands : ChatCommandManager() {
+    private val config get() = NobaAddons.config.chatCommands.dmCommands
     private val chatPattern: Pattern =
         Pattern.compile("^From (?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+): [!?.](?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?")
 
     init {
-        register(HelpCommand(this, "msg", NobaAddons.config.chatCommands.dmCommands::help))
-        register(WarpOutCommand("msg", NobaAddons.config.chatCommands.dmCommands::warpOut))
+        register(HelpCommand(this, "msg", config::help))
+        register(WarpOutCommand("msg", config::warpOut))
         register(WarpUserCommand())
         register(PartyMeCommand())
     }
@@ -53,5 +54,5 @@ class DMCommands : ChatCommandManager() {
         processMessage(receivedMessage)
     }
 
-    fun isEnabled() = NobaAddons.config.chatCommands.dmCommands.enabled
+    fun isEnabled() = config.enabled
 }

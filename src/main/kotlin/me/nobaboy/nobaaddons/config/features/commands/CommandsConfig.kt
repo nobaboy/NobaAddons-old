@@ -1,4 +1,4 @@
-package me.nobaboy.nobaaddons.core
+package me.nobaboy.nobaaddons.config.features.commands
 
 import com.google.gson.annotations.Expose
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
@@ -9,7 +9,7 @@ class CommandsConfig {
 	@JvmField
 	@ConfigOption(
 		name = "Auto Open /swiki Search",
-		desc = "Automatically opens the official SkyBlock Wiki with the given search query when using §e/swiki§r."
+		desc = "Automatically opens the official SkyBlock Wiki with the given search query when using §b/swiki§r."
 	)
 	@ConfigEditorBoolean
 	var autoOpenSWiki = false

@@ -1,4 +1,4 @@
-package me.nobaboy.nobaaddons.core
+package me.nobaboy.nobaaddons.config.features.chat
 
 import com.google.gson.annotations.Expose
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean

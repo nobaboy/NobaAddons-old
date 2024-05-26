@@ -9,6 +9,7 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 class CenturyCakes {
+    private val config get() = NobaAddons.config.notifiers.centuryCakesNotifier
     private var cakesEaten = 0
 
     @SubscribeEvent
@@ -18,7 +19,7 @@ class CenturyCakes {
         val receivedMessage = event.message.unformattedText.cleanString()
 
         if (receivedMessage.startsWith("Yum! You gain")) {
-            if (cakesEaten++ >= NobaAddons.config.notifiers.centuryCakesAmount) {
+            if (cakesEaten++ >= config.cakesAmount) {
                 ChatUtils.delayedAdd("All cakes eaten!")
                 mc.thePlayer.playSound("note.pling", 1F, 2.0F)
                 cakesEaten = 0
@@ -26,5 +27,5 @@ class CenturyCakes {
         }
     }
 
-    fun isEnabled() = NobaAddons.config.notifiers.cakesEatenNotifier && LocationUtils.inSkyblock
+    fun isEnabled() = config.enabled && LocationUtils.inSkyblock
 }

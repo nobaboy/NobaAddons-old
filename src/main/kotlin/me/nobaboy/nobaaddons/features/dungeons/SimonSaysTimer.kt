@@ -18,6 +18,8 @@ import java.io.IOException
 import java.util.regex.Pattern
 
 class SimonSaysTimer {
+    private val config get() = NobaAddons.config.dungeons.simonSaysTimer
+
     private val chatPattern: Pattern = Pattern.compile("^(?<username>[A-z0-9_]+) completed a device! \\([1-7]/7\\)")
     private var deviceDone: Boolean = false
     private var firstButtonPressed: Boolean = false
@@ -40,7 +42,7 @@ class SimonSaysTimer {
 
         val isPB = if (timeTakenToEnd <= personalBest) "§3§l(PB)" else "§3($personalBest)"
         val message = "Simon Says took ${timeTakenToEnd}s to complete. $isPB"
-        if (NobaAddons.config.dungeons.ssDeviceTimerPC && PartyAPI.inParty) {
+        if (config.timeInPartyChat && PartyAPI.inParty) {
             HypixelCommands.partyChat(message.cleanString())
         } else {
             ChatUtils.addMessage(message)
@@ -100,5 +102,5 @@ class SimonSaysTimer {
         deviceStartTime = Timestamp.currentTime()
     }
 
-    fun isEnabled() = NobaAddons.config.dungeons.ssDeviceTimer && LocationUtils.isInLocation(Location.CATACOMBS)
+    fun isEnabled() = config.enabled && LocationUtils.isInLocation(Location.CATACOMBS)
 }

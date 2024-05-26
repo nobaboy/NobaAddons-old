@@ -7,7 +7,7 @@ import kotlinx.coroutines.SupervisorJob
 import me.nobaboy.nobaaddons.api.PartyAPI
 import me.nobaboy.nobaaddons.commands.NobaCommand
 import me.nobaboy.nobaaddons.commands.SWikiCommand
-import me.nobaboy.nobaaddons.core.NobaConfig
+import me.nobaboy.nobaaddons.config.NobaConfig
 import me.nobaboy.nobaaddons.features.chat.HideTipMessages
 import me.nobaboy.nobaaddons.features.chatcommands.impl.DMCommands
 import me.nobaboy.nobaaddons.features.chatcommands.impl.GuildCommands
