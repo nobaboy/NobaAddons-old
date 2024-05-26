@@ -19,7 +19,7 @@ class TransferCommand : IChatCommand {
         get() = NobaAddons.config.chatCommands.partyCommands.transfer
 
     override fun run(ctx: ChatContext) {
-        if (PartyAPI.isLeader()) return
+        if (!PartyAPI.isLeader()) return
         if (ctx.user() == Utils.getPlayerName()) return
 
         if (!ctx.command().lowercaseEquals("ptme")) {
