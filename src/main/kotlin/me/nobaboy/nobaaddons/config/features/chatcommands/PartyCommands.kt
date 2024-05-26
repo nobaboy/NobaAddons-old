@@ -25,13 +25,13 @@ class PartyCommands {
 
     @Expose
     @JvmField
-    @ConfigOption(name = "!allinvite", desc = "Toggles §e/p settings allinvite§r when used. §7(alias: !allinv)§r")
+    @ConfigOption(name = "!allinvite", desc = "Toggles §b/p settings allinvite§r when used. §7(alias: !allinv)§r")
     @ConfigEditorBoolean
     var allInvite = false
 
     @Expose
     @JvmField
-    @ConfigOption(name = "!warp", desc = "Runs §e/p warp§r when used, with an optional delay.")
+    @ConfigOption(name = "!warp", desc = "Runs §b/p warp§r when used, with an optional delay.")
     @ConfigEditorBoolean
     var warp = false
 
