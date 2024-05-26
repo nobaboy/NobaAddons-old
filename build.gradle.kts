@@ -1,4 +1,5 @@
 import org.apache.commons.lang3.SystemUtils
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     idea
@@ -18,21 +19,27 @@ val mixinGroup = "$baseGroup.mixin"
 val modid: String by project
 
 // Toolchains:
+
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 }
 
 // Minecraft configuration:
+
 loom {
     log4jConfigs.from(file("log4j2.xml"))
+    launchConfigs {
+        "client" {
+            arg("--tweakClass", "io.github.notenoughupdates.moulconfig.tweaker.DevelopmentResourceTweaker")
+        }
+    }
     runConfigs {
         "client" {
             if(SystemUtils.IS_OS_MAC_OSX) {
                 // This argument causes a crash on macOS
                 vmArgs.remove("-XstartOnFirstThread")
             }
-            isIdeConfigGenerated = true
-            programArgs("--tweakClass", "io.github.notenoughupdates.moulconfig.tweaker.DevelopmentResourceTweaker")
+            vmArgs.add("-Xmx4G")
         }
         remove(getByName("server"))
     }
@@ -55,10 +62,10 @@ sourceSets.main {
 
 repositories {
     mavenCentral()
-    maven("https://repo.spongepowered.org/maven/")
-    maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
-    maven("https://maven.celestialfault.dev/snapshots")
-    maven("https://maven.notenoughupdates.org/releases/")
+    maven("https://repo.spongepowered.org/maven/") // Mixin
+    maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1") // DevAuth
+    maven("https://maven.celestialfault.dev/snapshots") // CelestialConfig
+    maven("https://maven.notenoughupdates.org/releases/") // MoulConfig
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -75,11 +82,16 @@ dependencies {
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
     shadowImpl(kotlin("stdlib-jdk8"))
-    shadowImpl("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
-
-    shadowImpl("me.celestialfault:celestial-config:1.0-alpha.2") {
-        exclude(module = "gson")
+    shadowImpl("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0") {
+        exclude(group = "org.jetbrains.kotlin")
     }
+
+    // CelestialConfig
+    shadowImpl("me.celestialfault:celestial-config:1.0-alpha.2") {
+        isTransitive = false
+    }
+
+    // MoulConfig
     shadowModImpl("org.notenoughupdates.moulconfig:legacy:3.0.0-beta.9")
 
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.0")
@@ -92,7 +104,7 @@ tasks.withType(JavaCompile::class) {
 }
 
 tasks.withType(Jar::class) {
-    archiveBaseName.set(modid)
+    archiveBaseName.set("NobaAddons")
     manifest.attributes.run {
         this["FMLCorePluginContainsFMLMod"] = "true"
         this["ForceLoadAsMod"] = "true"
@@ -121,15 +133,6 @@ val remapJar by tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
 tasks.jar {
     archiveClassifier.set("without-deps")
     destinationDirectory.set(layout.buildDirectory.dir("badjars"))
-    manifest.attributes (
-        mapOf(
-            "ForceLoadAsMod" to true,
-            "ModSide" to "CLIENT",
-            "ModType" to "FML",
-            "TweakClass" to "io.github.notenoughupdates.moulconfig.tweaker.DevelopmentResourceTweaker",
-            "TweakOrder" to "0"
-        )
-    )
 }
 
 tasks.shadowJar {
@@ -142,8 +145,19 @@ tasks.shadowJar {
         }
     }
 
-    relocate("me.celestialfault.celestialconfig", "$baseGroup.vendored.celestialconfig")
+    mergeServiceFiles()
     relocate("io.github.notenoughupdates.moulconfig", "$baseGroup.vendored.moulconfig")
 }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)
+
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+
+val sourcesJar by tasks.creating(Jar::class) {
+    destinationDirectory.set(layout.buildDirectory.dir("badjars"))
+    archiveClassifier.set("src")
+    from(sourceSets.main.get().allSource)
+}
