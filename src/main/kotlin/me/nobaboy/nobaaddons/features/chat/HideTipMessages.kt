@@ -21,6 +21,7 @@ class HideTipMessages {
         if (receivedMessage.startsWith("You tipped") ||
             receivedMessage.startsWith("You were tipped") ||
             receivedMessage == "That player is not online, try another user!" ||
+            receivedMessage == "No one has a network booster active right now! Try again later." ||
             receivedMessage == "You already tipped everyone that has boosters active, so there isn't anybody to be tipped right now!" ||
             receivedMessage == "Slow down! You can only use /tip every few seconds."
         ) {
