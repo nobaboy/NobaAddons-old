@@ -11,7 +11,7 @@ class WarpUserCommand : IChatCommand {
     override val name: String = "warpme"
 
     override val isEnabled: Boolean
-        get() = NobaAddons.config.dmWarpMeCommand
+        get() = NobaAddons.config.chatCommands.dmCommands.warpMe
 
     override fun run(ctx: ChatContext) {
         val playerName = ctx.user()

@@ -10,7 +10,7 @@ object LocationUtils {
     private var currentLocation: Location = Location.NONE
 
     fun checkForSkyblock() {
-        if (NobaAddons.config.debugMode) {
+        if (NobaAddons.config.dev.debugMode) {
             inSkyblock = true
             return
         }

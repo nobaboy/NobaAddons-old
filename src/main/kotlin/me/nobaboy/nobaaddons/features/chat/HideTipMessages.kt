@@ -28,5 +28,5 @@ class HideTipMessages {
         }
     }
 
-    fun isEnabled() = NobaAddons.config.hideTipMessages
+    fun isEnabled() = NobaAddons.config.chat.hideTipMessages
 }

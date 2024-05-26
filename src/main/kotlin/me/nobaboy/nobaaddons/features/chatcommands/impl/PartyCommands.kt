@@ -16,7 +16,7 @@ class PartyCommands : ChatCommandManager() {
         Pattern.compile("^Party > .*?(?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+).*?: [!?.](?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?")
 
     init {
-        register(HelpCommand(this, "pc", NobaAddons.config.partyHelpCommand))
+        register(HelpCommand(this, "pc", NobaAddons.config.chatCommands.partyCommands::help))
         register(TransferCommand())
         register(AllInviteCommand())
         register(WarpCommand())
@@ -39,5 +39,5 @@ class PartyCommands : ChatCommandManager() {
         processMessage(receivedMessage)
     }
 
-    fun isEnabled() = NobaAddons.config.partyCommands
+    fun isEnabled() = NobaAddons.config.chatCommands.partyCommands.enabled
 }

@@ -24,7 +24,7 @@ class WarpCommand : IChatCommand {
     override val usage: String = "warp [optional: username]"
 
     override val isEnabled: Boolean
-        get() = NobaAddons.config.partyWarpCommand
+        get() = NobaAddons.config.chatCommands.partyCommands.warp
 
     override fun run(ctx: ChatContext) {
         if (PartyAPI.isLeader()) return

@@ -8,7 +8,7 @@ class RefillPearlsCommand : ISubCommand {
     override val name: String = "refillPearls"
 
     override val isEnabled: Boolean
-        get() = NobaAddons.config.refillPearls
+        get() = NobaAddons.config.dungeons.refillPearls
 
     override fun run(args: Array<String>) {
         PearlRefill.refillPearls(true)

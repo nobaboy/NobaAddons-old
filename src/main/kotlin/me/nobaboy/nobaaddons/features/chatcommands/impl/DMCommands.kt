@@ -20,8 +20,8 @@ class DMCommands : ChatCommandManager() {
         Pattern.compile("^From (?:\\[[A-Z+]+] )?(?<username>[A-z0-9_]+): [!?.](?<command>[A-z0-9_]+) ?(?<argument>[A-z0-9_]+)?")
 
     init {
-        register(HelpCommand(this, "msg", NobaAddons.config.dmHelpCommand))
-        register(WarpOutCommand("msg", NobaAddons.config.dmWarpOutCommand))
+        register(HelpCommand(this, "msg", NobaAddons.config.chatCommands.dmCommands::help))
+        register(WarpOutCommand("msg", NobaAddons.config.chatCommands.dmCommands::warpOut))
         register(WarpUserCommand())
         register(PartyMeCommand())
     }
@@ -53,5 +53,5 @@ class DMCommands : ChatCommandManager() {
         processMessage(receivedMessage)
     }
 
-    fun isEnabled() = NobaAddons.config.dmCommands
+    fun isEnabled() = NobaAddons.config.chatCommands.dmCommands.enabled
 }

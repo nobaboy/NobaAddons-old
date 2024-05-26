@@ -39,7 +39,7 @@ class SimonSaysTimer {
 
         val isPB = if (timeTakenToEnd <= personalBest) " §3§l(PB)" else " §3($personalBest)"
         val message = "Simon Says took ${timeTakenToEnd}s to complete. $isPB"
-        if (NobaAddons.config.ssDeviceTimerPC && PartyAPI.inParty) {
+        if (NobaAddons.config.dungeons.ssDeviceTimerPC && PartyAPI.inParty) {
             HypixelCommands.partyChat(message.cleanString())
         } else {
             ChatUtils.addMessage(message)
@@ -99,5 +99,5 @@ class SimonSaysTimer {
         deviceStartTime = System.currentTimeMillis()
     }
 
-    fun isEnabled() = NobaAddons.config.ssDeviceTimer && LocationUtils.isInLocation(Location.CATACOMBS)
+    fun isEnabled() = NobaAddons.config.dungeons.ssDeviceTimer && LocationUtils.isInLocation(Location.CATACOMBS)
 }

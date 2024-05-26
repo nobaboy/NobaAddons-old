@@ -18,7 +18,7 @@ class CenturyCakes {
         val receivedMessage = event.message.unformattedText.cleanString()
 
         if (receivedMessage.startsWith("Yum! You gain")) {
-            if (cakesEaten++ >= NobaAddons.config.centuryCakesAmount) {
+            if (cakesEaten++ >= NobaAddons.config.notifiers.centuryCakesAmount) {
                 ChatUtils.delayedAdd("All cakes eaten!")
                 mc.thePlayer.playSound("note.pling", 1F, 2.0F)
                 cakesEaten = 0
@@ -26,5 +26,5 @@ class CenturyCakes {
         }
     }
 
-    fun isEnabled() = NobaAddons.config.cakesEatenNotifier && LocationUtils.inSkyblock
+    fun isEnabled() = NobaAddons.config.notifiers.cakesEatenNotifier && LocationUtils.inSkyblock
 }

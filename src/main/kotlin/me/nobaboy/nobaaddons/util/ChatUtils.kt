@@ -35,7 +35,7 @@ object ChatUtils {
 
     private fun sendCommand(command: String) {
         mc.thePlayer.sendChatMessage(
-            (if (NobaAddons.config.removeSlash) "" else "/") + command
+            (if (NobaAddons.config.dev.removeSlash) "" else "/") + command
         )
     }
 

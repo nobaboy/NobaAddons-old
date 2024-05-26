@@ -1,12 +1,13 @@
 package me.nobaboy.nobaaddons
 
+import io.github.notenoughupdates.moulconfig.managed.ManagedConfig
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import me.nobaboy.nobaaddons.api.PartyAPI
 import me.nobaboy.nobaaddons.commands.NobaCommand
 import me.nobaboy.nobaaddons.commands.SWikiCommand
-import me.nobaboy.nobaaddons.core.Config
+import me.nobaboy.nobaaddons.core.NobaConfig
 import me.nobaboy.nobaaddons.features.chat.HideTipMessages
 import me.nobaboy.nobaaddons.features.chatcommands.impl.DMCommands
 import me.nobaboy.nobaaddons.features.chatcommands.impl.GuildCommands
@@ -55,15 +56,18 @@ class NobaAddons {
 
         val LOGGER: Logger = LogManager.getLogger(NobaAddons)
         var ticks = 0
+        var openConfigGui = false
 
         @JvmStatic
         val mc: Minecraft by lazy {
             Minecraft.getMinecraft()
         }
 
-        val config by lazy {
-            Config
+        val configManager by lazy {
+            ManagedConfig.create(NobaConfig.FILE, NobaConfig::class.java)
         }
+
+        val config by lazy { configManager.instance }
 
         val modDir by lazy {
             File(File(mc.mcDataDir, "config"), "nobaaddons").also {
@@ -94,7 +98,7 @@ class NobaAddons {
         try {
             SSFile.load()
             if (SSFile.personalBest !in SSFile.times) {
-                SSFile.personalBest = SSFile.times.minOrNull()
+                SSFile.personalBest = SSFile.times.minOrNull().takeIf { it?.isNaN() == false }
                 SSFile.save()
             }
         } catch (ex: IOException) {
@@ -105,7 +109,7 @@ class NobaAddons {
         arrayOf(
             // Objects that don't fit into any category
             this,
-            
+
             // APIs
             PartyAPI,
 
@@ -152,6 +156,11 @@ class NobaAddons {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onTick(event: TickEvent.ClientTickEvent) {
         if (event.phase != TickEvent.Phase.START) return
+
+        if(openConfigGui) {
+            configManager.openConfigGui()
+            openConfigGui = false
+        }
 
         if (++ticks % 20 == 0) {
             if (mc.thePlayer != null) {
