@@ -13,9 +13,8 @@ abstract class ChatCommandManager : CooldownManager() {
         commands.add(command)
     }
 
-    fun getCommands(): List<IChatCommand> {
-        return commands
-    }
+    fun getCommands(enabledOnly: Boolean = false): List<IChatCommand> =
+        if (enabledOnly) commands.filter { it.isEnabled } else commands
 
     protected abstract fun matchMessage(message: String): Matcher?
 

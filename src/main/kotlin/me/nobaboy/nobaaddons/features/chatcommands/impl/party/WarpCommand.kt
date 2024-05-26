@@ -12,7 +12,6 @@ import kotlin.time.Duration.Companion.seconds
 
 class WarpCommand : IChatCommand {
     companion object {
-        @JvmField
         var cancel = false
     }
 

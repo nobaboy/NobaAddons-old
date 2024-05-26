@@ -20,7 +20,6 @@ class TransferCommand : IChatCommand {
 
     override fun run(ctx: ChatContext) {
         if (!PartyAPI.isLeader()) return
-        if (ctx.user() == Utils.getPlayerName()) return
 
         if (!ctx.command().lowercaseEquals("ptme")) {
             val player = if (ctx.args().isEmpty()) ctx.user() else ctx.args()[0]
@@ -28,6 +27,7 @@ class TransferCommand : IChatCommand {
             return
         }
 
+        if (ctx.user() == Utils.getPlayerName()) return
         HypixelCommands.partyTransfer(ctx.user())
     }
 }

@@ -18,7 +18,7 @@ class HelpCommand(
 
     override fun run(ctx: ChatContext) {
         if (command == "msg") command = "msg ${ctx.user()}"
-        val commands = manager.getCommands().map { it.usage }
+        val commands = manager.getCommands(true).map { it.usage }
         val commandsList = commands.joinToString(", ")
 
         ChatUtils.queueCommand("$command NobaAddons > [! ? .] | $commandsList")
