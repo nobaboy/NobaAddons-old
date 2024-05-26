@@ -133,7 +133,8 @@ class NobaAddons {
             PearlRefill,
 
             // Util
-            ChatUtils
+            ChatUtils,
+            DungeonUtils
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }
 

@@ -21,14 +21,15 @@ class SimonSaysTimer {
     private val chatPattern: Pattern = Pattern.compile("^(?<username>[A-z0-9_]+) completed a device! \\([1-7]/7\\)")
     private var deviceDone: Boolean = false
     private var firstButtonPressed: Boolean = false
-    private var deviceStartTime: Long = 0
+    private var deviceStartTime = Timestamp.distantPast()
     private var timeTakenToEnd: Double = 0.0
 
     private fun processDeviceTime() {
         deviceDone = true
 
-        timeTakenToEnd = (System.currentTimeMillis() - deviceStartTime).toDouble() / 1000
+        val currentTime = Timestamp.currentTime()
         val times: MutableList<Double> = SSFile.times
+        timeTakenToEnd = (currentTime.toMillis() - deviceStartTime.toMillis()).toDouble() / 1000
         times.add(timeTakenToEnd)
 
         var personalBest: Double? = SSFile.personalBest
@@ -37,7 +38,7 @@ class SimonSaysTimer {
             personalBest = timeTakenToEnd
         }
 
-        val isPB = if (timeTakenToEnd <= personalBest) " §3§l(PB)" else " §3($personalBest)"
+        val isPB = if (timeTakenToEnd <= personalBest) "§3§l(PB)" else "§3($personalBest)"
         val message = "Simon Says took ${timeTakenToEnd}s to complete. $isPB"
         if (NobaAddons.config.dungeons.ssDeviceTimerPC && PartyAPI.inParty) {
             HypixelCommands.partyChat(message.cleanString())
@@ -57,7 +58,7 @@ class SimonSaysTimer {
         if (deviceDone || firstButtonPressed) {
             deviceDone = false
             firstButtonPressed = false
-            deviceStartTime = 0
+            deviceStartTime = Timestamp.distantPast()
             timeTakenToEnd = 0.0
         }
     }
@@ -66,7 +67,7 @@ class SimonSaysTimer {
     fun onChatReceived(event: ClientChatReceivedEvent) {
         if (!isEnabled()) return
         if (deviceDone) return
-        if (!DungeonUtils.isInCatacombs7()) return
+        if (!DungeonUtils.isInCatacombsFloor(7)) return
         if (!DungeonUtils.isInPhase(DungeonBoss.GOLDOR)) return
 
         val receivedMessage = event.message.unformattedText.cleanString()
@@ -96,7 +97,7 @@ class SimonSaysTimer {
         if (blockState.block !is BlockButtonStone) return
 
         firstButtonPressed = true
-        deviceStartTime = System.currentTimeMillis()
+        deviceStartTime = Timestamp.currentTime()
     }
 
     fun isEnabled() = NobaAddons.config.dungeons.ssDeviceTimer && LocationUtils.isInLocation(Location.CATACOMBS)
