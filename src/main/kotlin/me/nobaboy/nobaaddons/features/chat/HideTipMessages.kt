@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.regex.Pattern
 
 class HideTipMessages {
-    private val alreadyTippedPattern: Pattern = Pattern.compile("You've already tipped someone in the past hour in [A-z]+! Wait a bit and try again!")
+    private val alreadyTippedPattern: Pattern = Pattern.compile("You've already tipped someone in the past hour in [A-z ]+! Wait a bit and try again!")
 
     @SubscribeEvent
     fun onChatReceived(event: ClientChatReceivedEvent) {
