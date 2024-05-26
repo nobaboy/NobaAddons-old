@@ -45,12 +45,9 @@ object DungeonUtils {
         return currentFloor
     }
 
-    fun isInCatacombs7(): Boolean {
-        return currentFloor == DungeonFloor.F7 || currentFloor == DungeonFloor.M7
-    }
-
-    fun isInFloor(floor: DungeonFloor): Boolean {
-        return currentFloor == floor
+    fun isInCatacombsFloor(floor: Int): Boolean {
+        if (NobaAddons.config.dev.debugMode) return true
+        return currentFloor.floor == floor
     }
 
     fun checkForDungeonClass() {
@@ -83,6 +80,7 @@ object DungeonUtils {
     }
 
     fun isInPhase(boss: DungeonBoss): Boolean {
+        println(currentBoss)
         return currentBoss == boss
     }
 }

@@ -1,20 +1,28 @@
 package me.nobaboy.nobaaddons.util.data
 
-enum class DungeonFloor {
-    NONE,
-    E0,
-    F1,
-    F2,
-    F3,
-    F4,
-    F5,
-    F6,
-    F7,
-    M1,
-    M2,
-    M3,
-    M4,
-    M5,
-    M6,
-    M7
+enum class DungeonFloor(val floor: Int) {
+    NONE(-1),
+
+    E0(0),
+
+    F1(1),
+    M1(1),
+
+    F2(2),
+    M2(2),
+
+    F3(3),
+    M3(3),
+
+    F4(4),
+    M4(4),
+
+    F5(5),
+    M5(5),
+
+    F6(6),
+    M6(6),
+
+    F7(7),
+    M7(7)
 }

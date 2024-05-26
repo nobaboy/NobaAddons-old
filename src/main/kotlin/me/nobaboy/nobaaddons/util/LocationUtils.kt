@@ -45,6 +45,7 @@ object LocationUtils {
     }
 
     fun isInLocation(location: Location): Boolean {
+        if (NobaAddons.config.dev.debugMode) return true
         return currentLocation == location
     }
 }
