@@ -44,14 +44,14 @@ import java.io.IOException
     modid = NobaAddons.MOD_ID,
     name = NobaAddons.MOD_NAME,
     version = NobaAddons.MOD_VERSION,
-    acceptableSaveVersions = "[1.8.9]",
+    acceptedMinecraftVersions = "[1.8.9]",
     clientSideOnly = true
 )
 class NobaAddons {
     companion object {
         const val MOD_ID = "nobaaddons"
         const val MOD_NAME = "NobaAddons"
-        const val MOD_VERSION = "0.10.4"
+        const val MOD_VERSION = "0.10.5"
         const val MOD_PREFIX = "§9NobaAddons §1> §b"
 
         val LOGGER: Logger = LogManager.getLogger(NobaAddons)
