@@ -52,12 +52,13 @@ object DungeonUtils {
 
     fun checkForDungeonClass() {
         if (LocationUtils.isInLocation(Location.CATACOMBS)) {
-            val playerName = Minecraft.getMinecraft().thePlayer.name
+            val playerName = Utils.getPlayerName()
             val players = Minecraft.getMinecraft().netHandler.playerInfoMap
             for (player in players) {
                 if (player == null || player.displayName == null) continue
                 val text = player.displayName.unformattedText
                 if (text.contains(playerName) && text.indexOf('(') != -1) {
+                    if (text.contains("($playerName)")) continue // Puzzle fail text
                     val dungeonClass = text.substring(text.indexOf("(") + 1, text.lastIndexOf(")"))
                     currentClass = DungeonClass.valueOf(dungeonClass.split(" ")[0].uppercase())
                     break
