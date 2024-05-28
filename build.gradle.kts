@@ -90,6 +90,7 @@ dependencies {
     shadowImpl("me.celestialfault:celestial-config:1.0-alpha.2") {
         isTransitive = false
     }
+    shadowImpl(kotlin("reflect"))
 
     // MoulConfig
     shadowModImpl("org.notenoughupdates.moulconfig:legacy:3.0.0-beta.9")

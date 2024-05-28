@@ -2,6 +2,7 @@ package me.nobaboy.nobaaddons.util
 
 import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.util.ScoreboardUtils.cleanScoreboard
+import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.data.Location
 import net.minecraft.client.Minecraft
 
@@ -34,7 +35,7 @@ object LocationUtils {
             val players = Minecraft.getMinecraft().netHandler.playerInfoMap
             for (player in players) {
                 if (player == null || player.displayName == null) continue
-                val text = player.displayName.unformattedText
+                val text = player.displayName.unformattedText.cleanString()
                 if (text.startsWith("Area: ") || text.startsWith("Dungeon: ")) {
                     currentLocation = Location.fromTab(text.substring(text.indexOf(":") + 2))
                     return

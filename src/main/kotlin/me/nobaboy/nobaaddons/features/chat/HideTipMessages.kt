@@ -2,7 +2,7 @@ package me.nobaboy.nobaaddons.features.chat
 
 import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.util.StringUtils.cleanString
-import me.nobaboy.nobaaddons.util.StringUtils.matchMatcher
+import me.nobaboy.nobaaddons.util.RegexUtils.matchMatcher
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.regex.Pattern

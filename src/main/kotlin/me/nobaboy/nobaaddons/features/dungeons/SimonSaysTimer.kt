@@ -6,7 +6,7 @@ import me.nobaboy.nobaaddons.api.PartyAPI
 import me.nobaboy.nobaaddons.features.dungeons.data.SSFile
 import me.nobaboy.nobaaddons.util.*
 import me.nobaboy.nobaaddons.util.StringUtils.cleanString
-import me.nobaboy.nobaaddons.util.StringUtils.matchMatcher
+import me.nobaboy.nobaaddons.util.RegexUtils.matchMatcher
 import me.nobaboy.nobaaddons.util.data.DungeonBoss
 import me.nobaboy.nobaaddons.util.data.Location
 import net.minecraft.block.BlockButtonStone

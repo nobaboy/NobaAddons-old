@@ -1,8 +1,6 @@
 package me.nobaboy.nobaaddons.util.data
 
-import me.nobaboy.nobaaddons.util.StringUtils.lowercaseEquals
-
-enum class Location(location: String) {
+enum class Location(val displayName: String) {
     NONE(""),
     CATACOMBS("Catacombs"),
     CRIMSON_ISLE("Crimson Isle"),
@@ -26,7 +24,7 @@ enum class Location(location: String) {
     companion object {
         fun fromTab(text: String): Location {
             for (location in entries) {
-                if (location.name.lowercaseEquals(text)) return location
+                if (text == location.displayName) return location
             }
             return NONE
         }

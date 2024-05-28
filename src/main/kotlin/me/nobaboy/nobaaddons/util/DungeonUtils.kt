@@ -81,7 +81,6 @@ object DungeonUtils {
     }
 
     fun isInPhase(boss: DungeonBoss): Boolean {
-        println(currentBoss)
         return currentBoss == boss
     }
 }

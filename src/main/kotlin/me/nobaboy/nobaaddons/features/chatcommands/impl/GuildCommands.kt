@@ -7,7 +7,7 @@ import me.nobaboy.nobaaddons.features.chatcommands.impl.shared.WarpOutCommand
 import me.nobaboy.nobaaddons.features.chatcommands.impl.shared.WarpPlayerHandler
 import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.StringUtils.lowercaseContains
-import me.nobaboy.nobaaddons.util.StringUtils.matchMatcher
+import me.nobaboy.nobaaddons.util.RegexUtils.matchMatcher
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.regex.Matcher
