@@ -19,7 +19,7 @@ class CenturyCakes {
         val receivedMessage = event.message.unformattedText.cleanString()
 
         if (receivedMessage.startsWith("Yum! You gain")) {
-            if (cakesEaten++ >= config.cakesAmount) {
+            if (++cakesEaten >= config.cakesAmount) {
                 ChatUtils.delayedAdd("All cakes eaten!")
                 mc.thePlayer.playSound("note.pling", 1F, 2.0F)
                 cakesEaten = 0
