@@ -15,6 +15,6 @@ class CenturyCakesConfig {
     @Expose
     @JvmField
     @ConfigOption(name = "Cakes Count", desc = "The current total number of Century Cakes that exist")
-    @ConfigEditorSlider(minValue = 1f, maxValue = 100f, minStep = 1f)
+    @ConfigEditorSlider(minValue = 1F, maxValue = 100F, minStep = 1F)
     var cakesAmount = 14
 }

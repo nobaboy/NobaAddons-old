@@ -1,6 +1,9 @@
 package me.nobaboy.nobaaddons.util
 
 import me.nobaboy.nobaaddons.NobaAddons
+import me.nobaboy.nobaaddons.util.StringUtils.cleanString
+import net.minecraft.inventory.Container
+import net.minecraft.inventory.ContainerChest
 import java.awt.Desktop
 import java.io.IOException
 import java.net.URI
@@ -18,4 +21,10 @@ object Utils {
     }
 
     fun getPlayerName(): String = NobaAddons.mc.thePlayer.name
+
+    val ContainerChest.name: String
+        get() = this.lowerChestInventory.displayName.unformattedText.cleanString()
+
+    val Container.name: String
+        get() = (this as? ContainerChest)?.name ?: "Undefined Container"
 }

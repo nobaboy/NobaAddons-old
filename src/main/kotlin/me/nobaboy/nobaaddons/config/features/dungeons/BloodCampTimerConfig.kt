@@ -15,6 +15,6 @@ class BloodCampTimerConfig {
     @Expose
     @JvmField
     @ConfigOption(name = "Time (in seconds)", desc = "Time until blood camp warning.")
-    @ConfigEditorSlider(minValue = 1f, maxValue = 30f, minStep = 1f)
+    @ConfigEditorSlider(minValue = 1F, maxValue = 30F, minStep = 1F)
     var timeTillWarning = 20
 }
