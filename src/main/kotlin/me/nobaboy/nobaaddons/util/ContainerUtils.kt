@@ -16,23 +16,15 @@ object ContainerUtils {
     val Container.name: String
         get() = (this as? ContainerChest)?.name ?: "Undefined Container"
 
-    private fun getItemsInOpenChest() = buildList<Slot> {
-        val guiChest = Minecraft.getMinecraft().currentScreen as? GuiChest ?: return emptyList<Slot>()
-        for (slot in guiChest.inventorySlots.inventorySlots) {
-            if (slot.inventory is InventoryPlayer) break
-            if (slot.stack != null) add(slot)
-        }
-    }
-
     private fun getOpenChestItems(): List<Slot> {
         val guiChest = Minecraft.getMinecraft().currentScreen as? GuiChest ?: return emptyList()
         return guiChest.inventorySlots.inventorySlots
             .takeWhile { it.inventory !is InventoryPlayer }
-            .filter { it .stack != null }
+            .filter { it.stack != null }
     }
 
     fun getItemAtSlot(slotIndex: Int): ItemStack? {
-        return getItemsInOpenChest().find { it.slotIndex == slotIndex }?.stack
+        return getOpenChestItems().find { it.slotIndex == slotIndex }?.stack
     }
 
     fun ItemStack.getLore(): List<String> {
