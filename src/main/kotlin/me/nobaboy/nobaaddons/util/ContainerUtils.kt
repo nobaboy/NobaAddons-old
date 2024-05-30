@@ -9,7 +9,7 @@ import net.minecraft.inventory.ContainerChest
 import net.minecraft.inventory.Slot
 import net.minecraft.item.ItemStack
 
-class ContainerUtils {
+object ContainerUtils {
     val ContainerChest.name: String
         get() = this.lowerChestInventory.displayName.unformattedText.cleanString()
 
