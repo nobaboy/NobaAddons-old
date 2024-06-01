@@ -15,7 +15,7 @@ class HideTipMessages {
         val receivedMessage = event.message.unformattedText.cleanString()
 
         alreadyTippedPattern.matchMatcher(receivedMessage) {
-            event.isCanceled
+            event.isCanceled = true
         }
 
         if (receivedMessage.startsWith("You tipped") ||
