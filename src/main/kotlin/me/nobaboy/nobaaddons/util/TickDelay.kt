@@ -12,11 +12,10 @@ class TickDelay(private var waitingTicks: Int, val task: () -> Unit) {
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
         if (event.phase == TickEvent.Phase.START) {
-            if (waitingTicks < 1) {
+            if (waitingTicks-- < 1) {
                 task()
                 MinecraftForge.EVENT_BUS.unregister(this)
             }
-            waitingTicks--
         }
     }
 }
