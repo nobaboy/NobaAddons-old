@@ -35,7 +35,7 @@ loom {
     }
     runConfigs {
         "client" {
-            if(SystemUtils.IS_OS_MAC_OSX) {
+            if (SystemUtils.IS_OS_MAC_OSX) {
                 // This argument causes a crash on macOS
                 vmArgs.remove("-XstartOnFirstThread")
             }

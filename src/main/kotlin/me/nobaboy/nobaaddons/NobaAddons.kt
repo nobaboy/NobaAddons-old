@@ -159,7 +159,7 @@ class NobaAddons {
     fun onTick(event: TickEvent.ClientTickEvent) {
         if (event.phase != TickEvent.Phase.START) return
 
-        if(openConfigGui) {
+        if (openConfigGui) {
             configManager.openConfigGui()
             openConfigGui = false
         }

@@ -39,7 +39,7 @@ class NobaCommand : CommandBase() {
     }
 
     override fun processCommand(sender: ICommandSender, args: Array<String>) {
-        if(args.isEmpty()) {
+        if (args.isEmpty()) {
             NobaAddons.openConfigGui = true
             return
         }
