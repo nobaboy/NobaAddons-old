@@ -32,7 +32,7 @@ object PearlRefill : CooldownManager() {
         if (!isEnabled()) return
 
         val pearlsToRefill = getPearlsNeeded()
-        if (fromKeyBind || LocationUtils.isInLocation(Location.CATACOMBS) || LocationUtils.isInLocation(Location.KUUDRA)) {
+        if (fromKeyBind || SkyblockUtils.isInLocation(Location.CATACOMBS) || SkyblockUtils.isInLocation(Location.KUUDRA)) {
             if (pearlsToRefill == 0) {
                 ChatUtils.addMessage("Can't add more than 16 pearls to your inventory.")
                 return
@@ -53,5 +53,5 @@ object PearlRefill : CooldownManager() {
         startCooldown()
     }
 
-    fun isEnabled() = config.enabled && mc.theWorld != null && LocationUtils.inSkyblock
+    fun isEnabled() = config.enabled && mc.theWorld != null && SkyblockUtils.inSkyblock
 }

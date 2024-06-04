@@ -6,14 +6,14 @@ import kotlinx.coroutines.launch
 import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
 import me.nobaboy.nobaaddons.util.ChatUtils
-import me.nobaboy.nobaaddons.util.LocationUtils
+import me.nobaboy.nobaaddons.util.SkyblockUtils
+import me.nobaboy.nobaaddons.util.SoundUtils
 import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 class TotemOfCorruption {
@@ -26,10 +26,7 @@ class TotemOfCorruption {
             while (seconds-- >= 0) {
                 if (seconds == 0) {
                     ChatUtils.addMessage("Place Totem of Corruption!")
-                    for (i in 1..5) {
-                        mc.thePlayer.playSound("note.pling", 1F, 2.0F)
-                        delay(100.milliseconds)
-                    }
+                    SoundUtils.repeatSound(100L, 5, "note.pling", 2.0F)
                     break
                 }
                 delay(1.seconds)
@@ -55,5 +52,5 @@ class TotemOfCorruption {
         if (itemDisplayName == "Totem of Corruption") startTimer()
     }
 
-    fun isEnabled() = NobaAddons.config.notifiers.corruptionTotemNotifier && LocationUtils.inSkyblock
+    fun isEnabled() = NobaAddons.config.notifiers.corruptionTotemNotifier && SkyblockUtils.inSkyblock
 }

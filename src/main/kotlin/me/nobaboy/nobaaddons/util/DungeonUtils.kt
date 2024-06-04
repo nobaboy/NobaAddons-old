@@ -1,13 +1,13 @@
 package me.nobaboy.nobaaddons.util
 
 import me.nobaboy.nobaaddons.NobaAddons
+import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
 import me.nobaboy.nobaaddons.util.ScoreboardUtils.cleanScoreboard
 import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.data.DungeonBoss
 import me.nobaboy.nobaaddons.util.data.DungeonClass
 import me.nobaboy.nobaaddons.util.data.DungeonFloor
 import me.nobaboy.nobaaddons.util.data.Location
-import net.minecraft.client.Minecraft
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
@@ -17,7 +17,7 @@ object DungeonUtils {
     private var currentBoss: DungeonBoss = DungeonBoss.UNKNOWN
 
     fun checkForDungeonFloor() {
-        if (LocationUtils.isInLocation(Location.CATACOMBS)) {
+        if (SkyblockUtils.isInLocation(Location.CATACOMBS)) {
             val scoreboard = ScoreboardUtils.getSidebarLines()
 
             for (s in scoreboard) {
@@ -51,9 +51,9 @@ object DungeonUtils {
     }
 
     fun checkForDungeonClass() {
-        if (LocationUtils.isInLocation(Location.CATACOMBS)) {
+        if (SkyblockUtils.isInLocation(Location.CATACOMBS)) {
             val playerName = Utils.getPlayerName()
-            val players = Minecraft.getMinecraft().netHandler.playerInfoMap
+            val players = mc.netHandler.playerInfoMap
             for (player in players) {
                 if (player == null || player.displayName == null) continue
                 val text = player.displayName.unformattedText
@@ -76,7 +76,7 @@ object DungeonUtils {
     @SubscribeEvent
     fun checkForDungeonBoss(event: ClientChatReceivedEvent) {
         val receivedMessage = event.message.unformattedText.cleanString()
-        if (LocationUtils.isInLocation(Location.CATACOMBS) && receivedMessage.startsWith("[BOSS]"))
+        if (SkyblockUtils.isInLocation(Location.CATACOMBS) && receivedMessage.startsWith("[BOSS]"))
             currentBoss = DungeonBoss.fromChat(receivedMessage)
     }
 

@@ -127,5 +127,5 @@ class SimonSaysTimer {
         resetState()
     }
 
-    fun isEnabled() = config.enabled && LocationUtils.isInLocation(Location.CATACOMBS) && DungeonUtils.isInPhase(DungeonBoss.GOLDOR)
+    fun isEnabled() = config.enabled && SkyblockUtils.isInLocation(Location.CATACOMBS) && DungeonUtils.isInPhase(DungeonBoss.GOLDOR)
 }

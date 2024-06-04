@@ -1,7 +1,7 @@
 package me.nobaboy.nobaaddons.util
 
+import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
 import me.nobaboy.nobaaddons.util.StringUtils.cleanString
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.inventory.Container
@@ -17,7 +17,7 @@ object ContainerUtils {
         get() = (this as? ContainerChest)?.name ?: "Undefined Container"
 
     private fun getOpenChestItems(): List<Slot> {
-        val guiChest = Minecraft.getMinecraft().currentScreen as? GuiChest ?: return emptyList()
+        val guiChest = mc.currentScreen as? GuiChest ?: return emptyList()
         return guiChest.inventorySlots.inventorySlots
             .takeWhile { it.inventory !is InventoryPlayer }
             .filter { it.stack != null }

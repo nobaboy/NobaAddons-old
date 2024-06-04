@@ -4,8 +4,8 @@ import me.nobaboy.nobaaddons.NobaAddons
 import me.nobaboy.nobaaddons.features.chatcommands.ChatCommandManager
 import me.nobaboy.nobaaddons.features.chatcommands.impl.party.*
 import me.nobaboy.nobaaddons.features.chatcommands.impl.shared.HelpCommand
-import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.RegexUtils.matchMatcher
+import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.regex.Matcher

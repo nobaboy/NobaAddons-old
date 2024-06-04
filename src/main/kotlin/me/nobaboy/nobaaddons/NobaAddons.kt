@@ -23,7 +23,8 @@ import me.nobaboy.nobaaddons.keybinds.CommandKeyBind
 import me.nobaboy.nobaaddons.keybinds.NobaKeyBind
 import me.nobaboy.nobaaddons.util.ChatUtils
 import me.nobaboy.nobaaddons.util.DungeonUtils
-import me.nobaboy.nobaaddons.util.LocationUtils
+import me.nobaboy.nobaaddons.util.PlayerUtils
+import me.nobaboy.nobaaddons.util.SkyblockUtils
 import net.minecraft.client.Minecraft
 import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
@@ -165,10 +166,11 @@ class NobaAddons {
 
         if (++ticks % 20 == 0) {
             if (mc.thePlayer != null) {
-                LocationUtils.checkForSkyblock()
-                LocationUtils.checkTabLocation()
+                SkyblockUtils.checkForSkyblock()
+                SkyblockUtils.checkTabLocation()
                 DungeonUtils.checkForDungeonFloor()
                 DungeonUtils.checkForDungeonClass()
+                PlayerUtils.processClickQueue()
             }
             ticks = 0
         }

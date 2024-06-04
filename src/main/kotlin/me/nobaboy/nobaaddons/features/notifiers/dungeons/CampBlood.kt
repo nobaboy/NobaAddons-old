@@ -4,16 +4,15 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.nobaboy.nobaaddons.NobaAddons
-import me.nobaboy.nobaaddons.NobaAddons.Companion.mc
 import me.nobaboy.nobaaddons.util.ChatUtils
-import me.nobaboy.nobaaddons.util.LocationUtils
+import me.nobaboy.nobaaddons.util.SkyblockUtils
+import me.nobaboy.nobaaddons.util.SoundUtils
 import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.StringUtils.lowercaseEquals
 import me.nobaboy.nobaaddons.util.data.Location
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 class CampBlood {
@@ -25,11 +24,7 @@ class CampBlood {
             delay(config.timeTillWarning.seconds)
 
             ChatUtils.addMessage("Go blood camp!")
-
-            for (i in 1..10) {
-                mc.thePlayer.playSound("note.pling", 1F, 2.0F)
-                delay(100.milliseconds)
-            }
+            SoundUtils.repeatSound(100L, 10, "note.pling", 2.0F)
         }
     }
 
@@ -46,5 +41,5 @@ class CampBlood {
         if (receivedMessage.lowercaseEquals("The BLOOD DOOR has been opened!")) startTimer()
     }
 
-    fun isEnabled() = config.enabled && LocationUtils.isInLocation(Location.CATACOMBS)
+    fun isEnabled() = config.enabled && SkyblockUtils.isInLocation(Location.CATACOMBS)
 }
