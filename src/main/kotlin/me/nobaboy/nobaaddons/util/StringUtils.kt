@@ -7,6 +7,8 @@ object StringUtils {
 
     infix fun String.lowercaseContains(other: String) = this.lowercase().contains(other.lowercase())
 
+    fun String.startsWith(list: List<String>): Boolean = list.any { this.startsWith(it) }
+
     fun String.capitalizeFirstLetters(): String {
         return this.split(" ").joinToString("") {
             if (it.contains("/")) {

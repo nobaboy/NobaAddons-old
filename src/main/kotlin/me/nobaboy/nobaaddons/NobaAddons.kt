@@ -8,7 +8,7 @@ import me.nobaboy.nobaaddons.api.PartyAPI
 import me.nobaboy.nobaaddons.commands.NobaCommand
 import me.nobaboy.nobaaddons.commands.SWikiCommand
 import me.nobaboy.nobaaddons.config.NobaConfig
-import me.nobaboy.nobaaddons.features.chat.HideTipMessages
+import me.nobaboy.nobaaddons.features.chat.ChatFilter
 import me.nobaboy.nobaaddons.features.chatcommands.impl.DMCommands
 import me.nobaboy.nobaaddons.features.chatcommands.impl.GuildCommands
 import me.nobaboy.nobaaddons.features.chatcommands.impl.PartyCommands
@@ -115,7 +115,7 @@ class NobaAddons {
             PartyAPI,
 
             // Chat
-            HideTipMessages(),
+            ChatFilter(),
 
             // Chat Commands
             PartyCommands(),
