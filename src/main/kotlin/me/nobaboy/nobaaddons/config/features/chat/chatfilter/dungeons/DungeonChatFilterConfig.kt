@@ -17,7 +17,7 @@ class DungeonChatFilterConfig {
 
     @Expose
     @JvmField
-    @ConfigOption(name = "Blessings Message", desc = "§8Compact:\n§c§lPOWER BUFF!§7 +10.6 +1.05x ❁ Strength & ☠ Crit Damage.")
+    @ConfigOption(name = "Blessings Message", desc = "§8Compact:\n§c§lPOWER BUFF!§7 +10.6 & +1.05x ❁ Strength and ☠ Crit Damage.")
     @ConfigEditorDropdown
     var blessingsMessage: Property<MessageState> = Property.of(MessageState.SHOWN)
 

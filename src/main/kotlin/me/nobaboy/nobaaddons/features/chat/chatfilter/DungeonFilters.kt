@@ -110,7 +110,7 @@ object DungeonFilters {
             blessingStatsPattern.toRegex().findAll(line).forEach { match ->
                 if (customMessage.isBlank()) return
 
-                if (cycle++ > 0) customMessage.append(" &")
+                if (cycle++ > 0) customMessage.append(" and")
 
                 val stat = match.groups["stat"]!!.value
                 val first = match.groups["one"]!!.value
