@@ -52,7 +52,7 @@ class NobaAddons {
     companion object {
         const val MOD_ID = "nobaaddons"
         const val MOD_NAME = "NobaAddons"
-        const val MOD_VERSION = "0.10.6"
+        const val MOD_VERSION = "0.10.7"
         const val MOD_PREFIX = "§9NobaAddons §1> §b"
 
         val LOGGER: Logger = LogManager.getLogger(NobaAddons)
