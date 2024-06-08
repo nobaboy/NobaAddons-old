@@ -1,7 +1,7 @@
 package me.nobaboy.nobaaddons.features.chat
 
-import me.nobaboy.nobaaddons.features.chat.chatfilter.DungeonFilters
-import me.nobaboy.nobaaddons.features.chat.chatfilter.GeneralFilters
+import me.nobaboy.nobaaddons.features.chat.chatfilter.DungeonChatFilter
+import me.nobaboy.nobaaddons.features.chat.chatfilter.GeneralChatFilter
 import me.nobaboy.nobaaddons.util.SkyblockUtils
 import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.data.Location
@@ -13,10 +13,10 @@ class ChatFilter {
     fun onChatReceived(event: ClientChatReceivedEvent) {
         val receivedMessage = event.message.unformattedText.cleanString()
 
-        GeneralFilters.processFilters(event, receivedMessage)
+        GeneralChatFilter.processFilters(event, receivedMessage)
 
         when (SkyblockUtils.getPlayerLocation()) {
-            Location.CATACOMBS -> DungeonFilters.processFilters(event, receivedMessage)
+            Location.CATACOMBS -> DungeonChatFilter.processFilters(event, receivedMessage)
             else -> {}
         }
     }

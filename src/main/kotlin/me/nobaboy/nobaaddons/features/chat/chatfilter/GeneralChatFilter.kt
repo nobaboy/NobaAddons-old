@@ -5,13 +5,11 @@ import me.nobaboy.nobaaddons.util.RegexUtils.matches
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import java.util.regex.Pattern
 
-object GeneralFilters {
+object GeneralChatFilter {
     private val config get() = NobaAddons.config.chat.chatFilter.general
 
     private val alreadyTippedPattern: Pattern = Pattern.compile("You've already tipped someone in the past hour in [A-z ]+! Wait a bit and try again!")
     private val tipMessages = setOf(
-        "You tipped",
-        "You were tipped",
         "The player is not online, try another user!",
         "No one has a network booster active right now, Try again later.",
         "You already tipped everyone that has boosters active, so there isn't anybody to be tipped right now!",
@@ -25,7 +23,9 @@ object GeneralFilters {
     private fun handleTipMessages(event: ClientChatReceivedEvent, message: String) {
         if (!config.hideTipMessages) return
 
-        if (alreadyTippedPattern.matches(message) || tipMessages.any { message.startsWith(it) }) {
+        if (alreadyTippedPattern.matches(message) ||
+            message.startsWith("You tipped")
+            || tipMessages.any { message.startsWith(it) }) {
             event.isCanceled = true
         }
     }

@@ -11,9 +11,9 @@ import me.nobaboy.nobaaddons.config.features.chat.chatfilter.ChatFilterConfig.Me
 class DungeonChatFilterConfig {
     @Expose
     @JvmField
-    @ConfigOption(name = "Note", desc = "§9§lShown: §rKeeps the message as is.\n§9§lCompact: §rCompacts the message into one line.\n§9§lHidden: §rHides the message from showing in chat.")
+    @ConfigOption(name = "Options", desc = "§9§lShown: §rDisplays the message as it is.\n§9§lCompact: §Condenses the message into a single line.\n§9§lHidden: §rPrevents the message from appearing in chat.")
     @ConfigEditorInfoText
-    var usageNote: Nothing? = null
+    var displayOptions: Nothing? = null
 
     @Expose
     @JvmField
@@ -29,7 +29,13 @@ class DungeonChatFilterConfig {
 
     @Expose
     @JvmField
-    @ConfigOption(name = "Pickup/Obtain Messages", desc = "Toggles the pickup/obtain messages in chat.")
+    @ConfigOption(name = "Disable Pickup/Obtain Messages", desc = "Disables the display of messages for picking up or obtaining items in chat.")
     @ConfigEditorBoolean
     var pickupObtainMessages = false
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Allow 50/50 Items", desc = "Allow messages for obtaining 50/50 items.\n§cNote: Pickup/Obtain Messages must be enabled.")
+    @ConfigEditorBoolean
+    var allow5050ItemMessage = false
 }
