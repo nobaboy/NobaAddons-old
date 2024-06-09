@@ -10,7 +10,7 @@ object GeneralChatFilter {
 
     private val alreadyTippedPattern: Pattern = Pattern.compile("You've already tipped someone in the past hour in [A-z ]+! Wait a bit and try again!")
     private val tipMessages = setOf(
-        "The player is not online, try another user!",
+        "That player is not online, try another user!",
         "No one has a network booster active right now, Try again later.",
         "You already tipped everyone that has boosters active, so there isn't anybody to be tipped right now!",
         "Slow down! You can only use /tip every few seconds."
