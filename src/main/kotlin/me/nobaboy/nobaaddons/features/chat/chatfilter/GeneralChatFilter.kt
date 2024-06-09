@@ -24,8 +24,9 @@ object GeneralChatFilter {
         if (!config.hideTipMessages) return
 
         if (alreadyTippedPattern.matches(message) ||
-            message.startsWith("You tipped")
-            || tipMessages.any { message.startsWith(it) }) {
+            message.startsWith("You tipped") ||
+            message.startsWith("You already tipped") ||
+            tipMessages.any { message == it }) {
             event.isCanceled = true
         }
     }
