@@ -10,6 +10,7 @@ import me.nobaboy.nobaaddons.util.StringUtils.cleanString
 import me.nobaboy.nobaaddons.util.data.DungeonBoss
 import me.nobaboy.nobaaddons.util.data.Location
 import net.minecraft.block.BlockButtonStone
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.BlockPos
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
@@ -22,29 +23,23 @@ import java.util.regex.Pattern
 class SimonSaysTimer {
     private val config get() = NobaAddons.config.dungeons.simonSaysTimer
 
-    private val deviceFinishPattern: Pattern = Pattern.compile("^(?<username>[A-z0-9_]+) completed a device! \\([1-7]/7\\)")
+    private val completionPattern: Pattern = Pattern.compile("^(?<username>[A-z0-9_]+) completed a device! \\([1-7]/7\\)")
+    private val buttonPosition = BlockPos(110, 121, 91)
 
-    private var deviceStartTime = Timestamp.distantPast()
-    private var deviceEndTime = Timestamp.distantPast()
-
-    private val stoneButton = BlockPos(110, 121, 91)
-    private var playerDoingDevice: String? = null
-    private var firstButtonPressed: Boolean = false
-    private var deviceDone: Boolean = false
+    private var startTime = Timestamp.distantPast()
+    private var endTime = Timestamp.distantPast()
+    private var buttonPressed: Boolean = false
+    private var deviceCompleted: Boolean = false
 
     private fun processPersonalTime() {
         val times: MutableList<Double> = SSFile.times
-        val timeTakenToEnd = (deviceEndTime.toMillis() - deviceStartTime.toMillis()).toDouble() / 1000
-        times.add(timeTakenToEnd)
+        val duration = (endTime.toMillis() - startTime.toMillis()).toDouble() / 1000
+        times.add(duration)
 
-        var personalBest: Double? = SSFile.personalBest
-        if (personalBest == null || timeTakenToEnd < personalBest) {
-            SSFile.personalBest = timeTakenToEnd
-            personalBest = timeTakenToEnd
-        }
+        val personalBest = SSFile.personalBest?.takeIf { duration >= it } ?: duration.also { SSFile.personalBest = it }
+        val isPersonalBest = if (duration < personalBest) "§3§l(PB)" else "§3($personalBest)"
+        val message = "Took ${duration}s to finish Simon Says. $isPersonalBest"
 
-        val isPB = if (timeTakenToEnd <= personalBest) "§3§l(PB)" else "§3($personalBest)"
-        val message = "Took ${timeTakenToEnd}s to finish Simon Says. $isPB"
         if (config.timeInPartyChat && PartyAPI.inParty) {
             HypixelCommands.partyChat(message.cleanString())
         } else {
@@ -58,38 +53,48 @@ class SimonSaysTimer {
         }
     }
 
-    private fun processOtherTime(username: String) {
+    private fun processOtherPlayerTime(username: String) {
         if (!config.timeOtherPlayers) return
 
-        val timeTakenToEnd = (deviceEndTime.toMillis() - deviceStartTime.toMillis()).toDouble() / 1000
-
-        val message = "$username took ${timeTakenToEnd}s to complete Simon Says."
+        val duration = (endTime.toMillis() - startTime.toMillis()).toDouble() / 1000
+        val message = "$username took ${duration}s to complete Simon Says."
         ChatUtils.addMessage(message)
     }
 
     private fun resetState() {
-        deviceStartTime = Timestamp.distantPast()
-        deviceEndTime = Timestamp.distantPast()
-        firstButtonPressed = false
-        deviceDone = false
-        playerDoingDevice = null
+        startTime = Timestamp.distantPast()
+        endTime = Timestamp.distantPast()
+        buttonPressed = false
+        deviceCompleted = false
     }
 
     @SubscribeEvent
     fun onChatReceived(event: ClientChatReceivedEvent) {
         if (!isEnabled()) return
         if (!DungeonUtils.isInCatacombsFloor(7)) return
-        if (deviceDone) return
+        if (!buttonPressed) return
+        if (deviceCompleted) return
 
         val receivedMessage = event.message.unformattedText.cleanString()
 
-        deviceFinishPattern.matchMatcher(receivedMessage) {
+        completionPattern.matchMatcher(receivedMessage){
             val username = group("username")
-            deviceEndTime = Timestamp.currentTime()
-            deviceDone = true
+            val nearbyEntity = EntityUtils.getEntitiesNear<EntityPlayer>(buttonPosition.toNobaVec(), 5.0)
+                .find { it.name.contains(username) }
 
-            if (playerDoingDevice == username)
-                processPersonalTime() else processOtherTime(username)
+            if (nearbyEntity == null) {
+                resetState()
+                return@matchMatcher
+            }
+
+            endTime = Timestamp.currentTime()
+            deviceCompleted = true
+
+            if (Utils.getPlayerName() in nearbyEntity.name) {
+                processPersonalTime()
+            } else {
+                processOtherPlayerTime(username)
+            }
         }
     }
 
@@ -98,16 +103,15 @@ class SimonSaysTimer {
         if (!isEnabled()) return
         if (event.entityPlayer != mc.thePlayer) return
         if (event.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) return
-        if (firstButtonPressed) return
-        if (deviceDone) return
+        if (event.pos != buttonPosition) return
+        if (buttonPressed) return
+        if (deviceCompleted) return
 
         val blockState = event.world.getBlockState(event.pos) ?: return
-        if (blockState.block == null) return
         if (blockState.block !is BlockButtonStone) return
 
-        firstButtonPressed = true
-        deviceStartTime = Timestamp.currentTime()
-        playerDoingDevice = Utils.getPlayerName()
+        buttonPressed = true
+        startTime = Timestamp.currentTime()
     }
 
     @SubscribeEvent
@@ -115,11 +119,11 @@ class SimonSaysTimer {
         if (event.phase != TickEvent.Phase.START) return
         if (!config.timeOtherPlayers) return
 
-        val isActivate = mc.theWorld?.isBlockPowered(stoneButton) ?: return
-        if (!isActivate) return
+        val isButtonPowered = mc.theWorld?.isBlockPowered(buttonPosition) ?: return
+        if (!isButtonPowered) return
 
-        if (deviceStartTime == Timestamp.distantPast()) deviceStartTime = Timestamp.currentTime()
-        firstButtonPressed = true
+        if (startTime == Timestamp.distantPast()) startTime = Timestamp.currentTime()
+        buttonPressed = true
     }
 
     @SubscribeEvent

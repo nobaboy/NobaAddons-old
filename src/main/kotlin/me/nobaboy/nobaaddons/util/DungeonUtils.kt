@@ -81,6 +81,7 @@ object DungeonUtils {
     }
 
     fun isInPhase(boss: DungeonBoss): Boolean {
+        if (NobaAddons.config.dev.debugMode) return true
         return currentBoss == boss
     }
 }
