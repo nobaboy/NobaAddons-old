@@ -11,7 +11,7 @@ import me.nobaboy.nobaaddons.config.features.chat.chatfilter.ChatFilterConfig.Me
 class DungeonChatFilterConfig {
     @Expose
     @JvmField
-    @ConfigOption(name = "Options", desc = "§9§lShown: §rDisplays the message as it is.\n§9§lCompact: §Condenses the message into a single line.\n§9§lHidden: §rPrevents the message from appearing in chat.")
+    @ConfigOption(name = "Options", desc = "§9§lShown: §rDisplays the message as it is.\n§9§lCompact: Condenses the message into a single line.\n§9§lHidden: §rPrevents the message from appearing in chat.")
     @ConfigEditorInfoText
     var displayOptions: Nothing? = null
 
